@@ -20,6 +20,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
 Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin
 Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
+Plugin 'junegunn/goyo.vim' "For distraction-free writing
 
 "All plugins must be declared before this
 call vundle#end()
@@ -34,6 +35,26 @@ filetype plugin indent on "required for the plugins to have effect
 
 "See :h in vundle for more details
 """"""""""""""""""""""""""""""""""""""""""""
+
+"""""Goyo stuff"""""""
+function! GoyoEnterFn()
+	set noshowmode
+	set noshowcmd
+	set scrolloff=999
+	" ...
+endfunction
+
+function! GoyoLeaveFn()
+	resize-pane -Z
+	set showmode
+	set showcmd
+	set scrolloff=5
+	" ...
+endfunction
+
+autocmd! User GoyoEnter nested call GoyoEnterFn()
+autocmd! User GoyoLeave nested call GoyoLeaveFn()
+"""""""""""""""""""
 
 """"Pathogen stuff"""""
 execute pathogen#infect()
