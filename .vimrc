@@ -65,7 +65,7 @@ nmap <C-n> :NERDTreeToggle<CR>
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
 	\ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
@@ -147,7 +147,16 @@ set backspace=indent,eol,start
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
 let &colorcolumn=join(range(86, 999),",")
-highlight ColorColumn ctermbg=233 ctermfg=254
+highlight ColorColumn ctermbg=235 ctermfg=254
+
+"This is used to disable colorcolumn for certain files
+function! RemoveColorColumn()
+	let &colorcolumn=''
+endfun
+command! RemoveColorColumn call RemoveColorColumn()
+"Call it for all relevant files
+autocmd BufEnter *.tex,*.txt
+	\ :call RemoveColorColumn()
 
 "Number of spaces a <TAB> is
 set tabstop=4
@@ -267,6 +276,7 @@ nnoremap <leader>s :set spell!<CR>
 
 "TODO:
 "-> Customize the status line using set statusline
+"-> Customize the titlestring
 "-> Make shortcuts so that working with windows/tabs/buffers is easier
 "-> Get Snipmate for snippet control
 "-> Get NERDCommentor for comment management
@@ -280,4 +290,4 @@ nnoremap <leader>s :set spell!<CR>
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
 "-> Get gundo to work by compiling Vim from source with Python 2.4+ support
-"Think about autocompletetion of matching brackets/parantheses/quotes etc
+"-> Think about autocompletetion of matching brackets/parantheses/quotes etc
