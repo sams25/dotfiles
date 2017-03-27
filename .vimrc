@@ -18,7 +18,7 @@ call vundle#begin()
 "List of plugin commands - must be in between vundle#begin and end.
 
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin
+Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 Plugin 'junegunn/goyo.vim' "For distraction-free writing
 
@@ -90,13 +90,14 @@ set grepprg=grep\ -nH\ $*
 "let g:tex_flavor='latex'
 """""""""""""""""""""Vim-LATEX-END"""""""""""""""""""
 
-"This sets the leader key to comma
+"This sets the leader key to comma - check why this is present twice in the
+".vimrc - something to do with plugins? Try removing this and see?
 let mapleader=","
 "A cool colourscheme
 "A list of colors for ctermbg, ctermfg (foreground and background colors) can
 "be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 colorscheme koehler
-"This enables syntax highlighting
+"This enables syntax highlighting depending on filetype
 syntax enable
 "This is to give the mouse expected behaviour
 set mouse=a
@@ -152,10 +153,10 @@ highlight ColorColumn ctermbg=235 ctermfg=254
 "This is used to disable colorcolumn for certain files
 function! RemoveColorColumn()
 	let &colorcolumn=''
-endfun
+endfunction
 command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
-autocmd BufEnter *.tex,*.txt
+autocmd BufEnter *.tex,*.txt,*.md
 	\ :call RemoveColorColumn()
 
 "Number of spaces a <TAB> is
@@ -168,7 +169,7 @@ set softtabstop=0
 set noexpandtab
 "Make vim indent code for me
 set autoindent
-"The default indentation is c style
+"The default indentation is C style
 set cindent
 "This enables filetype-specific indentation
 filetype indent on
@@ -226,10 +227,10 @@ function! TrimWhiteSpace()
 	"\s is whitespace, $ is end of line
     %s/\s\+$//e
     call setpos('.', l:save_cursor)
-endfun
+endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R
 	\ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
