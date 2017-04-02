@@ -99,8 +99,12 @@ let mapleader=","
 colorscheme koehler
 "This enables syntax highlighting depending on filetype
 syntax enable
+
 "This is to give the mouse expected behaviour
 set mouse=a
+"TODO: find a way of disabling mouse on Ubuntu's terminal as it's
+"annoying on a laptop. Just 'set mouse=' does not work.
+
 "This is to tell vim to redraw the screen only when required
 set lazyredraw
 "The encoding used to display a file in vim (Unicode)
