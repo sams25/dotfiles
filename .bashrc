@@ -115,10 +115,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#enable makenotes to work from everywhere
+# enable makenotes to work from everywhere
 alias makenotes='bash ~/Documents/MyNotes/makenotes.sh'
-export PATH="$HOME/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$PATH"
-
+# and SAGE
+export PATH=$PATH:/home/anindya/Documents/Sage/sage-6.8/
+# and Go
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Documents/Go
 

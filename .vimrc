@@ -2,11 +2,20 @@
 
 "This sets the leader key to comma
 let mapleader=","
+"
+"A list of colors for ctermbg, ctermfg (foreground and background colors) can
+"be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+"Some cool colourschemes
+"colorscheme elflord
+colorscheme koehler
+"colorscheme ron
+"colorscheme slate
 
-let g:ycm_server_python_interpreter='/usr/bin/python'
+""""Pathogen stuff"""""
+execute pathogen#infect()
+
 """"""""""""""""""""""""""""""""""""""""""""
 "Vundle stuff for vim plugin management
-
 set nocompatible "We need vImproved, just vi won't do
 
 filetype off "Because Vundle should have control of it
@@ -21,6 +30,7 @@ Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
 Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 Plugin 'junegunn/goyo.vim' "For distraction-free writing
+Plugin 'luochen1990/rainbow' "For matching parantheses in different colours
 
 "All plugins must be declared before this
 call vundle#end()
@@ -35,6 +45,10 @@ filetype plugin indent on "required for the plugins to have effect
 
 "See :h in vundle for more details
 """"""""""""""""""""""""""""""""""""""""""""
+let g:ycm_server_python_interpreter='/usr/bin/python'
+let g:ycm_autoclose_preview_window_after_insertion=1
+
+let g:rainbow_active=1 "Can be toggled via :RainbowToggle
 
 """""Goyo stuff"""""""
 function! GoyoEnterFn()
@@ -56,9 +70,6 @@ autocmd! User GoyoEnter nested call GoyoEnterFn()
 autocmd! User GoyoLeave nested call GoyoLeaveFn()
 """""""""""""""""""
 
-""""Pathogen stuff"""""
-execute pathogen#infect()
-
 """"""NERDTree stuff"""
 "To open and close NERDTree
 nmap <C-n> :NERDTreeToggle<CR>
@@ -74,29 +85,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
 
-"Gundo stuff
-nnoremap <leader>u :GundoToggle<CR>
-
-"""""""""""""""""""""Vim-LATEX-START"""""""""""""""""""
-"This invokes Vim-Latex for every tex file
-filetype plugin on
-" IMPORTANT- grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-" OPTIONAL- Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintext' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-"let g:tex_flavor='latex'
-"""""""""""""""""""""Vim-LATEX-END"""""""""""""""""""
-
 "This sets the leader key to comma - check why this is present twice in the
 ".vimrc - something to do with plugins? Try removing this and see?
 let mapleader=","
-"A cool colourscheme
-"A list of colors for ctermbg, ctermfg (foreground and background colors) can
-"be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-colorscheme koehler
+
 "This enables syntax highlighting depending on filetype
 syntax enable
 
@@ -151,7 +143,7 @@ set backspace=indent,eol,start
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
-let &colorcolumn=join(range(86, 999),",")
+let &colorcolumn=join(range(76, 999),",")
 highlight ColorColumn ctermbg=235 ctermfg=254
 
 "This is used to disable colorcolumn for certain files
@@ -163,20 +155,19 @@ command! RemoveColorColumn call RemoveColorColumn()
 autocmd BufEnter *.tex,*.txt,*.md
 	\ :call RemoveColorColumn()
 
-"Number of spaces a <TAB> is
-set tabstop=4
-"Number of spaces for autoindent
-set shiftwidth=4
-"Number of spaces that are inserted when <TAB> is hit
-set softtabstop=0
-"Don't expand tabs to spaces
-set noexpandtab
+filetype indent on
+"
 "Make vim indent code for me
 set autoindent
-"The default indentation is C style
-set cindent
 "This enables filetype-specific indentation
-filetype indent on
+"Number of spaces a <TAB> is in the file
+set tabstop=4
+"Number of spaces that are inserted when <TAB> is hit
+set softtabstop=4
+"Number of spaces for autoindent
+set shiftwidth=4
+"Don't expand tabs to spaces
+set expandtab
 
 "This makes vim list invisible characters like tab, space, etc
 set list
@@ -234,7 +225,7 @@ function! TrimWhiteSpace()
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md
 	\ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
@@ -273,11 +264,17 @@ nnoremap <leader>sh :sh<CR>
 "To make vim create an .un~ file to store the list of all things done to a
 "file, so that undos transcend opening and closing of files
 set undofile
+"Use git for important version control, and we have an undofile anyway
+set noswapfile
 
 "Set Spell checker
 set spelllang=en_gb
 "Toggle spell checking with <leader>s
 nnoremap <leader>s :set spell!<CR>
+
+"Things that have to happen after sourcing the vimrc
+"rainbow has to be reloaded
+"TODO: find out how to do this
 
 "TODO:
 "-> Customize the status line using set statusline
