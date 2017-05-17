@@ -21,6 +21,10 @@ set keymap vi-command
 # keymaps in command mode
 set keymap vi-insert
 
+# use alt+j/k for forward search and backward search
+"\ej": history-search-forward
+"\ek": history-search-backward
+
 # needed to restore what we have overwritten in the 
 # previous section for insert mode
 "P": self-insert
