@@ -30,7 +30,6 @@ Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
 Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 Plugin 'junegunn/goyo.vim' "For distraction-free writing
-Plugin 'luochen1990/rainbow' "For matching parantheses in different colours
 
 "All plugins must be declared before this
 call vundle#end()
@@ -47,8 +46,6 @@ filetype plugin indent on "required for the plugins to have effect
 """"""""""""""""""""""""""""""""""""""""""""
 let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
-
-let g:rainbow_active=1 "Can be toggled via :RainbowToggle
 
 """""Goyo stuff"""""""
 function! GoyoEnterFn()
@@ -91,7 +88,8 @@ let mapleader=","
 
 "This enables syntax highlighting depending on filetype
 syntax enable
-
+"Treat sage files like Python files
+autocmd BufRead,BufNewFile *.sage,*.spyx set filetype=python
 "This is to give the mouse expected behaviour
 set mouse=a
 "TODO: find a way of disabling mouse on Ubuntu's terminal as it's
@@ -225,7 +223,7 @@ function! TrimWhiteSpace()
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,*.sage,*.spyx
 	\ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy

@@ -1,3 +1,29 @@
-"\ep": history-search-backward
-"\en": history-search-forward
+# in this file, '\e' represents '^[', that is, ESCape
 
+# use Vi bindings
+set editing-mode vi
+
+# ignore case for autocompletion
+set completion-ignore-case on
+
+########################################################
+# keymaps in command mode
+set keymap vi-command
+
+# use the standard j/k vim for autocompletion w/ prefix
+"j": history-search-forward
+"k": history-search-backward
+
+# insert arguments from last command, !overwriting P!
+"P": "i !!*\r"
+
+########################################################
+# keymaps in command mode
+set keymap vi-insert
+
+# needed to restore what we have overwritten in the 
+# previous section for insert mode
+"P": self-insert
+"j": self-insert
+"k": self-insert
+########################################################

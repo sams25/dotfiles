@@ -117,8 +117,8 @@ fi
 
 # enable makenotes to work from everywhere
 alias makenotes='bash ~/Documents/MyNotes/makenotes.sh'
-# and SAGE
-export PATH=$PATH:/home/anindya/Documents/Sage/sage-6.8/
+# and Sage
+alias sage='~/Documents/Sage/SageMath/sage'
 # and Go
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/Documents/Go
