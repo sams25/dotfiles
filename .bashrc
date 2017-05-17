@@ -1,9 +1,8 @@
-# TODO: figure out what everything in this file does properly, 
+# TODO: figure out what everything in this file does properly,
 # and play around with more
-
-# ~/.bashrc: executed by bash(1) for non-login shells.
+# a really nice example: http://tldp.org/LDP/abs/html/sample-bashrc.html
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# for more examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -61,6 +60,43 @@ function set-title() {
 
 # Colour stuff
 # ------------
+
+# Color definitions (taken from Color Bash Prompt HowTo).
+# Some colors might look different of some terminals.
+# To use in a string go "${Col} string-in-colour ${NC} no-colour"
+
+# Normal Colors
+Black='\e[0;30m'
+Red='\e[0;31m'
+Green='\e[0;32m'
+Yellow='\e[0;33m'
+Blue='\e[0;34m'
+Purple='\e[0;35m'
+Cyan='\e[0;36m'
+White='\e[0;37m'
+
+# Bold
+BBlack='\e[1;30m'
+BRed='\e[1;31m'
+BGreen='\e[1;32m'
+BYellow='\e[1;33m'
+BBlue='\e[1;34m'
+BPurple='\e[1;35m'
+BCyan='\e[1;36m'
+BWhite='\e[1;37m'
+
+# Background
+On_Black='\e[40m'
+On_Red='\e[41m'
+On_Green='\e[42m'
+On_Yellow='\e[43m'
+On_Blue='\e[44m'
+On_Purple='\e[45m'
+On_Cyan='\e[46m'
+On_White='\e[47m'
+
+NC="\e[m" # Color Reset
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -89,17 +125,14 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+# colourise output of less
+export LESS_TERMCAP_mb=$'\e[01;31m' \
+export LESS_TERMCAP_md=$'\e[01;31m' \
+export LESS_TERMCAP_me=$'\e[0m' \
+export LESS_TERMCAP_se=$'\e[0m' \
+export LESS_TERMCAP_so=$'\e[01;44;33m' \
+export LESS_TERMCAP_ue=$'\e[0m' \
+export LESS_TERMCAP_us=$'\e[01;32m' \
 # ------------
 
 # Useful aliases
@@ -112,11 +145,19 @@ fi
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias ls='ls -h --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
 alias rm='rm -i'
+
+alias more='less' # haha
 
 alias ..='cd ..'
 alias ...='cd ../..'
