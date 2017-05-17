@@ -1,0 +1,29 @@
+# git config file, use the following website for documentation
+# https://git-scm.com/docs/git-config
+
+[user]
+	email = as2464@cam.ac.uk
+	name = sams25
+
+[core]
+    editor = vim
+    # fix fixes the whitespace problems
+    whitespace = trailing-space,space-before-tab,fix
+    
+[filter "tabspace"]
+	smudge = unexpand --tabs=4 --first-only
+	clean = expand --tabs=4 --initial
+
+[push]
+    default = simple
+
+[color]
+    # sets color for most things
+    ui = true
+
+[diff]
+    # for 'git difftool' or the diff tool used by merge
+    tool = vimdiff
+
+[github]
+    user = sams25
