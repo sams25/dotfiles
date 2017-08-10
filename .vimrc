@@ -2,7 +2,7 @@
 
 "This sets the leader key to comma
 let mapleader=","
-"
+
 "A list of colors for ctermbg, ctermfg (foreground and background colors) can
 "be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 "Some cool colourschemes
@@ -10,9 +10,6 @@ let mapleader=","
 colorscheme koehler
 "colorscheme ron
 "colorscheme slate
-
-""""Pathogen stuff"""""
-execute pathogen#infect()
 
 """"""""""""""""""""""""""""""""""""""""""""
 "Vundle stuff for vim plugin management
@@ -27,7 +24,13 @@ call vundle#begin()
 "List of plugin commands - must be in between vundle#begin and end.
 
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
+Plugin 'ervandew/supertab' "For autocompletion supertab
 Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
+Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
+Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+Plugin 'tpope/vim-repeat' "For repeating plugin commands
+Plugin 'bling/vim-airline' "For a smoother statusline
+Plugin 'scrooloose/nerdtree' "For directory traversal
 Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 Plugin 'junegunn/goyo.vim' "For distraction-free writing
 
@@ -67,13 +70,19 @@ autocmd! User GoyoEnter nested call GoyoEnterFn()
 autocmd! User GoyoLeave nested call GoyoLeaveFn()
 """""""""""""""""""
 
+"""DoxyGen-Syntax stuff"""
+"Need to set syntax to cpp.doxygen
+nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
+nnoremap <leader>cpp :set syntax=cpp<CR>
+"""
+
 """"""NERDTree stuff"""
 "To open and close NERDTree
-nmap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
 	\ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
@@ -81,8 +90,44 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
 	\&& b:NERDTree.isTabTree()) | q | endif
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
+"""""""""""""""""""""""
 
-"This sets the leader key to comma - check why this is present twice in the
+""""""""""""""""""
+"Vim-airline stuff
+
+"V- is v line, V| is v block
+let g:airline_mode_map = {
+  \ '__' : '-',
+  \ 'n'  : 'N',
+  \ 'i'  : 'I',
+  \ 'R'  : 'R',
+  \ 'c'  : 'C',
+  \ 'v'  : 'V',
+  \ 'V'  : 'V-',
+  \ '' : 'V|',
+  \ 's'  : 'S',
+  \ 'S'  : 'S',
+  \ '' : 'S',
+  \ }
+
+set showtabline=2
+"Display all buffers when there's only tab oben
+let g:airline#extensions#tabline#enabled = 1
+"Remove filetype
+let g:airline_section_x = ''
+"Remove fileencoding and fileformat
+let g:airline_section_y = ''
+"Remove warning and error counts (check this again)
+let g:airline_section_error = ''
+let g:airline_section_warning = ''
+
+"NOTE: Go to /autoload/airline/extensions/tabline/buffers.vim
+"and change the label from 'buffers' to whatever else
+"so that the top buffer line isn't taken away by 'buffers'
+"I have changed it to '-' but you can make that something better
+""""""""""""""""""
+
+"This sets the leader key to comma - TODO: check why this is present twice in the
 ".vimrc - something to do with plugins? Try removing this and see?
 let mapleader=","
 
@@ -150,28 +195,27 @@ function! RemoveColorColumn()
 endfunction
 command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
-autocmd BufEnter *.tex,*.txt,*.md
+autocmd BufEnter *.tex,*.txt,*.md,*.MD
 	\ :call RemoveColorColumn()
 
 filetype indent on
-"
+
 "Make vim indent code for me
 set autoindent
-"This enables filetype-specific indentation
 "Number of spaces a <TAB> is in the file
 set tabstop=4
 "Number of spaces that are inserted when <TAB> is hit
 set softtabstop=4
 "Number of spaces for autoindent
 set shiftwidth=4
-"Don't expand tabs to spaces
+"Expand tabs to spaces
 set expandtab
 
 "This makes vim list invisible characters like tab, space, etc
 set list
 set listchars=tab:▸\ ,eol:¬
 "This makes it easy to toggle between showing these characters and not
-nmap <leader>l :set list!<CR>
+nnoremap <leader>l :set list!<CR>
 "The colours for these invisible characters
 highlight NonText    ctermfg=235
 highlight SpecialKey ctermfg=235
@@ -209,10 +253,16 @@ set foldmethod=indent
 "This remaps the spacebar to fold/unfold a block
 nnoremap <space> za
 
-"This is used to write to file as a shortcut
-nnoremap <leader>w :update<CR>
-"This is used to write all files open
+"To save a file and open a new one
+nnoremap S :w<CR>:e<space>
+"To save a file only if changed have been made
+nnoremap s :update<CR>
+"To write all open files
 nnoremap <leader>wa :wa<CR>
+"To close a window
+nnoremap Q :q<CR>
+"To save and then close a window
+nnoremap X :update<CR>:q<CR>
 
 "This is used to remove trailing white spaces
 function! TrimWhiteSpace()
@@ -227,15 +277,24 @@ autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,
 	\ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
-nmap <leader>v :vsplit<space>
+nnoremap <leader>v :vsplit<space>
 "This is used to map ctrl-dir to change windows
-noremap <c-h> <c-w>h
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-l> <c-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 "Make the windows split to the right and bottom by default
 set splitbelow
 set splitright
+
+"To jump between buffers easily
+nnoremap <leader>b :b<space>
+
+"To open file under cursor in the current window is gf
+"To open file under cursor in a vsplit
+"TODO: play around so that we can make this open it in the 'other' window
+"if there is already a vsplit
+nnoremap gF <C-w>vgf
 
 "This is used to invoke command completion on pressing <TAB>
 set wildmenu
@@ -249,8 +308,8 @@ set wildmode=longest,list,full
 set history=1000
 ""This makes it so that you don't have to use the arrow keys while searching
 "through command line history
-cmap <C-k> <Up>
-cmap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
 
 "To make it easier to edit the vimrc during other editing.
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -270,6 +329,9 @@ set spelllang=en_gb
 "Toggle spell checking with <leader>s
 nnoremap <leader>s :set spell!<CR>
 
+"If in vimdiff, automatically update differences on saving
+autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
 "Things that have to happen after sourcing the vimrc
 "rainbow has to be reloaded
 "TODO: find out how to do this
@@ -279,15 +341,17 @@ nnoremap <leader>s :set spell!<CR>
 "-> Customize the titlestring
 "-> Make shortcuts so that working with windows/tabs/buffers is easier
 "-> Get Snipmate for snippet control
-"-> Get NERDCommentor for comment management
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
 "then checkout IndexSearch
 "-> Get YankRing or a better clipboard manager, or make the default yank/delete
-"place the system clipboard
+"place stuff on the system clipboard
 "-> Get surround.vim to enable the 'surrounding' adjective into our vim lingo,
 "and then add repeat.vim to enable repeating it
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
-"-> Get gundo to work by compiling Vim from source with Python 2.4+ support
+"-> Get gundo to work by compiling Vim *8.0* from source with Python 2.4+ support
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
+"Who uses 'help' with K anyway? Map K to something else
+"And remap caps lock to something that is usually escape, but can double up as
+"control when comfortable with the idea
