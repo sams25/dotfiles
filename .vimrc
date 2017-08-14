@@ -110,9 +110,6 @@ let g:airline_mode_map = {
   \ '' : 'S',
   \ }
 
-set showtabline=2
-"Display all buffers when there's only tab oben
-let g:airline#extensions#tabline#enabled = 1
 "Remove filetype
 let g:airline_section_x = ''
 "Remove fileencoding and fileformat
