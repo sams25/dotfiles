@@ -78,7 +78,7 @@ nnoremap <leader>cpp :set syntax=cpp<CR>
 
 """"""NERDTree stuff"""
 "To open and close NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
