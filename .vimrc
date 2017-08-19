@@ -332,6 +332,9 @@ nnoremap <leader>s :set spell!<CR>
 "If in vimdiff, automatically update differences on saving
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 
+"Use the system keyboard
+set clipboard=unnamedplus
+
 "Things that have to happen after sourcing the vimrc
 "rainbow has to be reloaded
 "TODO: find out how to do this
