@@ -175,6 +175,7 @@ set wrap
 "so that when you have long wrapped lines, j and k don't skip past the wrap
 nnoremap j gj
 nnoremap k gk
+nnoremap $ g$
 "Allows us to backspace over a lot of things
 "There is an option to make h and l wrap over lines using whichrap,
 "but this is not recommended as it may change the behaviour of other
@@ -194,6 +195,8 @@ command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
 autocmd BufEnter *.tex,*.txt,*.md,*.MD
 	\ :call RemoveColorColumn()
+"TODO: remove colorcolumn and use textwidth and all its various
+"options using formatoptions etc
 
 filetype indent on
 
