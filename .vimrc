@@ -280,6 +280,7 @@ autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,
 nnoremap <leader>v :vsplit<space>
 "This is used to map ctrl-dir to change windows
 noremap <C-h> <C-w>h
+"TODO: this enters insert mode for some reason, figure out why
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -321,6 +322,8 @@ nnoremap <leader>sh :sh<CR>
 "To make vim create an .un~ file to store the list of all things done to a
 "file, so that undos transcend opening and closing of files
 set undofile
+"Where to store the undo stuff, in order of preference
+set undodir="~/.vim/undo/,."
 "Use git for important version control, and we have an undofile anyway
 set noswapfile
 
