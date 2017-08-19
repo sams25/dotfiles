@@ -3,7 +3,7 @@
 
 [user]
 	email = as2464@cam.ac.uk
-	name = sams25
+	name = Anindya Sharma
 
 [core]
     editor = vim
@@ -24,3 +24,6 @@
 [diff]
     # for 'git difftool' or the diff tool used by merge
     tool = vimdiff
+
+[github]
+    user = sams25
