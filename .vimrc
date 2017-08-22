@@ -7,9 +7,10 @@ let mapleader=","
 "be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 "Some cool colourschemes
 "colorscheme elflord
-colorscheme koehler
+"colorscheme koehler
 "colorscheme ron
 "colorscheme slate
+colorscheme default
 
 """"""""""""""""""""""""""""""""""""""""""""
 "Vundle stuff for vim plugin management
@@ -25,14 +26,15 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
 Plugin 'ervandew/supertab' "For autocompletion supertab
-Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
+"Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
 Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 Plugin 'tpope/vim-repeat' "For repeating plugin commands
+"Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
 Plugin 'bling/vim-airline' "For a smoother statusline
 Plugin 'scrooloose/nerdtree' "For directory traversal
-Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
-Plugin 'junegunn/goyo.vim' "For distraction-free writing
+"Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
+"Plugin 'junegunn/goyo.vim' "For distraction-free writing
 
 "All plugins must be declared before this
 call vundle#end()
@@ -51,23 +53,23 @@ let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
 
 """""Goyo stuff"""""""
-function! GoyoEnterFn()
-	set noshowmode
-	set noshowcmd
-	set scrolloff=999
-	" ...
-endfunction
-
-function! GoyoLeaveFn()
-	resize-pane -Z
-	set showmode
-	set showcmd
-	set scrolloff=5
-	" ...
-endfunction
-
-autocmd! User GoyoEnter nested call GoyoEnterFn()
-autocmd! User GoyoLeave nested call GoyoLeaveFn()
+"function! GoyoEnterFn()
+"	set noshowmode
+"	set noshowcmd
+"	set scrolloff=999
+"	" ...
+"endfunction
+"
+"function! GoyoLeaveFn()
+"	resize-pane -Z
+"	set showmode
+"	set showcmd
+"	set scrolloff=5
+"	" ...
+"endfunction
+"
+"autocmd! User GoyoEnter nested call GoyoEnterFn()
+"autocmd! User GoyoLeave nested call GoyoLeaveFn()
 """""""""""""""""""
 
 """DoxyGen-Syntax stuff"""
@@ -95,6 +97,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
 """"""""""""""""""
 "Vim-airline stuff
 
+"Make all information explicit
+let g:airline_skip_empty_sections = 0
 "V- is v line, V| is v block
 let g:airline_mode_map = {
   \ '__' : '-',
@@ -110,10 +114,15 @@ let g:airline_mode_map = {
   \ '' : 'S',
   \ }
 
+"TODO: Make vim tell us what key is recording
+"Remove VCS information
+let g:airline_section_b = ''
 "Remove filetype
 let g:airline_section_x = ''
-"Remove fileencoding and fileformat
-let g:airline_section_y = ''
+"Remove fileencoding and fileformat if it is utf-8[unix]
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+"Make the position in vim file more succinct
+let g:airline_section_z = '%p%% %l/%L:%v'
 "Remove warning and error counts (check this again)
 let g:airline_section_error = ''
 let g:airline_section_warning = ''
@@ -124,9 +133,19 @@ let g:airline_section_warning = ''
 "I have changed it to '-' but you can make that something better
 """"""""""""""""""
 
-"This sets the leader key to comma - TODO: check why this is present twice in the
-".vimrc - something to do with plugins? Try removing this and see?
-let mapleader=","
+"""""""""""""""""""""
+"Vim-bufferline stuff
+
+"let g:airline#extensions#bufferline#enabled = 1
+""Make sure the bufferline rotates with respect to current buffer
+"let g:bufferline_active_buffer_left = ''
+"let g:bufferline_active_buffer_right = ''
+""let g:bufferline_fixed_index = 0 "make sure its always first
+""to use this, make sure bufferline_rotate is 1
+"let g:bufferline_rotate = 0
+""Whether bufferline should echo to the command bar
+"let g:bufferline_echo = 0
+"""""""""""""""""""""
 
 "This enables syntax highlighting depending on filetype
 syntax enable
@@ -181,6 +200,7 @@ nnoremap $ g$
 "but this is not recommended as it may change the behaviour of other
 "combinations when h and l are used as motions
 set backspace=indent,eol,start
+
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
@@ -212,13 +232,12 @@ set shiftwidth=4
 set expandtab
 
 "This makes vim list invisible characters like tab, space, etc
-set list
 set listchars=tab:▸\ ,eol:¬
 "This makes it easy to toggle between showing these characters and not
 nnoremap <leader>l :set list!<CR>
 "The colours for these invisible characters
-highlight NonText    ctermfg=235
-highlight SpecialKey ctermfg=235
+highlight NonText    ctermfg=135
+highlight SpecialKey ctermfg=135
 
 "This makes it so that Vim starts searching as characters are entered
 set incsearch
@@ -261,6 +280,8 @@ nnoremap s :update<CR>
 nnoremap <leader>wa :wa<CR>
 "To close a window
 nnoremap Q :q<CR>
+"To kill the current buffer and start a new one
+nnoremap K :enew<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
 
@@ -361,3 +382,6 @@ set clipboard=unnamedplus
 "Who uses 'help' with K anyway? Map K to something else
 "And remap caps lock to something that is usually escape, but can double up as
 "control when comfortable with the idea
+"Remap ; to : and make # do the same function as ;
+"Because # is the opposite of * and who uses that?
+"Or perhaps we should use it and find something else
