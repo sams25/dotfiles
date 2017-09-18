@@ -24,17 +24,24 @@ call vundle#begin()
 
 "List of plugin commands - must be in between vundle#begin and end.
 
+"TODO: Lazy loading of plugins to make vim lighter?
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
 Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
 Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+"Perhaps commentary.vim is better?
+Plugin 'tpope/vim-surround' "For repeating plugin commands
 Plugin 'tpope/vim-repeat' "For repeating plugin commands
 "Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
 Plugin 'bling/vim-airline' "For a smoother statusline
 Plugin 'scrooloose/nerdtree' "For directory traversal
 "Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 "Plugin 'junegunn/goyo.vim' "For distraction-free writing
+"TODO: get vim-gitgutter
+"TODO: get easymotion
+"TODO: get fugitive
+"TODO: get vim-markdown -> needs tabular
 
 "All plugins must be declared before this
 call vundle#end()
@@ -190,11 +197,24 @@ set ttyfast
 
 "Wraps lines around the window
 set wrap
+"To make sure we move only by one space when we sidescroll rather than
+"half a screen
+set sidescroll=1
+"Gives context to horizontal scrolling as well
+set sidescrolloff=3
 "This ensures that j and k move by visual lines instead of actual code lines -
 "so that when you have long wrapped lines, j and k don't skip past the wrap
-nnoremap j gj
-nnoremap k gk
-nnoremap $ g$
+"Only do this when wrap is set
+"TODO: set a 'Wrap' that toggles between wrap and sidescroll and j/gj etc
+if &wrap == 1
+    nnoremap j gj
+    nnoremap k gk
+    nnoremap $ g$
+else
+    nnoremap j j
+    nnoremap k k
+    nnoremap $ $
+endif
 "Allows us to backspace over a lot of things
 "There is an option to make h and l wrap over lines using whichrap,
 "but this is not recommended as it may change the behaviour of other
@@ -239,6 +259,8 @@ nnoremap <leader>l :set list!<CR>
 highlight NonText    ctermfg=135
 highlight SpecialKey ctermfg=135
 
+"This makes it so that Vim uses regular regex's
+"TODO: look at / \v \m \M and \V
 "This makes it so that Vim starts searching as characters are entered
 set incsearch
 "This highlights text that matches with our search string
@@ -273,7 +295,7 @@ set foldmethod=indent
 nnoremap <space> za
 
 "To save a file and open a new one
-nnoremap S :w<CR>:e<space>
+nnoremap S :update<CR>:e<space>
 "To save a file only if changed have been made
 nnoremap s :update<CR>
 "To write all open files
@@ -298,10 +320,10 @@ autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,
 	\ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
-nnoremap <leader>v :vsplit<space>
+nnoremap \| :vsplit<space>
+nnoremap _ :split<space>
 "This is used to map ctrl-dir to change windows
 noremap <C-h> <C-w>h
-"TODO: this enters insert mode for some reason, figure out why
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
