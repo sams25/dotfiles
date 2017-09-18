@@ -61,18 +61,18 @@ let g:ycm_autoclose_preview_window_after_insertion=1
 
 """""Goyo stuff"""""""
 "function! GoyoEnterFn()
-"	set noshowmode
-"	set noshowcmd
-"	set scrolloff=999
-"	" ...
+"   set noshowmode
+"   set noshowcmd
+"   set scrolloff=999
+"   " ...
 "endfunction
 "
 "function! GoyoLeaveFn()
-"	resize-pane -Z
-"	set showmode
-"	set showcmd
-"	set scrolloff=5
-"	" ...
+"   resize-pane -Z
+"   set showmode
+"   set showcmd
+"   set scrolloff=5
+"   " ...
 "endfunction
 "
 "autocmd! User GoyoEnter nested call GoyoEnterFn()
@@ -93,10 +93,10 @@ nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-	\ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-	\&& b:NERDTree.isTabTree()) | q | endif
+    \&& b:NERDTree.isTabTree()) | q | endif
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
 """""""""""""""""""""""
@@ -210,10 +210,7 @@ if &wrap == 1
     nnoremap j gj
     nnoremap k gk
     nnoremap $ g$
-else
-    nnoremap j j
-    nnoremap k k
-    nnoremap $ $
+    nnoremap 0 g0
 endif
 "Allows us to backspace over a lot of things
 "There is an option to make h and l wrap over lines using whichrap,
@@ -229,12 +226,12 @@ highlight ColorColumn ctermbg=235 ctermfg=254
 
 "This is used to disable colorcolumn for certain files
 function! RemoveColorColumn()
-	let &colorcolumn=''
+    let &colorcolumn=''
 endfunction
 command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
 autocmd BufEnter *.tex,*.txt,*.md,*.MD
-	\ :call RemoveColorColumn()
+    \ :call RemoveColorColumn()
 "TODO: remove colorcolumn and use textwidth and all its various
 "options using formatoptions etc
 
@@ -310,14 +307,14 @@ nnoremap X :update<CR>:q<CR>
 "This is used to remove trailing white spaces
 function! TrimWhiteSpace()
     let l:save_cursor = getpos('.')
-	"\s is whitespace, $ is end of line
+    "\s is whitespace, $ is end of line
     %s/\s\+$//e
     call setpos('.', l:save_cursor)
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
 autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,*.sage,*.spyx
-	\ :call TrimWhiteSpace()
+    \ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
 nnoremap \| :vsplit<space>
