@@ -26,10 +26,10 @@ call vundle#begin()
 
 "TODO: Lazy loading of plugins to make vim lighter?
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-Plugin 'ervandew/supertab' "For autocompletion supertab
+"Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
-Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+"Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
+"Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 "Perhaps commentary.vim is better?
 Plugin 'tpope/vim-surround' "For repeating plugin commands
 Plugin 'tpope/vim-repeat' "For repeating plugin commands
@@ -223,15 +223,32 @@ set backspace=indent,eol,start
 "too, and the corresponding text is highlighted
 let &colorcolumn=join(range(76, 999),",")
 highlight ColorColumn ctermbg=235 ctermfg=254
+let g:colorcolumn_is_on = 1
+
+"This is used to toggle between colorcolumn options
+"TODO get rid of code redundancy between the colorcolumn stuff
+function! ToggleColorColumn()
+    if g:colorcolumn_is_on
+        let &colorcolumn=''
+        let g:colorcolumn_is_on = 0
+    else
+        let &colorcolumn=join(range(76, 999),",")
+        highlight ColorColumn ctermbg=235 ctermfg=254
+        let g:colorcolumn_is_on = 1
+    endif
+endfunction
+command! ToggleColorColumn call ToggleColorColumn()
 
 "This is used to disable colorcolumn for certain files
 function! RemoveColorColumn()
     let &colorcolumn=''
+    let g:colorcolumn_is_on = 0
 endfunction
 command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
 autocmd BufEnter *.tex,*.txt,*.md,*.MD
     \ :call RemoveColorColumn()
+
 "TODO: remove colorcolumn and use textwidth and all its various
 "options using formatoptions etc
 
