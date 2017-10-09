@@ -1,4 +1,6 @@
 "This is my .vimrc file where I store the settings for my vim editor
+"On Ubuntu, flip CapsLock and Escape using
+"/usr/bin/setxkbmap -option caps:swapescape"
 
 "This sets the leader key to comma
 let mapleader=","
