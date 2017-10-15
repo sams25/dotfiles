@@ -26,10 +26,10 @@ call vundle#begin()
 
 "TODO: Lazy loading of plugins to make vim lighter?
 Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-"Plugin 'ervandew/supertab' "For autocompletion supertab
+Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 "Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-"Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 "Perhaps commentary.vim is better?
 Plugin 'tpope/vim-surround' "For repeating plugin commands
 Plugin 'tpope/vim-repeat' "For repeating plugin commands
@@ -58,6 +58,12 @@ filetype plugin indent on "required for the plugins to have effect
 """"""""""""""""""""""""""""""""""""""""""""
 let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
+
+let g:ycm_filetype_blacklist = {
+    \ 'markdown' : 1,
+    \ 'text' : 1,
+    \ 'pandoc' : 1
+    \}
 
 """""Goyo stuff"""""""
 "function! GoyoEnterFn()
@@ -168,6 +174,8 @@ set lazyredraw
 "The encoding used to display a file in vim (Unicode)
 "The encoding used to write and read files is changed by using fileencoding
 set encoding=utf-8
+"TODO: check if this is good thing to do
+set fileencoding=utf-8
 
 "This makes the commands I type in during normal mode visible below in the
 "status line
@@ -221,7 +229,7 @@ set backspace=indent,eol,start
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
-let &colorcolumn=join(range(76, 999),",")
+let &colorcolumn=join(range(81, 999),",")
 highlight ColorColumn ctermbg=235 ctermfg=254
 let g:colorcolumn_is_on = 1
 
@@ -246,10 +254,11 @@ function! RemoveColorColumn()
 endfunction
 command! RemoveColorColumn call RemoveColorColumn()
 "Call it for all relevant files
-autocmd BufEnter *.tex,*.txt,*.md,*.MD
+autocmd BufEnter *.tex,*.txt,*.md,*.sh
     \ :call RemoveColorColumn()
 
 "TODO: remove colorcolumn and use textwidth and all its various
+set textwidth=80
 "options using formatoptions etc
 
 filetype indent on
@@ -330,7 +339,7 @@ function! TrimWhiteSpace()
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.md,*.sage,*.spyx
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx
     \ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy
@@ -338,6 +347,8 @@ nnoremap \| :vsplit<space>
 nnoremap _ :split<space>
 "This is used to map ctrl-dir to change windows
 noremap <C-h> <C-w>h
+"TODO: this only works after sourcing vimrc,
+"otherwise it enters insert mode
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -373,6 +384,9 @@ cnoremap <C-j> <Down>
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 "To source the changes made to the vimrc into the present session
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+"To create a scratch file
+nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
