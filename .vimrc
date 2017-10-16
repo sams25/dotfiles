@@ -231,18 +231,14 @@ set backspace=indent,eol,start
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
-let &colorcolumn=join(range(81, 999),",")
-highlight ColorColumn ctermbg=235 ctermfg=254
-let g:colorcolumn_is_on = 1
-
+let g:colorcolumn_is_on = 0
 "This is used to toggle between colorcolumn options
-"TODO get rid of code redundancy between the colorcolumn stuff
 function! ToggleColorColumn()
     if g:colorcolumn_is_on
         let &colorcolumn=''
         let g:colorcolumn_is_on = 0
     else
-        let &colorcolumn=join(range(76, 999),",")
+        let &colorcolumn=join(range(81, 999),",")
         highlight ColorColumn ctermbg=235 ctermfg=254
         let g:colorcolumn_is_on = 1
     endif
@@ -259,9 +255,10 @@ command! RemoveColorColumn call RemoveColorColumn()
 autocmd BufEnter *.tex,*.txt,*.md,*.sh
     \ :call RemoveColorColumn()
 
-"TODO: remove colorcolumn and use textwidth and all its various
+"To make it so that once you type past 80 characters, the text
+"automatically wraps for you
 set textwidth=80
-"options using formatoptions etc
+"TODO: options using formatoptions etc
 
 filetype indent on
 
