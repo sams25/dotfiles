@@ -5,8 +5,8 @@ set editing-mode vi
 set show-mode-in-prompt on
 # the next two lines only work in bash 4.4+
 # can even replace + and : with some coloured strings
-#set vi-in-ins-mode-string "+"
-#set vi-in-cmd-mode-string ":"
+set vi-ins-mode-string "+"
+set vi-cmd-mode-string ":"
 
 # ignore case for autocompletion
 set completion-ignore-case on
@@ -15,6 +15,8 @@ set completion-ignore-case on
 # keymaps in command mode
 set keymap vi-command
 
+# disable the annoying v thing
+"v": ""
 # use the standard j/k vim for autocompletion w/ prefix
 "j": history-search-forward
 "k": history-search-backward
