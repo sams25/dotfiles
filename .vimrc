@@ -7,6 +7,7 @@ let mapleader=","
 
 "A list of colors for ctermbg, ctermfg (foreground and background colors) can
 "be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+set t_Co=256
 "Some cool colourschemes
 "colorscheme elflord
 "colorscheme koehler
@@ -239,7 +240,7 @@ function! ToggleColorColumn()
         let g:colorcolumn_is_on = 0
     else
         let &colorcolumn=join(range(81, 999),",")
-        highlight ColorColumn ctermbg=235 ctermfg=254
+        highlight ColorColumn ctermbg=235 ctermfg=255
         let g:colorcolumn_is_on = 1
     endif
 endfunction
