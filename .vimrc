@@ -281,6 +281,7 @@ nnoremap <leader>l :set list!<CR>
 "The colours for these invisible characters
 highlight NonText    ctermfg=135
 highlight SpecialKey ctermfg=135
+highlight Comment cterm=italic
 
 "This makes it so that Vim uses regular regex's
 "TODO: look at / \v \m \M and \V
@@ -370,6 +371,8 @@ set wildmenu
 "First complete till longest common string, then list all matches, then
 "complete the next full match
 set wildmode=longest,list,full
+"ignore case while autocompleting
+set wildignorecase
 "TODO: Set a list of files to be ignored in completion by using wildignore
 
 "This makes autocompletion of commands better as we have more data to pick

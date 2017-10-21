@@ -23,41 +23,50 @@ HISTFILESIZE=2000 # max lines to store in history file
 
 # Misc stuff
 # -------------
+
+# add cd if you just specify a path
+shopt -s autocd
+
+# command not found, look in the official repositories and suggest something
+source /usr/share/doc/pkgfile/command-not-found.bash
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and recursively into directories (note the TWO *s)
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+#     debian_chroot=$(cat /etc/debian_chroot)
+# fi
 
 # if this is an xterm, set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+# case "$TERM" in
+# xterm*|rxvt*)
+#     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+#     ;;
+# *)
+#     ;;
+# esac
 
 # a function to set the title of the terminal
-function set-title() {
-	if [[ -z "$ORIG" ]]; then
-		ORIG=$PS1
-	fi
-	TITLE="\[\e]2;$*\a\]"
-	PS1=${ORIG}${TITLE}
-}
+# function set-title() {
+# 	if [[ -z "$ORIG" ]]; then
+# 		ORIG=$PS1
+# 	fi
+# 	TITLE="\[\e]2;$*\a\]"
+# 	PS1=${ORIG}${TITLE}
+# }
 # -----------
 
+# the prompt is '<username> <pwd>$'
+export PS1="\u \w$ "
 # Colour stuff
 # ------------
 
@@ -106,24 +115,24 @@ esac
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
+#
+# if [ -n "$force_color_prompt" ]; then
+#     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+# 	# We have color support; assume it's compliant with Ecma-48
+# 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+# 	# a case would tend to support setf rather than setaf.)
+# 	color_prompt=yes
+#     else
+# 	color_prompt=
+#     fi
+# fi
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+# if [ "$color_prompt" = yes ]; then
+#     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# else
+#     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+# fi
+# unset color_prompt force_color_prompt
 
 # colourise output of less
 export LESS_TERMCAP_mb=$'\e[01;31m' \
@@ -146,30 +155,36 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+alias diff='colordiff'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 alias ls='ls -h --color=auto -F'
+alias lr='ls -R'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
 alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
 
-alias more='less' # haha
-
+alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 # -------------
 
-# Some other stuff I don't quite appreciate yet
+# Completion stuff
+complete -c man which systemctl
+complete -cf sudo
 # ---------------------------------------------
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -177,7 +192,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
 fi
@@ -186,11 +201,11 @@ fi
 # My local paths
 # -------------
 # enable makenotes to work from everywhere
-alias makenotes='bash ~/Documents/MyNotes/makenotes.sh'
+alias makenotes='bash ~/MyNotes/makenotes.sh'
 # and Sage
-alias sage='~/Documents/Sage/SageMath/sage'
+# alias sage='~/Documents/Sage/SageMath/sage'
 # and Go
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/Documents/Go
+# export PATH=$PATH:/usr/local/go/bin
+# export GOPATH=$HOME/Documents/Go
 # -------------
 

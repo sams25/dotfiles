@@ -1,5 +1,22 @@
 # in this file, '\e' represents '^[', that is, ESCape
 
+# look at bash readline faster completion macros
+# cool stuff like mapping Ctrl+Alt+L to pipe the command to less etc
+
+# better tab completion
+set show-all-if-ambiguous on
+
+# Color files by types
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
+
 # use Vi bindings
 set editing-mode vi
 set show-mode-in-prompt on
@@ -9,7 +26,7 @@ set vi-ins-mode-string "+"
 set vi-cmd-mode-string ":"
 
 # ignore case for autocompletion
-set completion-ignore-case on
+set completion-ignore-case On
 
 ########################################################
 # keymaps in command mode
