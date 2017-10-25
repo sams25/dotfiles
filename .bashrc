@@ -24,9 +24,6 @@ HISTFILESIZE=2000 # max lines to store in history file
 # Misc stuff
 # -------------
 
-# add cd if you just specify a path
-shopt -s autocd
-
 # command not found, look in the official repositories and suggest something
 source /usr/share/doc/pkgfile/command-not-found.bash
 
