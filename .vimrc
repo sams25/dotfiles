@@ -130,7 +130,6 @@ let g:airline_mode_map = {
   \ '' : 'S',
   \ }
 
-"TODO: Make vim tell us what key is recording
 "Remove VCS information
 let g:airline_section_b = ''
 "Remove filetype

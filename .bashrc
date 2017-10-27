@@ -164,6 +164,7 @@ fi
 # -------------
 # enable makenotes to work from everywhere
 alias makenotes='bash ~/MyNotes/makenotes.sh'
+alias vless='/usr/share/vim/vim80/macros/less.sh'
 # and Sage
 # alias sage='~/Documents/Sage/SageMath/sage'
 # and Go
