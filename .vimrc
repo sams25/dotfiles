@@ -274,7 +274,7 @@ set shiftwidth=4
 set expandtab
 
 "This makes vim list invisible characters like tab, space, etc
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
 "This makes it easy to toggle between showing these characters and not
 nnoremap <leader>l :set list!<CR>
 "The colours for these invisible characters

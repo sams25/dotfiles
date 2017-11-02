@@ -172,3 +172,5 @@ alias vless='/usr/share/vim/vim80/macros/less.sh'
 # export GOPATH=$HOME/Documents/Go
 # -------------
 
+# For gnome terminals to open in the same directory for new tabs
+. /etc/profile.d/vte.sh
