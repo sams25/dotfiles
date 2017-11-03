@@ -27,6 +27,10 @@ HISTFILESIZE=2000 # max lines to store in history file
 # command not found, look in the official repositories and suggest something
 source /usr/share/doc/pkgfile/command-not-found.bash
 
+# prevent C-s and C-q from suspending and unsuspending the screen
+stty -ixon
+stty -ixoff
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
