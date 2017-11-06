@@ -22,23 +22,23 @@ set nocompatible "We need vImproved, just vi won't do
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 
 "List of plugin commands - must be in between vundle#begin and end.
 
 "TODO: Lazy loading of plugins to make vim lighter?
-Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-Plugin 'ervandew/supertab' "For autocompletion supertab
+"Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
+"Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 "Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+"Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 "Perhaps commentary.vim is better?
-Plugin 'tpope/vim-surround' "For repeating plugin commands
-Plugin 'tpope/vim-repeat' "For repeating plugin commands
+"Plugin 'tpope/vim-surround' "For repeating plugin commands
+"Plugin 'tpope/vim-repeat' "For repeating plugin commands
+"Plugin 'bling/vim-airline' "For a smoother statusline
 "Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
-Plugin 'bling/vim-airline' "For a smoother statusline
-Plugin 'scrooloose/nerdtree' "For directory traversal
+"Plugin 'scrooloose/nerdtree' "For directory traversal
 "Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
 "Plugin 'junegunn/goyo.vim' "For distraction-free writing
 "TODO: get vim-gitgutter
@@ -47,7 +47,7 @@ Plugin 'scrooloose/nerdtree' "For directory traversal
 "TODO: get vim-markdown -> needs tabular
 
 "All plugins must be declared before this
-call vundle#end()
+"call vundle#end()
 filetype plugin indent on "required for the plugins to have effect
 
 "Brief help for vundle-
@@ -100,12 +100,12 @@ nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+"    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-    \&& b:NERDTree.isTabTree()) | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
+"    \&& b:NERDTree.isTabTree()) | q | endif
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
 """""""""""""""""""""""
