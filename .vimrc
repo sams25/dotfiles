@@ -429,11 +429,12 @@ set clipboard=unnamedplus
 "and then add repeat.vim to enable repeating it
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
-"-> Get gundo to work by compiling Vim *8.0* from source with Python 2.4+ support
+"-> Get gundo to work by compiling Vim *8.0* from source with Python 2.4+
+"support
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
-"Who uses 'help' with K anyway? Map K to something else
-"And remap caps lock to something that is usually escape, but can double up as
+"-> Remap caps lock to something that is usually escape, but can double up as
 "control when comfortable with the idea
-"Remap ; to : and make # do the same function as ;
-"Because # is the opposite of * and who uses that?
-"Or perhaps we should use it and find something else
+"-> Remap ; to : and make # do the same function as ; Because # is the opposite
+"of * and who uses that? Or perhaps we should use it and find something else
+"-> Get bash to become interactive, or work around that in other dotfiles to
+"make sure all the !<command> stuff works as you would expect them to
