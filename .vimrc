@@ -392,6 +392,9 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
+"Cool stuff for calculation when you have selected an expression
+vnoremap <C-e> :!bc<CR>
+
 "To make vim create an .un~ file to store the list of all things done to a
 "file, so that undos transcend opening and closing of files
 set undofile
