@@ -430,14 +430,8 @@ set clipboard=unnamedplus
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
 "then checkout IndexSearch
-"-> Get YankRing or a better clipboard manager, or make the default yank/delete
-"place stuff on the system clipboard
-"-> Get surround.vim to enable the 'surrounding' adjective into our vim lingo,
-"and then add repeat.vim to enable repeating it
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
-"-> Get gundo to work by compiling Vim *8.0* from source with Python 2.4+
-"support
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
 "-> Remap caps lock to something that is usually escape, but can double up as
 "control when comfortable with the idea

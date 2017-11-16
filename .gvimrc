@@ -130,7 +130,6 @@ let g:airline_mode_map = {
   \ '' : 'S',
   \ }
 
-"TODO: Make vim tell us what key is recording
 "Remove VCS information
 let g:airline_section_b = ''
 "Remove filetype
@@ -223,6 +222,10 @@ if &wrap == 1
     nnoremap k gk
     nnoremap $ g$
     nnoremap 0 g0
+    vnoremap j gj
+    vnoremap k gk
+    vnoremap $ g$
+    vnoremap 0 g0
 endif
 "Allows us to backspace over a lot of things
 "There is an option to make h and l wrap over lines using whichrap,
@@ -276,7 +279,7 @@ set shiftwidth=4
 set expandtab
 
 "This makes vim list invisible characters like tab, space, etc
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
 "This makes it easy to toggle between showing these characters and not
 nnoremap <leader>l :set list!<CR>
 "The colours for these invisible characters
@@ -394,6 +397,9 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
+"Cool stuff for calculation when you have selected an expression
+vnoremap <C-e> :!bc<CR>
+
 "To make vim create an .un~ file to store the list of all things done to a
 "file, so that undos transcend opening and closing of files
 set undofile
@@ -425,17 +431,12 @@ set clipboard=unnamedplus
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
 "then checkout IndexSearch
-"-> Get YankRing or a better clipboard manager, or make the default yank/delete
-"place stuff on the system clipboard
-"-> Get surround.vim to enable the 'surrounding' adjective into our vim lingo,
-"and then add repeat.vim to enable repeating it
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
-"-> Get gundo to work by compiling Vim *8.0* from source with Python 2.4+ support
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
-"Who uses 'help' with K anyway? Map K to something else
-"And remap caps lock to something that is usually escape, but can double up as
+"-> Remap caps lock to something that is usually escape, but can double up as
 "control when comfortable with the idea
-"Remap ; to : and make # do the same function as ;
-"Because # is the opposite of * and who uses that?
-"Or perhaps we should use it and find something else
+"-> Remap ; to : and make # do the same function as ; Because # is the opposite
+"of * and who uses that? Or perhaps we should use it and find something else
+"-> Get bash to become interactive, or work around that in other dotfiles to
+"make sure all the !<command> stuff works as you would expect them to
