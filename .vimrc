@@ -221,6 +221,10 @@ if &wrap == 1
     nnoremap k gk
     nnoremap $ g$
     nnoremap 0 g0
+    vnoremap j gj
+    vnoremap k gk
+    vnoremap $ g$
+    vnoremap 0 g0
 endif
 "Allows us to backspace over a lot of things
 "There is an option to make h and l wrap over lines using whichrap,

@@ -42,23 +42,10 @@ shopt -s globstar
 # make less more friendly for non-text input files, see lesspipe
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# a function to set the title of the terminal
-function set-title() {
-	if [[ -z "$ORIG" ]]; then
-		ORIG=$PS1
-	fi
-	TITLE="\[\e]2;$*\a\]"
-	PS1=${ORIG}${TITLE}
-}
-# -----------
-
-# the prompt is '<username> <pwd>$'
-export PS1="\u \w$ "
 # Colour stuff
 # ------------
 
 # Color definitions (taken from Color Bash Prompt HowTo).
-# Some colors might look different of some terminals.
 # To use in a string go "${Col} string-in-colour ${NC} no-colour"
 
 # Normal Colors
@@ -93,6 +80,27 @@ On_White='\e[47m'
 
 NC="\e[m" # Color Reset
 
+# Naming stuff ----
+
+# a function to set the title of the terminal
+function set-title() {
+	if [[ -z "$ORIG" ]]; then
+		ORIG=$PS1
+	fi
+	TITLE="\[\e]2;$*\a\]"
+	PS1=${ORIG}${TITLE}
+}
+# -----------
+
+# the prompt is '<username> <pwd>$'
+# TODO: make everything use tput
+tput_bold=$(tput bold)
+tput_reset=$(tput sgr0)
+# for bold prompts
+# export PS1="\[$tput_reset\]\[$tput_bold\]\u \w\[$tput_reset\]$ "
+# for normal prompts
+export PS1="\[$tput_reset\]\u \w\[$tput_reset\]$ "
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -123,6 +131,7 @@ alias diff='colordiff'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias top='top -o %CPU'
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
@@ -132,6 +141,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# don't fuck up
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
@@ -139,9 +149,11 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
+# basic error correction and laziness
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias sl='ls'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -150,7 +162,7 @@ alias ...='cd ../..'
 
 # Completion stuff
 complete -c man which systemctl
-complete -cf sudo
+complete -cf sudo fusermount
 # ---------------------------------------------
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
