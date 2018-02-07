@@ -40,6 +40,10 @@ filetype off "Because Vundle should have control of it
 "Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
 "Plugin 'scrooloose/nerdtree' "For directory traversal
 "Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
+"Plugin 'fsharp/vim-fsharp', {
+"    \ 'for': 'fsharp',
+"    \ 'do':  'make fsautocomplete'
+"    \} "For F# suppport
 "Plugin 'junegunn/goyo.vim' "For distraction-free writing
 "TODO: get vim-gitgutter
 "TODO: get easymotion
@@ -166,10 +170,11 @@ let g:airline_section_warning = ''
 syntax enable
 "Treat sage files like Python files
 autocmd BufRead,BufNewFile *.sage,*.spyx set filetype=python
-"This is to give the mouse expected behaviour
-set mouse=a
-"TODO: find a way of disabling mouse on Ubuntu's terminal as it's
-"annoying on a laptop. Just 'set mouse=' does not work.
+"This is to prevent the mouse from scrolling when in the terminal
+"But I've had to add the 'a' to prevent random shit from being inserted when I
+"type and scroll
+"TODO: fix everything
+set mouse=
 
 "This is to tell vim to redraw the screen only when required
 set lazyredraw
@@ -353,6 +358,7 @@ nnoremap _ :split<space>
 noremap <C-h> <C-w>h
 "TODO: this only works after sourcing vimrc,
 "otherwise it enters insert mode
+"Something to do with a plugin
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -396,6 +402,8 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
+"Get our custom aliases
+let $BASH_ENV = "~/.bash_aliases"
 "Cool stuff for calculation when you have selected an expression
 vnoremap <C-e> :!bc<CR>
 
@@ -423,6 +431,7 @@ set clipboard=unnamedplus
 "TODO: find out how to do this
 
 "TODO:
+"-> Make <C-m> makefile/modify the make script/run the object file/etc
 "-> Customize the status line using set statusline
 "-> Customize the titlestring
 "-> Make shortcuts so that working with windows/tabs/buffers is easier
@@ -437,5 +446,3 @@ set clipboard=unnamedplus
 "control when comfortable with the idea
 "-> Remap ; to : and make # do the same function as ; Because # is the opposite
 "of * and who uses that? Or perhaps we should use it and find something else
-"-> Get bash to become interactive, or work around that in other dotfiles to
-"make sure all the !<command> stuff works as you would expect them to

@@ -127,39 +127,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-alias diff='colordiff'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias top='top -o %CPU'
-
-# Make ls not show single quotes around files/directories with spaces in them
-export QUOTING_STYLE=literal
-alias ls='ls -h --color=auto -F'
-alias lr='ls -R'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# don't fuck up
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
-
-# basic error correction and laziness
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias sl='ls'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-# -------------
-
 # Completion stuff
 complete -c man which systemctl
 complete -cf sudo fusermount
@@ -179,8 +146,6 @@ fi
 # My local paths
 # -------------
 # enable makenotes to work from everywhere
-alias makenotes='bash ~/Documents/MyNotes/makenotes.sh'
-alias vless='/usr/share/vim/vim80/macros/less.sh'
 # and Sage
 # alias sage='~/Documents/Sage/SageMath/sage'
 # and Go

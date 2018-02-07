@@ -22,24 +22,28 @@ set nocompatible "We need vImproved, just vi won't do
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 
 "List of plugin commands - must be in between vundle#begin and end.
 
 "TODO: Lazy loading of plugins to make vim lighter?
-Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-Plugin 'ervandew/supertab' "For autocompletion supertab
+"Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
+"Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
 "Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+"Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 "Perhaps commentary.vim is better?
-Plugin 'tpope/vim-surround' "For repeating plugin commands
-Plugin 'tpope/vim-repeat' "For repeating plugin commands
+"Plugin 'tpope/vim-surround' "For repeating plugin commands
+"Plugin 'tpope/vim-repeat' "For repeating plugin commands
+"Plugin 'bling/vim-airline' "For a smoother statusline
 "Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
-Plugin 'bling/vim-airline' "For a smoother statusline
-Plugin 'scrooloose/nerdtree' "For directory traversal
+"Plugin 'scrooloose/nerdtree' "For directory traversal
 "Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
+"Plugin 'fsharp/vim-fsharp', {
+"    \ 'for': 'fsharp',
+"    \ 'do':  'make fsautocomplete'
+"    \} "For F# suppport
 "Plugin 'junegunn/goyo.vim' "For distraction-free writing
 "TODO: get vim-gitgutter
 "TODO: get easymotion
@@ -47,7 +51,7 @@ Plugin 'scrooloose/nerdtree' "For directory traversal
 "TODO: get vim-markdown -> needs tabular
 
 "All plugins must be declared before this
-call vundle#end()
+"call vundle#end()
 filetype plugin indent on "required for the plugins to have effect
 
 "Brief help for vundle-
@@ -100,12 +104,12 @@ nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+"    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-    \&& b:NERDTree.isTabTree()) | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
+"    \&& b:NERDTree.isTabTree()) | q | endif
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
 """""""""""""""""""""""
@@ -166,10 +170,8 @@ let g:airline_section_warning = ''
 syntax enable
 "Treat sage files like Python files
 autocmd BufRead,BufNewFile *.sage,*.spyx set filetype=python
-"This is to give the mouse expected behaviour
+"This is to give the mouse expected behaviour in a window
 set mouse=a
-"TODO: find a way of disabling mouse on Ubuntu's terminal as it's
-"annoying on a laptop. Just 'set mouse=' does not work.
 
 "This is to tell vim to redraw the screen only when required
 "Disable for gvim
@@ -354,6 +356,7 @@ nnoremap _ :split<space>
 noremap <C-h> <C-w>h
 "TODO: this only works after sourcing vimrc,
 "otherwise it enters insert mode
+"Something to do with a plugin
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -397,6 +400,8 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
+"Get our custom aliases
+let $BASH_ENV = "~/.bash_aliases"
 "Cool stuff for calculation when you have selected an expression
 vnoremap <C-e> :!bc<CR>
 
@@ -424,6 +429,7 @@ set clipboard=unnamedplus
 "TODO: find out how to do this
 
 "TODO:
+"-> Make <C-m> makefile/modify the make script/run the object file/etc
 "-> Customize the status line using set statusline
 "-> Customize the titlestring
 "-> Make shortcuts so that working with windows/tabs/buffers is easier
@@ -438,5 +444,3 @@ set clipboard=unnamedplus
 "control when comfortable with the idea
 "-> Remap ; to : and make # do the same function as ; Because # is the opposite
 "of * and who uses that? Or perhaps we should use it and find something else
-"-> Get bash to become interactive, or work around that in other dotfiles to
-"make sure all the !<command> stuff works as you would expect them to

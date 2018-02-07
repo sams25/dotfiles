@@ -2,8 +2,17 @@
 import subprocess
 
 # the files in our git repository, but are stored in the home directory
-files = [".gitconfig", ".inputrc", ".bashrc", ".vimrc", ".zshrc", ".gvimrc",
-        ".profile", ".tmux.conf"]
+files = [
+        ".bash_aliases",
+        ".bashrc",
+        ".gitconfig",
+        ".gvimrc",
+        ".inputrc",
+        ".profile",
+        ".tmux.conf",
+        ".vimrc",
+        ".zshrc",
+        ]
 
 for filename in files:
     print("------ Checking " + filename + " ------")
