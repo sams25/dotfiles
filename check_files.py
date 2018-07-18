@@ -9,6 +9,7 @@ files = [
         ".gvimrc",
         ".inputrc",
         ".profile",
+        ".Rprofile",
         ".tmux.conf",
         ".vimrc",
         ".zshrc",

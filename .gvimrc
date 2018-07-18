@@ -22,36 +22,36 @@ set nocompatible "We need vImproved, just vi won't do
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 "List of plugin commands - must be in between vundle#begin and end.
 
 "TODO: Lazy loading of plugins to make vim lighter?
-"Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-"Plugin 'ervandew/supertab' "For autocompletion supertab
+Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
+Plugin 'ervandew/supertab' "For autocompletion supertab
 "Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
-"Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-"Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
+Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
+Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
 "Perhaps commentary.vim is better?
-"Plugin 'tpope/vim-surround' "For repeating plugin commands
-"Plugin 'tpope/vim-repeat' "For repeating plugin commands
-"Plugin 'bling/vim-airline' "For a smoother statusline
+Plugin 'tpope/vim-surround' "For repeating plugin commands
+Plugin 'tpope/vim-repeat' "For repeating plugin commands
+Plugin 'bling/vim-airline' "For a smoother statusline
 "Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
-"Plugin 'scrooloose/nerdtree' "For directory traversal
-"Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
-"Plugin 'fsharp/vim-fsharp', {
-"    \ 'for': 'fsharp',
-"    \ 'do':  'make fsautocomplete'
-"    \} "For F# suppport
-"Plugin 'junegunn/goyo.vim' "For distraction-free writing
+Plugin 'scrooloose/nerdtree' "For directory traversal
+Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
+Plugin 'fsharp/vim-fsharp', {
+    \ 'for': 'fsharp',
+    \ 'do':  'make fsautocomplete'
+    \} "For F# suppport
+Plugin 'junegunn/goyo.vim' "For distraction-free writing
 "TODO: get vim-gitgutter
 "TODO: get easymotion
 "TODO: get fugitive
 "TODO: get vim-markdown -> needs tabular
 
 "All plugins must be declared before this
-"call vundle#end()
+call vundle#end()
 filetype plugin indent on "required for the plugins to have effect
 
 "Brief help for vundle-
@@ -73,29 +73,32 @@ let g:ycm_filetype_blacklist = {
     \}
 
 """""Goyo stuff"""""""
-"function! GoyoEnterFn()
-"   set noshowmode
-"   set noshowcmd
-"   set scrolloff=999
-"   " ...
-"endfunction
-"
-"function! GoyoLeaveFn()
-"   resize-pane -Z
-"   set showmode
-"   set showcmd
-"   set scrolloff=5
-"   " ...
-"endfunction
-"
-"autocmd! User GoyoEnter nested call GoyoEnterFn()
-"autocmd! User GoyoLeave nested call GoyoLeaveFn()
+function! GoyoEnterFn()
+   set noshowmode
+   set noshowcmd
+   set scrolloff=999
+   " ...
+endfunction
+
+function! GoyoLeaveFn()
+   resize-pane -Z
+   set showmode
+   set showcmd
+   set scrolloff=5
+   " ...
+endfunction
+
+autocmd! User GoyoEnter nested call GoyoEnterFn()
+autocmd! User GoyoLeave nested call GoyoLeaveFn()
 """""""""""""""""""
 
 """DoxyGen-Syntax stuff"""
 "Need to set syntax to cpp.doxygen
 nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
 nnoremap <leader>cpp :set syntax=cpp<CR>
+"CPP/doxygen automatically set syntax
+autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh
+    \ set syntax=cpp.doxygen
 """
 
 """"""NERDTree stuff"""
@@ -104,12 +107,12 @@ nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
 "To open NERDTree automatically when no files are specified or if vim starts
 "up opening a directory
 autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-"    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 "To close NERDTree when it is the only window left
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-"    \&& b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
+    \&& b:NERDTree.isTabTree()) | q | endif
 "For other NERDTree options like file highlighting and stuff,
 "look at the Github page
 """""""""""""""""""""""
@@ -264,6 +267,7 @@ autocmd BufEnter *.tex,*.txt,*.md,*.sh
 
 "To make it so that once you type past 80 characters, the text
 "automatically wraps for you
+"TODO: make this dependent on filetype
 set textwidth=80
 "TODO: options using formatoptions etc
 
@@ -279,6 +283,9 @@ set softtabstop=4
 set shiftwidth=4
 "Expand tabs to spaces
 set expandtab
+
+"Filetype specific indentation
+autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 "This makes vim list invisible characters like tab, space, etc
 set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
@@ -328,6 +335,8 @@ nnoremap <space> za
 nnoremap S :update<CR>:e<space>
 "To save a file only if changed have been made
 nnoremap s :update<CR>
+nnoremap <C-s> :update<CR>
+inoremap <C-s> <Esc>:update<CR>a
 "To write all open files
 nnoremap <leader>wa :wa<CR>
 "To close a window
@@ -346,7 +355,7 @@ function! TrimWhiteSpace()
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx,*.m,*.bib
     \ :call TrimWhiteSpace()
 
 "This is used to make vertical splits easy

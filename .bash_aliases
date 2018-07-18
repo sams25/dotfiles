@@ -1,13 +1,16 @@
 # explicity expand aliases, needed so that Vim can use this file
 shopt -s expand_aliases
 
-# Utilities
+# Programs (basic utilites)
 alias diff='colordiff'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias top='top -o %CPU'
+
+# Other programs
 alias vimro='vim -R'
+alias R="R --quiet"
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal

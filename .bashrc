@@ -94,6 +94,8 @@ function set-title() {
 
 # the prompt is '<username> <pwd>$'
 # TODO: make everything use tput
+# TODO: make the prompt colorful (it helps with debugging because you can scroll
+# up a lot and look for a color to find your last bash command executed)
 tput_bold=$(tput bold)
 tput_reset=$(tput sgr0)
 # for bold prompts
