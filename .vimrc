@@ -172,7 +172,8 @@ let g:airline_section_warning = ''
 "This enables syntax highlighting depending on filetype
 syntax enable
 "Treat sage files like Python files
-autocmd BufRead,BufNewFile *.sage,*.spyx set filetype=python
+autocmd BufEnter *.sage,*.spyx set filetype=python
+autocmd BufEnter *.Rprofile set filetype=r
 "This is to prevent the mouse from scrolling when in the terminal
 "But I've had to add the 'a' to prevent random shit from being inserted when I
 "type and scroll
@@ -428,6 +429,9 @@ set noswapfile
 set spelllang=en_gb
 "Toggle spell checking with <leader>s
 nnoremap <leader>s :set spell!<CR>
+
+"Disable bells etc
+set belloff=all
 
 "If in vimdiff, automatically update differences on saving
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif

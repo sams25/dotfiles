@@ -10,7 +10,7 @@ alias top='top -o %CPU'
 
 # Other programs
 alias vimro='vim -R'
-alias R="R --quiet"
+alias R="R --quiet --no-save"
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
