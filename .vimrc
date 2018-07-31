@@ -10,6 +10,7 @@ let mapleader=","
 set t_Co=256
 "Some cool colourschemes
 colorscheme elflord
+set background=dark
 "colorscheme koehler
 "colorscheme ron
 "colorscheme slate
@@ -45,6 +46,7 @@ Plugin 'fsharp/vim-fsharp', {
     \ 'do':  'make fsautocomplete'
     \} "For F# suppport
 Plugin 'junegunn/goyo.vim' "For distraction-free writing
+Plugin 'kshenoy/vim-signature' "For toggling and displaying marks
 "TODO: get vim-gitgutter
 "TODO: get easymotion
 "TODO: get fugitive
@@ -62,7 +64,11 @@ filetype plugin indent on "required for the plugins to have effect
 " :PluginClean - confirms removal of unused plugins
 
 "See :h in vundle for more details
+"TODO: For all the plugin settings below, activate the commands only if we know
+"the plugins are loaded. That way this .vimrc is portable even to systems where
+"the plugins are not loaded
 """"""""""""""""""""""""""""""""""""""""""""
+"YouCompleteMeStuff
 let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
 
@@ -97,7 +103,7 @@ autocmd! User GoyoLeave nested call GoyoLeaveFn()
 nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
 nnoremap <leader>cpp :set syntax=cpp<CR>
 "CPP/doxygen automatically set syntax
-autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh
+autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh,*.c,*.h
     \ set syntax=cpp.doxygen
 """
 
@@ -174,14 +180,15 @@ syntax enable
 "Treat sage files like Python files
 autocmd BufEnter *.sage,*.spyx set filetype=python
 autocmd BufEnter *.Rprofile set filetype=r
+"
 "This is to prevent the mouse from scrolling when in the terminal
 "But I've had to add the 'a' to prevent random shit from being inserted when I
 "type and scroll
 "TODO: fix everything
 set mouse=
-
 "This is to tell vim to redraw the screen only when required
 set lazyredraw
+
 "The encoding used to display a file in vim (Unicode)
 "The encoding used to write and read files is changed by using fileencoding
 set encoding=utf-8
@@ -241,6 +248,13 @@ endif
 "combinations when h and l are used as motions
 set backspace=indent,eol,start
 
+"For gutter column
+highlight clear SignColumn
+highlight clear SignatureMarkText
+highlight SignatureMarkText ctermfg=red
+"TODO: make the usage of marks even better by customising ' and `
+"TODO: Make <C-m> toggle signcolumn to on/off
+
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
@@ -272,10 +286,11 @@ autocmd BufEnter *.tex,*.txt,*.md,*.sh
 "automatically wraps for you
 "TODO: make this dependent on filetype
 set textwidth=80
-"TODO: options using formatoptions etc
+"To autoformat paragraphs in text mode
+autocmd BufEnter *.md,*.txt
+    \ set formatoptions+=a
 
 filetype indent on
-
 "Make vim indent code for me
 set autoindent
 "Number of spaces a <TAB> is in the file
@@ -286,9 +301,14 @@ set softtabstop=4
 set shiftwidth=4
 "Expand tabs to spaces
 set expandtab
+"Make sure Vim only uses the options above
+set nosmarttab
 
 "Filetype specific indentation
-autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
+    \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd BufRead,BufNewFile Makefile
+    \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 
 "This makes vim list invisible characters like tab, space, etc
 set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
@@ -348,6 +368,8 @@ nnoremap Q :q<CR>
 nnoremap K :enew<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
+"To sudo save a file when permission is needed, use :W
+command! W w !sudo tee % > /dev/null
 
 "This is used to remove trailing white spaces
 function! TrimWhiteSpace()
@@ -366,18 +388,12 @@ nnoremap \| :vsplit<space>
 nnoremap _ :split<space>
 "This is used to map ctrl-dir to change windows
 noremap <C-h> <C-w>h
-"TODO: this only works after sourcing vimrc,
-"otherwise it enters insert mode
-"Something to do with a plugin
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 "Make the windows split to the right and bottom by default
 set splitbelow
 set splitright
-
-"To jump between buffers easily
-nnoremap <leader>b :b<space>
 
 "To open file under cursor in the current window is gf
 "To open file under cursor in a vsplit
@@ -392,7 +408,8 @@ set wildmenu
 set wildmode=longest,list,full
 "ignore case while autocompleting
 set wildignorecase
-"TODO: Set a list of files to be ignored in completion by using wildignore
+"ignore some standard files and directories whilst editing
+set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
 
 "This makes autocompletion of commands better as we have more data to pick
 "from
@@ -421,9 +438,12 @@ vnoremap <C-e> :!bc<CR>
 "file, so that undos transcend opening and closing of files
 set undofile
 "Where to store the undo stuff, in order of preference
-set undodir="~/.vim/undo/,."
+"TODO: make vim create this folder if it does not exist
+set undodir="~/.vim/undo/"
 "Use git for important version control, and we have an undofile anyway
 set noswapfile
+set nobackup
+set nowritebackup
 
 "Set Spell checker
 set spelllang=en_gb
@@ -436,7 +456,7 @@ set belloff=all
 "If in vimdiff, automatically update differences on saving
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 
-"Use the system keyboard
+"Use the system keyboard and store in register '+'
 set clipboard=unnamedplus
 
 "Things that have to happen after sourcing the vimrc
