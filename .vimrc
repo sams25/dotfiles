@@ -201,15 +201,20 @@ syntax enable
 autocmd BufEnter *.sage,*.spyx set filetype=python
 autocmd BufEnter *.Rprofile set filetype=r
 
-"To autoformat paragraphs in text mode
-autocmd BufEnter *.txt
-    \ set formatoptions+=a
+"R specific insertions
+autocmd FileType r inoremap <buffer> - <-
+autocmd FileType r inoremap <buffer> <C-m> %>%
 
 "Filetype specific indentation
 autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
     \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 autocmd BufRead,BufNewFile Makefile
     \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+
+"To autoformat paragraphs in text mode
+autocmd BufEnter *.txt
+    \ set formatoptions+=a
+
 
 "This is used to disable colorcolumn for certain files
 function! RemoveColorColumn()
@@ -259,6 +264,18 @@ set clipboard=unnamedplus
 set mouse=
 "Do not redraw every time a macro is executed
 set lazyredraw
+"Do not show startup screen
+set shortmess+=I
+function! Start()
+    "Don't run if we have command line arguments,
+    if argc()
+        echo "Loaded custom .vimrc file and opened required buffer"
+        return
+    endif
+    edit .
+    echo "Loaded custom .vimrc file, and opened current directory"
+endfunction
+autocmd VimEnter * call Start()
 
 "Use git for important version control; we have an undofile anyway
 set noswapfile
@@ -471,6 +488,14 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 
 "To create a scratch file
 nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
+
+"For going through quickfix errors
+"- next error
+nnoremap <leader>n :cnext<CR>
+"- open quickfix window
+nnoremap <leader>o :copen<CR>
+"- close quickfix window
+nnoremap <leader>c :cclose<CR>
 
 "To make it easier to open the shell
 nnoremap <leader>sh :sh<CR>
