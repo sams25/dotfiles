@@ -1,8 +1,5 @@
 # TODO: figure out what everything in this file does properly,
 # and play around with more
-# a really nice example: http://tldp.org/LDP/abs/html/sample-bashrc.html
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for more examples
 
 # If not running interactively, don't do anything
 case $- in
@@ -144,16 +141,6 @@ if ! shopt -oq posix; then
   fi
 fi
 # ---------------------------------------------
-
-# My local paths
-# -------------
-# enable makenotes to work from everywhere
-# and Sage
-# alias sage='~/Documents/Sage/SageMath/sage'
-# and Go
-# export PATH=$PATH:/usr/local/go/bin
-# export GOPATH=$HOME/Documents/Go
-# -------------
 
 # For gnome terminals to open in the same directory for new tabs
 . /etc/profile.d/vte.sh
