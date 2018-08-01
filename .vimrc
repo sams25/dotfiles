@@ -1,60 +1,77 @@
-"This is my .vimrc file where I store the settings for my vim editor
-"On Ubuntu, flip CapsLock and Escape using
-"/usr/bin/setxkbmap -option caps:swapescape"
+"My .vimrc file
+"Anindya Sharma <anindya.sharma1@gmail.com>
 
-"This sets the leader key to comma
+"Flip CapsLock and Escape using
+"/usr/bin/setxkbmap -option caps:swapescape
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MAIN SETTINGS BEFORE PLUGINS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Use vImproved instead of traditional vi
+set nocompatible
+"Set leader key before extensions are loaded
 let mapleader=","
+"Local leader is for filetype specific commands, use `\`
+let maplocalleader="\\"
 
-"A list of colors for ctermbg, ctermfg (foreground and background colors) can
-"be found at http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" APPEARANCE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Terminal colours for ctermfg and ctermbg
 set t_Co=256
-"Some cool colourschemes
+"Some cool colourschemes - elflord, koehler, ron, slate, default
 colorscheme elflord
+"Dark color
 set background=dark
-"colorscheme koehler
-"colorscheme ron
-"colorscheme slate
-"colorscheme default
 
-""""""""""""""""""""""""""""""""""""""""""""
-"Vundle stuff for vim plugin management
-set nocompatible "We need vImproved, just vi won't do
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VUNDLE PLUGIN MANAGEMENT
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-"List of plugin commands - must be in between vundle#begin and end.
 
 "TODO: Lazy loading of plugins to make vim lighter?
-Plugin 'VundleVim/Vundle.vim' "Let Vundle manage itself, required.
-Plugin 'ervandew/supertab' "For autocompletion supertab
-"Plugin 'Valloric/YouCompleteMe' "For YouCompleteMe, an autocomplete plugin, esp for C
-Plugin 'DoxyGen-Syntax' "For DoxyGen syntax highlighting on top of C/C++
-Plugin 'scrooloose/nerdcommenter' "For NERDcommenting
-"Perhaps commentary.vim is better?
-Plugin 'tpope/vim-surround' "For repeating plugin commands
-Plugin 'tpope/vim-repeat' "For repeating plugin commands
-Plugin 'bling/vim-airline' "For a smoother statusline
-"Plugin 'bling/vim-bufferline' "For displaying a list of all buffers
-Plugin 'scrooloose/nerdtree' "For directory traversal
-Plugin 'fatih/vim-go' "For vim-go, a plugin for Go syntax
-Plugin 'fsharp/vim-fsharp', {
-    \ 'for': 'fsharp',
-    \ 'do':  'make fsautocomplete'
-    \} "For F# suppport
-Plugin 'junegunn/goyo.vim' "For distraction-free writing
-Plugin 'kshenoy/vim-signature' "For toggling and displaying marks
-"TODO: get vim-gitgutter
-"TODO: get easymotion
-"TODO: get fugitive
-"TODO: get vim-markdown -> needs tabular
+"List of plugin commands - must be in between vundle#begin and end.
+call vundle#begin()
+"{
+    " 1) USED A LOT
+    "Let Vundle manage itself, required.
+    Plugin 'VundleVim/Vundle.vim'
+    "For autocompletion supertab
+    Plugin 'ervandew/supertab'
+    "For a smoother statusline
+    Plugin 'bling/vim-airline'
+    "For distraction-free writing
+    Plugin 'junegunn/goyo.vim'
+    "For toggling and displaying marks
+    Plugin 'kshenoy/vim-signature'
+    "For repeating plugin commands
+    Plugin 'tpope/vim-repeat'
 
-"All plugins must be declared before this
+    " 2) FILETYPE SPECIFIC
+    "For DoxyGen syntax highlighting on top of C/C++
+    Plugin 'DoxyGen-Syntax'
+    "For vim-go, a plugin for Go syntax
+    Plugin 'fatih/vim-go'
+
+    " 3) DON'T REALLY USE?
+    "For new verbs
+    Plugin 'tpope/vim-surround'
+
+    "4) POTENTIALS/LOOK COOL
+    "Valloric/YouCompleteMe
+    "NERDcommenting or commentary.vim
+    "NERDTree
+    "vim-gitgutter
+    "easymotion
+    "fugitive
+    "vim-markdown (needs tabular)
+"}
 call vundle#end()
-filetype plugin indent on "required for the plugins to have effect
+
+filetype plugin on "required for the plugins to have effect
 
 "Brief help for vundle-
 " :PluginList - lists configured plugins
@@ -63,22 +80,25 @@ filetype plugin indent on "required for the plugins to have effect
 " :PluginSearch foo - searches for foo
 " :PluginClean - confirms removal of unused plugins
 
-"See :h in vundle for more details
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PLUGIN SPECIFIC SECTIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "TODO: For all the plugin settings below, activate the commands only if we know
 "the plugins are loaded. That way this .vimrc is portable even to systems where
 "the plugins are not loaded
-""""""""""""""""""""""""""""""""""""""""""""
-"YouCompleteMeStuff
-let g:ycm_server_python_interpreter='/usr/bin/python'
-let g:ycm_autoclose_preview_window_after_insertion=1
 
-let g:ycm_filetype_blacklist = {
-    \ 'markdown' : 1,
-    \ 'text' : 1,
-    \ 'pandoc' : 1
-    \}
+" ****** YouCompleteMe ******
+"let g:ycm_server_python_interpreter='/usr/bin/python'
+"let g:ycm_autoclose_preview_window_after_insertion=1
+"
+"let g:ycm_filetype_blacklist = {
+"    \ 'markdown' : 1,
+"    \ 'text' : 1,
+"    \ 'pandoc' : 1
+"    \}
 
-"""""Goyo stuff"""""""
+" ****** GoYo ******
 function! GoyoEnterFn()
    set noshowmode
    set noshowcmd
@@ -96,35 +116,16 @@ endfunction
 
 autocmd! User GoyoEnter nested call GoyoEnterFn()
 autocmd! User GoyoLeave nested call GoyoLeaveFn()
-"""""""""""""""""""
 
-"""DoxyGen-Syntax stuff"""
+" ****** Doxygen ******
 "Need to set syntax to cpp.doxygen
 nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
 nnoremap <leader>cpp :set syntax=cpp<CR>
 "CPP/doxygen automatically set syntax
 autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh,*.c,*.h
     \ set syntax=cpp.doxygen
-"""
 
-""""""NERDTree stuff"""
-"To open and close NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR><C-w>=
-"To open NERDTree automatically when no files are specified or if vim starts
-"up opening a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-    \ | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-"To close NERDTree when it is the only window left
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-    \&& b:NERDTree.isTabTree()) | q | endif
-"For other NERDTree options like file highlighting and stuff,
-"look at the Github page
-"""""""""""""""""""""""
-
-""""""""""""""""""
-"Vim-airline stuff
+" ****** Vim-airline ******
 
 "Make all information explicit
 let g:airline_skip_empty_sections = 0
@@ -155,82 +156,125 @@ let g:airline_section_z = '%p%% %l/%L:%v'
 let g:airline_section_error = ''
 let g:airline_section_warning = ''
 
+"Enable the displaying of buffer list on top
+let g:airline#extensions#tabline#enabled = 1
+"TODO: look at all the config for tabline settings
 "NOTE: Go to /autoload/airline/extensions/tabline/buffers.vim
 "and change the label from 'buffers' to whatever else
 "so that the top buffer line isn't taken away by 'buffers'
-"I have changed it to '-' but you can make that something better
-""""""""""""""""""
 
-"""""""""""""""""""""
-"Vim-bufferline stuff
-
-"let g:airline#extensions#bufferline#enabled = 1
-""Make sure the bufferline rotates with respect to current buffer
-"let g:bufferline_active_buffer_left = ''
-"let g:bufferline_active_buffer_right = ''
-""let g:bufferline_fixed_index = 0 "make sure its always first
-""to use this, make sure bufferline_rotate is 1
-"let g:bufferline_rotate = 0
-""Whether bufferline should echo to the command bar
-"let g:bufferline_echo = 0
-"""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FILETYPE SPECIFIC STUFF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "This enables syntax highlighting depending on filetype
 syntax enable
 "Treat sage files like Python files
 autocmd BufEnter *.sage,*.spyx set filetype=python
 autocmd BufEnter *.Rprofile set filetype=r
-"
-"This is to prevent the mouse from scrolling when in the terminal
-"But I've had to add the 'a' to prevent random shit from being inserted when I
-"type and scroll
-"TODO: fix everything
-set mouse=
-"This is to tell vim to redraw the screen only when required
-set lazyredraw
 
-"The encoding used to display a file in vim (Unicode)
-"The encoding used to write and read files is changed by using fileencoding
-set encoding=utf-8
-"TODO: check if this is good thing to do
-set fileencoding=utf-8
+"To autoformat paragraphs in text mode
+autocmd BufEnter *.md,*.txt
+    \ set formatoptions+=a
 
-"This makes the commands I type in during normal mode visible below in the
-"status line
-set showcmd
-"Always display the status line
-set laststatus=2
-"Show which mode I am in
-set showmode
+"Filetype specific indentation
+autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
+    \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+autocmd BufRead,BufNewFile Makefile
+    \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+
+"This is used to disable colorcolumn for certain files
+function! RemoveColorColumn()
+    let &colorcolumn=''
+    let g:colorcolumn_is_on = 0
+endfunction
+command! RemoveColorColumn call RemoveColorColumn()
+"Call it for all relevant files
+autocmd BufEnter *.tex,*.txt,*.md,*.sh
+    \ :call RemoveColorColumn()
+
+"This is used to remove trailing white spaces
+function! TrimWhiteSpace()
+    let l:save_cursor = getpos('.')
+    "\s is whitespace, $ is end of line
+    %s/\s\+$//e
+    call setpos('.', l:save_cursor)
+endfunction
+command! TrimWhiteSpace call TrimWhiteSpace()
+"Call it for all relevant files
+autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx,*.m,*.bib
+    \ :call TrimWhiteSpace()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GENERAL VIM BEHAVIOUR
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set laststatus=2        "Always display the status line
+set showcmd             "Show commands being typed
+set showmode            "Show insert/normal/visual etc
+
+set encoding=utf-8      "Encoding to display a file in vim
+set fileencoding=utf-8  "Encoding to read/write files
+
+set belloff=all         "Disable all alarms/visual bells
+
 "To make the escape more easy to identify
 "However, this makes the cursor and arrow keys disabled in insert mode
 set noesckeys
+"Use the system keyboard and store in register '+'
+set clipboard=unnamedplus
+"TODO:
+"1) Mouse still works on terminal for some reason <- FIX
+"2) In insert mode, scrolling on the touchpad inserts characters <- FIX
+set mouse=
 
-"This displays the cursor location in the status line
-set ruler
-"This highlights the current line
-set cursorline
-"This shows line numbers on the left
-set number
-"This makes it so that the line number is displayed only for the current line and the
-"other lines are measured with respect to the current line
-set relativenumber
-"This makes sure that there are always 3 lines around the highlighted line to
-"give context
-set scrolloff=3
-"Makes scrolling faster
-set ttyfast
+"Where to store the undo stuff, in order of preference
+"TODO: make vim create this folder if it does not exist
+set undodir="~/.vim/undo/"
+"To make vim create an .un~ file to store the list of all things done to a
+"file, so that undos transcend opening and closing of files
+set undofile
+"Use git for important version control; we have an undofile anyway
+set noswapfile
+set nobackup
+set nowritebackup
 
-"Wraps lines around the window
-set wrap
-"To make sure we move only by one space when we sidescroll rather than
-"half a screen
-set sidescroll=1
-"Gives context to horizontal scrolling as well
-set sidescrolloff=3
-"This ensures that j and k move by visual lines instead of actual code lines -
-"so that when you have long wrapped lines, j and k don't skip past the wrap
-"Only do this when wrap is set
+"If in vimdiff, automatically update differences on saving
+autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIM COMMAND LINE STUFF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set history=1000        "Store lots of commands
+"Scroll through command history better
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
+set wildmenu            "Complete commands with <TAB>
+set wildignorecase      "Ignorecase whilst autocompleting
+"Don't have smartcase for the commandline autocompletetion
+"Assumes both ignorecase and smartcase are already set
+augroup dynamic_smartcase
+    autocmd!
+    autocmd CmdLineEnter : set nosmartcase
+    autocmd CmdLineLeave : set smartcase
+augroup END
+"Complete 1) longest common substring 2) list all matches 3) full first match
+set wildmode=longest,list,full
+"Ignore some standard files and directories whilst editing
+set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" WRAPPING AND LINES
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set ttyfast             "Make scrolling fast
+set scrolloff=3         "Give 3 lines of context around current line
+set wrap                "Wrap lines around the window
+set sidescroll=1        "Scroll by only 1 column as opposed to half a screen
+set sidescrolloff=3     "Give 3 columns of context around cursor
+
+"Make scrolling visually intuitive
 "TODO: set a 'Wrap' that toggles between wrap and sidescroll and j/gj etc
 if &wrap == 1
     nnoremap j gj
@@ -248,12 +292,50 @@ endif
 "combinations when h and l are used as motions
 set backspace=indent,eol,start
 
-"For gutter column
-highlight clear SignColumn
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" INDENTATION AND BRACKETS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype indent on  "Indent code for me
+set autoindent      "Number of spaces a <TAB> is in the file
+set tabstop=4       "Number of spaces that are inserted when <TAB> is hit
+set softtabstop=4   "Number of spaces for autoindent
+set shiftwidth=4    "Expand tabs to spaces
+set expandtab       "Make sure Vim only uses the options above
+set nosmarttab
+
+set showmatch           "Highlight matching brackets
+set foldenable          "Allow folding code within matching brackets
+set foldlevelstart=5    "Anything with fold depth <5 is open
+set foldnestmax=3       "Maximum depth of nested folding is 3
+set foldmethod=indent   "Folding strategy is based on indents
+nnoremap <space> za     "To fold/unfold a block
+
+"This makes vim list invisible characters like tab, space, etc
+set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
+"This makes it easy to toggle between showing these characters and not
+nnoremap <leader>k :set list!<CR>
+"The colours for these invisible characters
+highlight NonText    ctermfg=135
+highlight SpecialKey ctermfg=135
+highlight Comment cterm=italic
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SPECIAL COLUMNS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set ruler               "Show cursor location
+set cursorline          "Highlight current line
+set number              "Show line numbers in the left column
+set relativenumber      "Number are with respect to current line
+
+"For gutter column, make the background same as line number background
 highlight clear SignatureMarkText
 highlight SignatureMarkText ctermfg=red
+highlight clear SignColumn "Needs to be after syntax enable
 "TODO: make the usage of marks even better by customising ' and `
-"TODO: Make <C-m> toggle signcolumn to on/off
+
+"To make it so that once you type past 80 characters, the text
+"automatically wraps for you
+set textwidth=80
 
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
@@ -272,87 +354,22 @@ function! ToggleColorColumn()
 endfunction
 command! ToggleColorColumn call ToggleColorColumn()
 
-"This is used to disable colorcolumn for certain files
-function! RemoveColorColumn()
-    let &colorcolumn=''
-    let g:colorcolumn_is_on = 0
-endfunction
-command! RemoveColorColumn call RemoveColorColumn()
-"Call it for all relevant files
-autocmd BufEnter *.tex,*.txt,*.md,*.sh
-    \ :call RemoveColorColumn()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SEARCHING
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set incsearch   "Star searching as I type
+set hlsearch    "Highlight all matches for the search
+set ignorecase  "Ignore case during searches
+set smartcase   "Unless I explicity type a capital character
+set gdefault    "Do all substitutions on a line, not just the first
+"TODO: look at / \v \m \M and \V for searches
 
-"To make it so that once you type past 80 characters, the text
-"automatically wraps for you
-"TODO: make this dependent on filetype
-set textwidth=80
-"To autoformat paragraphs in text mode
-autocmd BufEnter *.md,*.txt
-    \ set formatoptions+=a
-
-filetype indent on
-"Make vim indent code for me
-set autoindent
-"Number of spaces a <TAB> is in the file
-set tabstop=4
-"Number of spaces that are inserted when <TAB> is hit
-set softtabstop=4
-"Number of spaces for autoindent
-set shiftwidth=4
-"Expand tabs to spaces
-set expandtab
-"Make sure Vim only uses the options above
-set nosmarttab
-
-"Filetype specific indentation
-autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
-    \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd BufRead,BufNewFile Makefile
-    \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-
-"This makes vim list invisible characters like tab, space, etc
-set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
-"This makes it easy to toggle between showing these characters and not
-nnoremap <leader>l :set list!<CR>
-"The colours for these invisible characters
-highlight NonText    ctermfg=135
-highlight SpecialKey ctermfg=135
-highlight Comment cterm=italic
-
-"This makes it so that Vim uses regular regex's
-"TODO: look at / \v \m \M and \V
-"This makes it so that Vim starts searching as characters are entered
-set incsearch
-"This highlights text that matches with our search string
-set hlsearch
-"This makes it so that ,<space> removes the highlight after searching
+"For clearing my search expression
 nnoremap <leader><space> :let @/ = ""<CR>
-"This makes it so that searches ignore case unless you type capitals
-set ignorecase
-set smartcase
-"This ensures by default, all substitutions are done on a line rather than just
-"one by ensuring the g at the end of a s/// command is in there. This can be
-"toggled by adding another g
-set gdefault
 
-"This is used to highlight matching brackets
-set showmatch
-"This is used to move around bracket pairs with <tab> rather than %
-vnoremap <tab> %
-nnoremap <tab> %
-
-"This allows folding of code within matching brackets
-set foldenable
-"This means that most folds are open by defaults (anything will fold depth <10)
-"(the scale goes up to 99)
-set foldlevelstart=10
-"This means that the maximum depth of nested folding can go to 10 -
-"to prevent a lot of manual unfolding/folding
-set foldnestmax=10
-"This means that that the folding strategy is based on indents
-set foldmethod=indent
-"This remaps the spacebar to fold/unfold a block
-nnoremap <space> za
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SAVING, OPENING, CLOSING
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "To save a file and open a new one
 nnoremap S :update<CR>:e<space>
@@ -360,30 +377,26 @@ nnoremap S :update<CR>:e<space>
 nnoremap s :update<CR>
 nnoremap <C-s> :update<CR>
 inoremap <C-s> <Esc>:update<CR>a
+"To sudo save a file when permission is needed, use :W
+command! W w !sudo tee % > /dev/null
 "To write all open files
 nnoremap <leader>wa :wa<CR>
+
 "To close a window
 nnoremap Q :q<CR>
 "To kill the current buffer and start a new one
 nnoremap K :enew<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
-"To sudo save a file when permission is needed, use :W
-command! W w !sudo tee % > /dev/null
 
-"This is used to remove trailing white spaces
-function! TrimWhiteSpace()
-    let l:save_cursor = getpos('.')
-    "\s is whitespace, $ is end of line
-    %s/\s\+$//e
-    call setpos('.', l:save_cursor)
-endfunction
-command! TrimWhiteSpace call TrimWhiteSpace()
-"Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx,*.m,*.bib
-    \ :call TrimWhiteSpace()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BUFFERS, WINDOWS, TABS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"This is used to make vertical splits easy
+"Make the windows split to the right and bottom by default
+set splitbelow
+set splitright
+"Make the creation of splits easier
 nnoremap \| :vsplit<space>
 nnoremap _ :split<space>
 "This is used to map ctrl-dir to change windows
@@ -391,33 +404,21 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
-"Make the windows split to the right and bottom by default
-set splitbelow
-set splitright
 
-"To open file under cursor in the current window is gf
+"To move between buffers
+:nnoremap <Tab> :bnext<CR>
+:nnoremap <S-Tab> :bprevious<CR>
+"To delete the current buffer
+:nnoremap <C-X> :bdelete<CR>
+
 "To open file under cursor in a vsplit
 "TODO: play around so that we can make this open it in the 'other' window
 "if there is already a vsplit
 nnoremap gF <C-w>vgf
 
-"This is used to invoke command completion on pressing <TAB>
-set wildmenu
-"First complete till longest common string, then list all matches, then
-"complete the next full match
-set wildmode=longest,list,full
-"ignore case while autocompleting
-set wildignorecase
-"ignore some standard files and directories whilst editing
-set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
-
-"This makes autocompletion of commands better as we have more data to pick
-"from
-set history=1000
-""This makes it so that you don't have to use the arrow keys while searching
-"through command line history
-cnoremap <C-k> <Up>
-cnoremap <C-j> <Down>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" HANDY HELPER STUFF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "To make it easier to edit the vimrc during other editing.
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -431,43 +432,20 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide
 nnoremap <leader>sh :sh<CR>
 "Get our custom aliases
 let $BASH_ENV = "~/.bash_aliases"
+
 "Cool stuff for calculation when you have selected an expression
 vnoremap <C-e> :!bc<CR>
 
-"To make vim create an .un~ file to store the list of all things done to a
-"file, so that undos transcend opening and closing of files
-set undofile
-"Where to store the undo stuff, in order of preference
-"TODO: make vim create this folder if it does not exist
-set undodir="~/.vim/undo/"
-"Use git for important version control, and we have an undofile anyway
-set noswapfile
-set nobackup
-set nowritebackup
-
-"Set Spell checker
+"Set Spell checker and a shortcute to toggle it
 set spelllang=en_gb
-"Toggle spell checking with <leader>s
 nnoremap <leader>s :set spell!<CR>
 
-"Disable bells etc
-set belloff=all
-
-"If in vimdiff, automatically update differences on saving
-autocmd BufWritePost * if &diff == 1 | diffupdate | endif
-
-"Use the system keyboard and store in register '+'
-set clipboard=unnamedplus
-
-"Things that have to happen after sourcing the vimrc
-"rainbow has to be reloaded
-"TODO: find out how to do this
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" POTENTIAL FEATURES
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "TODO:
-"-> Make <C-m> makefile/modify the make script/run the object file/etc
 "-> Customize the status line using set statusline
 "-> Customize the titlestring
-"-> Make shortcuts so that working with windows/tabs/buffers is easier
 "-> Get Snipmate for snippet control
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
@@ -475,7 +453,5 @@ set clipboard=unnamedplus
 "-> Play around with Autocmd events to make default code for .cpp, .hh files,
 "*and so much more*
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
-"-> Remap caps lock to something that is usually escape, but can double up as
-"control when comfortable with the idea
 "-> Remap ; to : and make # do the same function as ; Because # is the opposite
 "of * and who uses that? Or perhaps we should use it and find something else

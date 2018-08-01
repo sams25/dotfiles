@@ -6,7 +6,6 @@ files = [
         ".bash_aliases",
         ".bashrc",
         ".gitconfig",
-        ".gvimrc",
         ".inputrc",
         ".profile",
         ".Rprofile",
