@@ -16,4 +16,4 @@ files = [
 
 for filename in files:
     print("------ Checking " + filename + " ------")
-    subprocess.call("diff --color=always ~/" + filename + " " + filename, shell=True)
+    subprocess.call("diff --color=always " + filename + " ~/" + filename, shell=True)

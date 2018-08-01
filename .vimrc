@@ -158,10 +158,38 @@ let g:airline_section_warning = ''
 
 "Enable the displaying of buffer list on top
 let g:airline#extensions#tabline#enabled = 1
-"TODO: look at all the config for tabline settings
-"NOTE: Go to /autoload/airline/extensions/tabline/buffers.vim
-"and change the label from 'buffers' to whatever else
-"so that the top buffer line isn't taken away by 'buffers'
+"The label for the buffer line
+let g:airline#extensions#tabline#buffers_label = ''
+"Enable the selection of up to 10 buffers
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+let g:airline#extensions#tabline#buffer_idx_format = {
+        \ '0': '0 ',
+        \ '1': '1 ',
+        \ '2': '2 ',
+        \ '3': '3 ',
+        \ '4': '4 ',
+        \ '5': '5 ',
+        \ '6': '6 ',
+        \ '7': '7 ',
+        \ '8': '8 ',
+        \ '9': '9 '
+\}
+"Separators between buffer names in the tabline
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFIC STUFF
@@ -174,7 +202,7 @@ autocmd BufEnter *.sage,*.spyx set filetype=python
 autocmd BufEnter *.Rprofile set filetype=r
 
 "To autoformat paragraphs in text mode
-autocmd BufEnter *.md,*.txt
+autocmd BufEnter *.txt
     \ set formatoptions+=a
 
 "Filetype specific indentation
@@ -218,6 +246,8 @@ set fileencoding=utf-8  "Encoding to read/write files
 
 set belloff=all         "Disable all alarms/visual bells
 
+set virtualedit=block   "Allow the cursor to go beyond EOL during visual block
+
 "To make the escape more easy to identify
 "However, this makes the cursor and arrow keys disabled in insert mode
 set noesckeys
@@ -227,17 +257,21 @@ set clipboard=unnamedplus
 "1) Mouse still works on terminal for some reason <- FIX
 "2) In insert mode, scrolling on the touchpad inserts characters <- FIX
 set mouse=
+"Do not redraw every time a macro is executed
+set lazyredraw
 
-"Where to store the undo stuff, in order of preference
-"TODO: make vim create this folder if it does not exist
-set undodir="~/.vim/undo/"
-"To make vim create an .un~ file to store the list of all things done to a
-"file, so that undos transcend opening and closing of files
-set undofile
 "Use git for important version control; we have an undofile anyway
 set noswapfile
 set nobackup
 set nowritebackup
+"Where to store the undo stuff, in order of preference
+"TODO: make vim create this folder if it does not exist
+set undodir=$HOME/.vim/undo/
+"A lot of history
+set undolevels=300
+"To make vim create an .un~ file to store the list of all things done to a
+"file, so that undos transcend opening and closing of files
+set undofile
 
 "If in vimdiff, automatically update differences on saving
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
@@ -263,6 +297,14 @@ augroup END
 set wildmode=longest,list,full
 "Ignore some standard files and directories whilst editing
 set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" INSERT MODE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Complete whole filenames/lines with a quicker shortcut key in insert mode
+inoremap <C-f> <C-x><C-f>
+inoremap <C-l> <C-x><C-l>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " WRAPPING AND LINES
@@ -295,20 +337,21 @@ set backspace=indent,eol,start
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " INDENTATION AND BRACKETS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype indent on  "Indent code for me
-set autoindent      "Number of spaces a <TAB> is in the file
-set tabstop=4       "Number of spaces that are inserted when <TAB> is hit
-set softtabstop=4   "Number of spaces for autoindent
-set shiftwidth=4    "Expand tabs to spaces
-set expandtab       "Make sure Vim only uses the options above
-set nosmarttab
+filetype indent on
+set autoindent      "Indent code for me
+set tabstop=4       "Number of spaces a <TAB> is in the file
+set softtabstop=4   "Number of spaces that are inserted when <TAB> is hit
+set shiftwidth=4    "Number of spaces for autoindent
+set expandtab       "Expand tabs to spaces
+set nosmarttab      "Make sure Vim only uses the options above
 
 set showmatch           "Highlight matching brackets
 set foldenable          "Allow folding code within matching brackets
 set foldlevelstart=5    "Anything with fold depth <5 is open
 set foldnestmax=3       "Maximum depth of nested folding is 3
 set foldmethod=indent   "Folding strategy is based on indents
-nnoremap <space> za     "To fold/unfold a block
+"To fold/unfold a block
+nnoremap <space> za
 
 "This makes vim list invisible characters like tab, space, etc
 set listchars=tab:▸\ ,eol:¬,trail:␣,precedes:←,extends:→,nbsp:␣
@@ -331,8 +374,9 @@ set relativenumber      "Number are with respect to current line
 highlight clear SignatureMarkText
 highlight SignatureMarkText ctermfg=red
 highlight clear SignColumn "Needs to be after syntax enable
-"TODO: make the usage of marks even better by customising ' and `
-
+"Make ' go to marked line and position and ` go to beginning of marked line
+nnoremap ' `
+nnoremap ` '
 "To make it so that once you type past 80 characters, the text
 "automatically wraps for you
 set textwidth=80
