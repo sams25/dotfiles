@@ -7,26 +7,29 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAIN SETTINGS BEFORE PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 "Use vImproved instead of traditional vi
 set nocompatible
 "Set leader key before extensions are loaded
 let mapleader=","
 "Local leader is for filetype specific commands, use `\`
 let maplocalleader="\\"
-
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " APPEARANCE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 "Terminal colours for ctermfg and ctermbg
 set t_Co=256
 "Some cool colourschemes - elflord, koehler, ron, slate, default
 colorscheme elflord
 "Dark color
 set background=dark
-
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VUNDLE PLUGIN MANAGEMENT
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
@@ -80,9 +83,11 @@ filetype plugin on "required for the plugins to have effect
 " :PluginSearch foo - searches for foo
 " :PluginClean - confirms removal of unused plugins
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGIN SPECIFIC SECTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 "TODO: For all the plugin settings below, activate the commands only if we know
 "the plugins are loaded. That way this .vimrc is portable even to systems where
@@ -114,16 +119,28 @@ function! GoyoLeaveFn()
    " ...
 endfunction
 
-autocmd! User GoyoEnter nested call GoyoEnterFn()
-autocmd! User GoyoLeave nested call GoyoLeaveFn()
+augroup GoyoStuff
+    autocmd!
+    autocmd User GoyoEnter nested call GoyoEnterFn()
+    autocmd User GoyoLeave nested call GoyoLeaveFn()
+augroup END
 
 " ****** Doxygen ******
 "Need to set syntax to cpp.doxygen
 nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
 nnoremap <leader>cpp :set syntax=cpp<CR>
 "CPP/doxygen automatically set syntax
-autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh,*.c,*.h
-    \ set syntax=cpp.doxygen
+augroup CppDoxygen
+    autocmd!
+    autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh,*.c,*.h
+        \ set syntax=cpp.doxygen
+augroup END
+
+" ****** Vim-signature****
+"Make the 0-9 marks reflect the 'uppercase' versions of 0-9
+let g:SignatureIncludeMarkers = ')!"£$%^&*('
+"Only display the current marker, and suffix it with an underscore
+let g:SignatureMarkOrder = 'm '
 
 " ****** Vim-airline ******
 
@@ -162,6 +179,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffers_label = ''
 "Enable the selection of up to 10 buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+"Some basic shortcuts, we can't use nnoremap because <plug> expands out the
+"internal command
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -191,79 +210,33 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FILETYPE SPECIFIC STUFF
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"This enables syntax highlighting depending on filetype
-syntax enable
-"Treat sage files like Python files
-autocmd BufEnter *.sage,*.spyx set filetype=python
-autocmd BufEnter *.Rprofile set filetype=r
-
-"R specific insertions
-autocmd FileType r inoremap <buffer> - <-
-autocmd FileType r inoremap <buffer> <C-m> %>%
-
-"Filetype specific indentation
-autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
-    \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-autocmd BufRead,BufNewFile Makefile
-    \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
-
-"To autoformat paragraphs in text mode
-autocmd BufEnter *.txt
-    \ set formatoptions+=a
-
-
-"This is used to disable colorcolumn for certain files
-function! RemoveColorColumn()
-    let &colorcolumn=''
-    let g:colorcolumn_is_on = 0
-endfunction
-command! RemoveColorColumn call RemoveColorColumn()
-"Call it for all relevant files
-autocmd BufEnter *.tex,*.txt,*.md,*.sh
-    \ :call RemoveColorColumn()
-
-"This is used to remove trailing white spaces
-function! TrimWhiteSpace()
-    let l:save_cursor = getpos('.')
-    "\s is whitespace, $ is end of line
-    %s/\s\+$//e
-    call setpos('.', l:save_cursor)
-endfunction
-command! TrimWhiteSpace call TrimWhiteSpace()
-"Call it for all relevant files
-autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,*.R,*.tex,*.sage,*.spyx,*.m,*.bib
-    \ :call TrimWhiteSpace()
-
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GENERAL VIM BEHAVIOUR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
-set laststatus=2        "Always display the status line
-set showcmd             "Show commands being typed
-set showmode            "Show insert/normal/visual etc
+set laststatus=2          "Always display the status line
+set showcmd               "Show commands being typed
+set showmode              "Show insert/normal/visual etc
+set encoding=utf-8        "Encoding to display a file in vim
+set fileencoding=utf-8    "Encoding to read/write files
+set virtualedit=block     "Allow cursor to go beyond EOL during visual block
+set lazyredraw            "Do not redraw every time a macro is executed
+syntax enable             "Syntax highlighting, has to be before SpeicalColumns
+set belloff=all           "Disable all alarms/visual bells
+set clipboard=unnamedplus "Use the system keyboard and store in register '+'
 
-set encoding=utf-8      "Encoding to display a file in vim
-set fileencoding=utf-8  "Encoding to read/write files
+set mouse=              "Disable all mouse features in terminal
+set noesckeys           "To make the escape keys easier to identify
+"However, this means the arrowpad inserts literal characters into the screen, so
+"we need to explicity disable those keys
+inoremap OA <nop>
+inoremap OB <nop>
+inoremap OC <nop>
+inoremap OD <nop>
 
-set belloff=all         "Disable all alarms/visual bells
 
-set virtualedit=block   "Allow the cursor to go beyond EOL during visual block
-
-"To make the escape more easy to identify
-"However, this makes the cursor and arrow keys disabled in insert mode
-set noesckeys
-"Use the system keyboard and store in register '+'
-set clipboard=unnamedplus
-"TODO:
-"1) Mouse still works on terminal for some reason <- FIX
-"2) In insert mode, scrolling on the touchpad inserts characters <- FIX
-set mouse=
-"Do not redraw every time a macro is executed
-set lazyredraw
 "Do not show startup screen
 set shortmess+=I
 function! Start()
@@ -275,7 +248,10 @@ function! Start()
     edit .
     echo "Loaded custom .vimrc file, and opened current directory"
 endfunction
-autocmd VimEnter * call Start()
+augroup VimEnterSpecific
+    autocmd!
+    autocmd VimEnter * call Start()
+augroup END
 
 "Use git for important version control; we have an undofile anyway
 set noswapfile
@@ -291,11 +267,16 @@ set undolevels=300
 set undofile
 
 "If in vimdiff, automatically update differences on saving
-autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+augroup VimdiffSpecific
+    autocmd!
+    autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+augroup END
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM COMMAND LINE STUFF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 set history=1000        "Store lots of commands
 "Scroll through command history better
@@ -305,7 +286,7 @@ set wildmenu            "Complete commands with <TAB>
 set wildignorecase      "Ignorecase whilst autocompleting
 "Don't have smartcase for the commandline autocompletetion
 "Assumes both ignorecase and smartcase are already set
-augroup dynamic_smartcase
+augroup DynamicSmartcase
     autocmd!
     autocmd CmdLineEnter : set nosmartcase
     autocmd CmdLineLeave : set smartcase
@@ -315,9 +296,11 @@ set wildmode=longest,list,full
 "Ignore some standard files and directories whilst editing
 set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " INSERT MODE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 " Complete whole filenames/lines with a quicker shortcut key in insert mode
 inoremap <C-f> <C-x><C-f>
@@ -351,9 +334,11 @@ endif
 "combinations when h and l are used as motions
 set backspace=indent,eol,start
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " INDENTATION AND BRACKETS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 filetype indent on
 set autoindent      "Indent code for me
 set tabstop=4       "Number of spaces a <TAB> is in the file
@@ -364,9 +349,9 @@ set nosmarttab      "Make sure Vim only uses the options above
 
 set showmatch           "Highlight matching brackets
 set foldenable          "Allow folding code within matching brackets
-set foldlevelstart=5    "Anything with fold depth <5 is open
 set foldnestmax=3       "Maximum depth of nested folding is 3
-set foldmethod=indent   "Folding strategy is based on indents
+set foldmethod=indent   "Folding strategy is based on markers
+set foldlevelstart=99   "Don't close anything by default
 "To fold/unfold a block
 nnoremap <space> za
 
@@ -379,9 +364,11 @@ highlight NonText    ctermfg=135
 highlight SpecialKey ctermfg=135
 highlight Comment cterm=italic
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SPECIAL COLUMNS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 set ruler               "Show cursor location
 set cursorline          "Highlight current line
 set number              "Show line numbers in the left column
@@ -389,7 +376,7 @@ set relativenumber      "Number are with respect to current line
 
 "For gutter column, make the background same as line number background
 highlight clear SignatureMarkText
-highlight SignatureMarkText ctermfg=red
+highlight SignatureMarkText ctermfg=028
 highlight clear SignColumn "Needs to be after syntax enable
 "Make ' go to marked line and position and ` go to beginning of marked line
 nnoremap ' `
@@ -401,7 +388,9 @@ set textwidth=80
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
 "too, and the corresponding text is highlighted
-let g:colorcolumn_is_on = 0
+let g:colorcolumn_is_on = 1
+let &colorcolumn=join(range(81, 999),",")
+highlight ColorColumn ctermbg=232 ctermfg=255
 "This is used to toggle between colorcolumn options
 function! ToggleColorColumn()
     if g:colorcolumn_is_on
@@ -409,15 +398,17 @@ function! ToggleColorColumn()
         let g:colorcolumn_is_on = 0
     else
         let &colorcolumn=join(range(81, 999),",")
-        highlight ColorColumn ctermbg=235 ctermfg=255
+        highlight ColorColumn ctermbg=232 ctermfg=255
         let g:colorcolumn_is_on = 1
     endif
 endfunction
 command! ToggleColorColumn call ToggleColorColumn()
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SEARCHING
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 set incsearch   "Star searching as I type
 set hlsearch    "Highlight all matches for the search
 set ignorecase  "Ignore case during searches
@@ -428,9 +419,11 @@ set gdefault    "Do all substitutions on a line, not just the first
 "For clearing my search expression
 nnoremap <leader><space> :let @/ = ""<CR>
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SAVING, OPENING, CLOSING
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 "To save a file and open a new one
 nnoremap S :update<CR>:e<space>
@@ -445,14 +438,14 @@ nnoremap <leader>wa :wa<CR>
 
 "To close a window
 nnoremap Q :q<CR>
-"To kill the current buffer and start a new one
-nnoremap K :enew<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BUFFERS, WINDOWS, TABS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 "Make the windows split to the right and bottom by default
 set splitbelow
@@ -469,17 +462,20 @@ noremap <C-l> <C-w>l
 "To move between buffers
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
-"To delete the current buffer
-:nnoremap <C-X> :bdelete<CR>
+"To kill the current buffer and start a new one
+"Opens previous buffer, and deletes the 'latest buffer'
+nnoremap K :bprevious\|bdelete #<CR>
 
 "To open file under cursor in a vsplit
 "TODO: play around so that we can make this open it in the 'other' window
 "if there is already a vsplit
 nnoremap gF <C-w>vgf
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HANDY HELPER STUFF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 "To make it easier to edit the vimrc during other editing.
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -487,9 +483,10 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 "To create a scratch file
-nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>:setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
+nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>
+                    \ :setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
 
-"For going through quickfix errors
+"For going through quickfix errors after using make
 "- next error
 nnoremap <leader>n :cnext<CR>
 "- open quickfix window
@@ -509,18 +506,111 @@ vnoremap <C-e> :!bc<CR>
 set spelllang=en_gb
 nnoremap <leader>s :set spell!<CR>
 
+"}}}
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FILETYPE SPECIFIC STUFF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+
+augroup VimSpecifc
+    autocmd!
+    autocmd Filetype vim setlocal foldmethod=marker
+augroup END
+
+augroup SageSpecific
+    autocmd!
+    "Treat sage files like Python files
+    autocmd BufEnter *.sage,*.spyx set filetype=python
+augroup END
+
+augroup RSpecific
+    autocmd!
+    autocmd BufEnter *.Rprofile set filetype=r
+    "Shortcuts for common operators
+    autocmd FileType r inoremap <buffer> - <-
+    autocmd FileType r inoremap <buffer> <C-m> %>%
+    "Indent R with 2 spaces, the standard for R
+    autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
+        \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+augroup END
+
+"Make commands for C/C++
+augroup CppSpecific
+    autocmd!
+    autocmd Filetype cpp,c nnoremap <buffer> <C-m> :make<CR>
+    nnoremap <leader>; mqA;<ESC>`q
+augroup END
+
+augroup MakefileSpecific
+    autocmd!
+    "Use actual tabs for makefiles instead of spaces
+    autocmd BufRead,BufNewFile Makefile
+        \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+augroup END
+
+augroup PlaintextSpecific
+    autocmd!
+    "To autoformat paragraphs in text mode
+    autocmd BufEnter *.txt
+        \ setlocal formatoptions+=a
+augroup END
+
+augroup MarkdownSpecific
+    autocmd!
+    "To prevent Vim from automatically joining lines
+    autocmd BufEnter *.md
+        \ setlocal formatoptions-=a
+augroup END
+
+"This is used to disable colorcolumn for certain files
+function! RemoveColorColumn()
+    let &colorcolumn=''
+    let g:colorcolumn_is_on = 0
+endfunction
+command! RemoveColorColumn call RemoveColorColumn()
+"Call it for all relevant files
+augroup NoColorColumnSpecific
+    autocmd!
+    autocmd BufEnter *.tex,*.txt,*.md,*.sh
+        \ :call RemoveColorColumn()
+augroup END
+
+"This is used to remove trailing white spaces
+function! TrimWhiteSpace()
+    let l:save_cursor = getpos('.')
+    "\s is whitespace, $ is end of line
+    %s/\s\+$//e
+    call setpos('.', l:save_cursor)
+endfunction
+command! TrimWhiteSpace call TrimWhiteSpace()
+"Call it for all relevant files
+augroup TrimWhiteSpaceSpecific
+    autocmd!
+    autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,
+            \ *.R,*.tex,*.sage,*.spyx,*.m,*.bib
+        \ :call TrimWhiteSpace()
+augroup END
+
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " POTENTIAL FEATURES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 "TODO:
-"-> Customize the status line using set statusline
-"-> Customize the titlestring
+"-> Play around with Autocmd events
+"----> make default code for .cpp, .hh files
+"----> use filetype specific iabbrevs for common constructs
+"----> use echom to log what is happening
+"
+"-> Look at folding the .vrimrc by default
 "-> Get Snipmate for snippet control
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
 "then checkout IndexSearch
-"-> Play around with Autocmd events to make default code for .cpp, .hh files,
-"*and so much more*
+"-> Configure the makeprg section to be filetype specific
 "-> Think about autocompletetion of matching brackets/parantheses/quotes etc
 "-> Remap ; to : and make # do the same function as ; Because # is the opposite
 "of * and who uses that? Or perhaps we should use it and find something else
+"-> Think of a better way of using insert-mode abbreviations such that when you
+"click backspace, the original text is reverted back
+"}}}
