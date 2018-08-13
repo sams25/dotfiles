@@ -586,9 +586,10 @@ command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
 augroup TrimWhiteSpaceSpecific
     autocmd!
-    autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.vimrc,
-            \ *.R,*.tex,*.sage,*.spyx,*.m,*.bib
-        \ :call TrimWhiteSpace()
+    autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.R,*.m,*.vimrc
+            \ :call TrimWhiteSpace()
+    autocmd BufWrite *.tex,*.bib,*.sage,*.spyx,*.m
+            \ :call TrimWhiteSpace()
 augroup END
 
 "}}}

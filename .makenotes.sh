@@ -1,0 +1,66 @@
+#!/bin/bash
+
+#This script is used to compile my latex notes and open them
+
+#The name of the latex file, with respect to this file, without the .tex extension
+#TODO: make it so that you can run makenotes from any directory, right now it
+#      creates the new pdf in the location of execution and opens the file in the
+#      subdirectory
+fullfile="$1"
+filetypeout=".pdf"
+
+filetypein="${fullfile##*.}"
+file="${fullfile%.*}"
+
+if [ "$file" == "" ]
+then
+	echo -e "No file specified as target"
+	exit 1
+fi
+
+#Whether or not the file should be opened or not after compiling
+open=$2
+
+if [ "$open" == "" ]
+then
+	open="0"
+fi
+
+if [ "$filetypein" == "tex" ]
+then
+    #The command used to make the notes
+    makefile="pdflatex"
+
+    echo "Compiling (with pdflatex)" $file".pdf from" $fullfile
+    $makefile "$file"
+fi
+
+if [ "$filetypein" == "md" ]
+then
+
+    #The command used to make the notes
+    makefile="pandoc --pdf-engine=pdflatex -V geometry:margin=1in"
+
+    echo "Compiling (with pandoc)" $file".pdf from" $fullfile
+    $makefile "$fullfile" -o "$file$filetypeout"
+fi
+
+
+if [ $? -eq 0 ] && [ "$open" ==  "o" ]
+then
+	echo -e "\nOpening" $file$filetypeout
+	xdg-open "$file$filetypeout"
+elif [ "$open" != "o" ]
+then
+	echo -e "\nOpen-file is not set, doing nothing."
+else
+	echo -e "\nThere was an error in compiling in the file. Output anyway? \(y/*\)"
+	read confirm
+	if [ "$confirm" == "y" ] || [ "$confirm" == "Y" ]
+	then
+		xdg-open "$file$filetypeout"
+	fi
+fi
+
+echo -e "\nCompleted with status" $?
+

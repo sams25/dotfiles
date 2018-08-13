@@ -7,6 +7,7 @@ files = [
         ".bashrc",
         ".gitconfig",
         ".inputrc",
+        ".makenotes.sh",
         ".profile",
         ".Rprofile",
         ".tmux.conf",

@@ -41,6 +41,6 @@ alias sl='ls'
 
 # My local paths
 # -------------
-alias makenotes='bash ~/Documents/my_notes/makenotes.sh'
+alias makenotes='bash ~/.makenotes.sh'
 alias vless='/usr/share/vim/vim80/macros/less.sh'
 # alias sage='~/Documents/Sage/SageMath/sage'
