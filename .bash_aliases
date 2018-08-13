@@ -11,6 +11,7 @@ alias top='top -o %CPU'
 # Other programs
 alias vimro='vim -R'
 alias R="R --quiet --no-save"
+alias makenotes='bash ~/.makenotes.sh'
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
@@ -34,13 +35,5 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias sl='ls'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-# -------------
-
 # My local paths
 # -------------
-alias makenotes='bash ~/.makenotes.sh'
-alias vless='/usr/share/vim/vim80/macros/less.sh'
-# alias sage='~/Documents/Sage/SageMath/sage'

@@ -12,7 +12,6 @@ files = [
         ".Rprofile",
         ".tmux.conf",
         ".vimrc",
-        ".zshrc",
         ]
 
 for filename in files:

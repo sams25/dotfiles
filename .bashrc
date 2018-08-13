@@ -22,7 +22,9 @@ HISTFILESIZE=2000 # max lines to store in history file
 # -------------
 
 # command not found, look in the official repositories and suggest something
-source /usr/share/doc/pkgfile/command-not-found.bash
+if [ -f /usr/share/doc/pkgfile/command-not-found.bash ]; then
+    source /usr/share/doc/pkgfile/command-not-found.bash
+fi
 
 # prevent C-s and C-q from suspending and unsuspending the screen
 stty -ixon
@@ -143,4 +145,6 @@ fi
 # ---------------------------------------------
 
 # For gnome terminals to open in the same directory for new tabs
-. /etc/profile.d/vte.sh
+if [ -f /etc/profile.d/vte.sh ]; then
+    . /etc/profile.d/vte.sh
+fi
