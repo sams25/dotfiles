@@ -12,6 +12,7 @@ alias top='top -o %CPU'
 alias vimro='vim -R'
 alias R="R --quiet --no-save"
 alias makenotes='bash ~/.makenotes.sh'
+alias get_battery='bash ~/.get_battery.sh'
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal

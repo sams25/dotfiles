@@ -5,6 +5,7 @@ import subprocess
 files = [
         ".bash_aliases",
         ".bashrc",
+        ".get_battery.sh",
         ".gitconfig",
         ".inputrc",
         ".makenotes.sh",
