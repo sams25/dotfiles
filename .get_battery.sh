@@ -5,6 +5,12 @@ percentage="$(acpi --battery | cut -d ' ' -f 4 | tr -d ,%)"
 if [ "${charge_status}" == "Discharging" ]
 then
     echo "-""${percentage}"
-else
+elif [ "${charge_status}" == "Charging" ]
+then
     echo "+""${percentage}"
+elif [ "${charge_status}" == "Full" ]
+then
+    echo "~""${percentage}"
+else
+    echo "?"
 fi
