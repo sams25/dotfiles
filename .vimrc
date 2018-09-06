@@ -48,20 +48,24 @@ call vundle#begin()
     Plugin 'bling/vim-airline'
     "For distraction-free writing
     Plugin 'junegunn/goyo.vim'
-    "For toggling and displaying marks
-    Plugin 'kshenoy/vim-signature'
     "For repeating plugin commands
     Plugin 'tpope/vim-repeat'
+    "For consistent vim-tmux navigation
+    Plugin 'christoomey/vim-tmux-navigator'
+    "For new verbs
+    Plugin 'tpope/vim-surround'
 
     " 2) FILETYPE SPECIFIC
     "For DoxyGen syntax highlighting on top of C/C++
     Plugin 'DoxyGen-Syntax'
     "For vim-go, a plugin for Go syntax
     Plugin 'fatih/vim-go'
+    "For markdown syntax
+    Plugin 'vim-pandoc/vim-pandoc-syntax'
 
     " 3) DON'T REALLY USE?
-    "For new verbs
-    Plugin 'tpope/vim-surround'
+    "For toggling and displaying marks
+    Plugin 'kshenoy/vim-signature'
 
     "4) POTENTIALS/LOOK COOL
     "Valloric/YouCompleteMe
@@ -174,7 +178,7 @@ let g:airline_section_error = ''
 let g:airline_section_warning = ''
 
 "Enable the displaying of buffer list on top
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 "The label for the buffer line
 let g:airline#extensions#tabline#buffers_label = ''
 "Enable the selection of up to 10 buffers
@@ -228,14 +232,12 @@ set belloff=all           "Disable all alarms/visual bells
 set clipboard=unnamedplus "Use the system keyboard and store in register '+'
 
 set mouse=              "Disable all mouse features in terminal
-set noesckeys           "To make the escape keys easier to identify
-"However, this means the arrowpad inserts literal characters into the screen, so
-"we need to explicity disable those keys
+"TODO: fiddle with this, 'esckeys' and 'ttimeoutlen'
+"Disable arrow keys
 inoremap OA <nop>
 inoremap OB <nop>
 inoremap OC <nop>
 inoremap OD <nop>
-
 
 "Do not show startup screen
 set shortmess+=I
@@ -419,6 +421,12 @@ set gdefault    "Do all substitutions on a line, not just the first
 "For clearing my search expression
 nnoremap <leader><space> :let @/ = ""<CR>
 
+"To make code-aware tags
+"TODO: make this autoupdate instead of rebuilding every time
+command! MakeTags !ctags -R .
+"<C-]> for finding tags, (g<C-]> for ambiguous)
+"<C-t> for jumping back to previous location
+
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SAVING, OPENING, CLOSING
@@ -441,6 +449,17 @@ nnoremap Q :q<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
 
+"To make fuzzy recursive search a thing
+set path=.,**
+"To use the find feature while editing
+nnoremap <leader>f :find<space>
+
+"For browsing using the default netrw
+let g:netrw_banner=0            "Disable top banner
+let g:netrw_preview=1           "Use vertical split for prev windo by default
+let g:netrw_browse_split=4      "Open in previous window
+let g:netrw_liststyle=3         "Tree-like browsing
+
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BUFFERS, WINDOWS, TABS
@@ -454,17 +473,17 @@ set splitright
 nnoremap \| :vsplit<space>
 nnoremap _ :split<space>
 "This is used to map ctrl-dir to change windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+"Uncomment this only if we do not want consistent tmux/vim navigation
+"noremap <C-h> <C-w>h
+"noremap <C-j> <C-w>j
+"noremap <C-k> <C-w>k
+"noremap <C-l> <C-w>l
 
-"To move between buffers
-:nnoremap <Tab> :bnext<CR>
-:nnoremap <S-Tab> :bprevious<CR>
 "To kill the current buffer and start a new one
 "Opens previous buffer, and deletes the 'latest buffer'
 nnoremap K :bprevious\|bdelete #<CR>
+"To open a buffer using a fuzzy search-string
+nnoremap <leader>b :b<space>
 
 "To open file under cursor in a vsplit
 "TODO: play around so that we can make this open it in the 'other' window
@@ -487,8 +506,8 @@ nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>
                     \ :setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
 
 "For going through quickfix errors after using make
-"- next error
 nnoremap <leader>n :cnext<CR>
+nnoremap <leader>p :cprevious<CR>
 "- open quickfix window
 nnoremap <leader>o :copen<CR>
 "- close quickfix window
@@ -512,6 +531,7 @@ nnoremap <leader>s :set spell!<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 
+"TODO: use Filetype for everything, don't just use *.whatever
 augroup VimSpecifc
     autocmd!
     autocmd Filetype vim setlocal foldmethod=marker
@@ -528,7 +548,7 @@ augroup RSpecific
     autocmd BufEnter *.Rprofile set filetype=r
     "Shortcuts for common operators
     autocmd FileType r inoremap <buffer> - <-
-    autocmd FileType r inoremap <buffer> <C-m> %>%
+    autocmd FileType r inoremap <buffer> <C-b> %>%
     "Indent R with 2 spaces, the standard for R
     autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
@@ -537,8 +557,12 @@ augroup END
 "Make commands for C/C++
 augroup CppSpecific
     autocmd!
+    "To make using the recipe in the given directory
     autocmd Filetype cpp,c nnoremap <buffer> <C-m> :make<CR>
-    nnoremap <leader>; mqA;<ESC>`q
+    "To add a semicolon to the end of the current line
+    autocmd Filetype cpp,c nnoremap <buffer> <leader>; mqA;<ESC>`q
+    "To toggle between header and cpp files quickly
+    autocmd Filetype cpp,c nnoremap <buffer> <leader>t :e %<.
 augroup END
 
 augroup MakefileSpecific
@@ -555,11 +579,12 @@ augroup PlaintextSpecific
         \ setlocal formatoptions+=a
 augroup END
 
-augroup MarkdownSpecific
+augroup pandoc_syntax
     autocmd!
+    autocmd BufNewFile,BufFilePre,BufRead *.md
+        \ set filetype=markdown.pandoc
     "To prevent Vim from automatically joining lines
-    autocmd BufEnter *.md
-        \ setlocal formatoptions-=a
+    autocmd BufEnter *.md setlocal formatoptions-=a
 augroup END
 
 "This is used to disable colorcolumn for certain files
@@ -586,9 +611,11 @@ command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
 augroup TrimWhiteSpaceSpecific
     autocmd!
-    autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.py,*.R,*.m,*.vimrc
+    autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.vimrc
             \ :call TrimWhiteSpace()
-    autocmd BufWrite *.tex,*.bib,*.sage,*.spyx,*.m
+    autocmd BufWrite *.R,*.py,*.tex,*.bib,*.sage,*.spyx,*.m
+            \ :call TrimWhiteSpace()
+    autocmd BufWrite Makefile
             \ :call TrimWhiteSpace()
 augroup END
 
@@ -614,4 +641,6 @@ augroup END
 "of * and who uses that? Or perhaps we should use it and find something else
 "-> Think of a better way of using insert-mode abbreviations such that when you
 "click backspace, the original text is reverted back
+"-> Have a command to return a buffer to the state that is stored on disc
+"-> Have a command to list all the colours available in vim
 "}}}
