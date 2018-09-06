@@ -1,3 +1,6 @@
+#TODO: Also write a script to copy files over, or set up symlinks accordingly
+# Is this script even necessary? Doesn't copying and git-diff do the same thing?
+
 # a program to check differences for the relevant files
 import subprocess
 
