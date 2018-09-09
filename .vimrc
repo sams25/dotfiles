@@ -42,8 +42,6 @@ call vundle#begin()
     " 1) USED A LOT
     "Let Vundle manage itself, required.
     Plugin 'VundleVim/Vundle.vim'
-    "For autocompletion supertab
-    Plugin 'ervandew/supertab'
     "For a smoother statusline
     Plugin 'bling/vim-airline'
     "For distraction-free writing
@@ -267,6 +265,11 @@ set undolevels=300
 "To make vim create an .un~ file to store the list of all things done to a
 "file, so that undos transcend opening and closing of files
 set undofile
+
+"Open project-specific setttings if they exist
+set exrc
+"But run them in a black-box with limited functionality
+set secure
 
 "If in vimdiff, automatically update differences on saving
 augroup VimdiffSpecific
@@ -535,10 +538,9 @@ nnoremap <leader>s :set spell!<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 
-"TODO: use Filetype for everything, don't just use *.whatever
 augroup VimSpecifc
     autocmd!
-    autocmd Filetype vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldmethod=marker
 augroup END
 
 augroup SageSpecific
@@ -554,33 +556,46 @@ augroup RSpecific
     autocmd FileType r inoremap <buffer> - <-
     autocmd FileType r inoremap <buffer> <C-b> %>%
     "Indent R with 2 spaces, the standard for R
-    autocmd BufRead,BufNewFile *.R,*.Rd,*.Rprofile
+    autocmd FileType r
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 augroup END
+
+function! NewCppHeaderFile()
+    "Read skeleton file
+    0read ~/.vim/skeleton.cpp_header
+    "Make appropriate replacements
+    %s/XXX/\=expand('%:r')/g
+    %s/EXTENSION/\=expand('%:e')/g
+    "Set uppercase stuff and position of cursor
+    execute "normal! 7G2wgUwjgUw12G3wgUw10G"
+    echom "Loaded Cpp Header File"
+endfunction
 
 "Make commands for C/C++
 augroup CppSpecific
     autocmd!
+    autocmd BufEnter ~/.vim/skeleton.cpp_header set filetype=cpp
     "To make using the recipe in the given directory
-    autocmd Filetype cpp,c nnoremap <buffer> <C-m> :make<CR>
+    autocmd FileType cpp,c nnoremap <buffer> <C-m> :make<CR>
     "To add a semicolon to the end of the current line
-    autocmd Filetype cpp,c nnoremap <buffer> <leader>; mqA;<ESC>`q
+    autocmd FileType cpp,c nnoremap <buffer> <leader>; mqA;<ESC>`q
     "To toggle between header and cpp files quickly
-    autocmd Filetype cpp,c nnoremap <buffer> <leader>j :e %<.
+    autocmd FileType cpp,c nnoremap <buffer> <leader>j :e %<.
+    "To generate base text for a new header file
+    autocmd BufNewFile *.h,*.hh,*.hpp call NewCppHeaderFile()
 augroup END
 
 augroup MakefileSpecific
     autocmd!
     "Use actual tabs for makefiles instead of spaces
-    autocmd BufRead,BufNewFile Makefile
+    autocmd FileType make
         \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
 augroup PlaintextSpecific
     autocmd!
     "To autoformat paragraphs in text mode
-    autocmd BufEnter *.txt
-        \ setlocal formatoptions+=a
+    autocmd FileType text setlocal formatoptions+=a
 augroup END
 
 augroup pandoc_syntax
@@ -588,7 +603,7 @@ augroup pandoc_syntax
     autocmd BufNewFile,BufFilePre,BufRead *.md
         \ set filetype=markdown.pandoc
     "To prevent Vim from automatically joining lines
-    autocmd BufEnter *.md setlocal formatoptions-=a
+    autocmd FileType markdown.pandoc setlocal formatoptions-=a
 augroup END
 
 "This is used to disable colorcolumn for certain files
