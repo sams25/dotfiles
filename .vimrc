@@ -424,6 +424,10 @@ nnoremap <leader><space> :let @/ = ""<CR>
 "To make code-aware tags
 "TODO: make this autoupdate instead of rebuilding every time
 command! MakeTags !ctags -R .
+"Shortcut for updating tags
+nnoremap <leader>t :MakeTags<CR><CR>
+"And using them in insert mode
+inoremap <C-]> <C-x><C-]>
 "<C-]> for finding tags, (g<C-]> for ambiguous)
 "<C-t> for jumping back to previous location
 
@@ -450,7 +454,7 @@ nnoremap Q :q<CR>
 nnoremap X :update<CR>:q<CR>
 
 "To make fuzzy recursive search a thing
-set path=.,**
+set path+=**
 "To use the find feature while editing
 nnoremap <leader>f :find<space>
 
@@ -497,7 +501,7 @@ nnoremap gF <C-w>vgf
 "{{{
 
 "To make it easier to edit the vimrc during other editing.
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>ev :edit $MYVIMRC<CR>
 "To source the changes made to the vimrc into the present session
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
@@ -562,7 +566,7 @@ augroup CppSpecific
     "To add a semicolon to the end of the current line
     autocmd Filetype cpp,c nnoremap <buffer> <leader>; mqA;<ESC>`q
     "To toggle between header and cpp files quickly
-    autocmd Filetype cpp,c nnoremap <buffer> <leader>t :e %<.
+    autocmd Filetype cpp,c nnoremap <buffer> <leader>j :e %<.
 augroup END
 
 augroup MakefileSpecific
