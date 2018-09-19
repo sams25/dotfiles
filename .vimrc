@@ -8,28 +8,33 @@
 " MAIN SETTINGS BEFORE PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 "Use vImproved instead of traditional vi
 set nocompatible
 "Set leader key before extensions are loaded
 let mapleader=","
 "Local leader is for filetype specific commands, use `\`
 let maplocalleader="\\"
+
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " APPEARANCE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 "Terminal colours for ctermfg and ctermbg
 set t_Co=256
 "Some cool colourschemes - elflord, koehler, ron, slate, default
 colorscheme elflord
 "Dark color
 set background=dark
+
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VUNDLE PLUGIN MANAGEMENT
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 filetype off "Because Vundle should have control of it
 
 "To include Vundle into the run time path and intialise
@@ -145,7 +150,6 @@ let g:SignatureIncludeMarkers = ')!"£$%^&*('
 let g:SignatureMarkOrder = 'm '
 
 " ****** Vim-airline ******
-
 "Make all information explicit
 let g:airline_skip_empty_sections = 0
 "V- is v line, V| is v block
@@ -311,9 +315,11 @@ set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
 inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
+"}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " WRAPPING AND LINES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
 
 set ttyfast             "Make scrolling fast
 set scrolloff=3         "Give 3 lines of context around current line
@@ -344,6 +350,7 @@ set backspace=indent,eol,start
 " INDENTATION AND BRACKETS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 filetype indent on
 set autoindent      "Indent code for me
 set tabstop=4       "Number of spaces a <TAB> is in the file
@@ -355,8 +362,9 @@ set nosmarttab      "Make sure Vim only uses the options above
 set showmatch           "Highlight matching brackets
 set foldenable          "Allow folding code within matching brackets
 set foldnestmax=3       "Maximum depth of nested folding is 3
-set foldmethod=indent   "Folding strategy is based on markers
 set foldlevelstart=99   "Don't close anything by default
+"Folding strategy for most default files is by indented blocks
+set foldmethod=indent
 "To fold/unfold a block
 nnoremap <space> za
 
@@ -374,6 +382,7 @@ highlight Comment cterm=italic
 " SPECIAL COLUMNS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 set ruler               "Show cursor location
 set cursorline          "Highlight current line
 set number              "Show line numbers in the left column
@@ -414,6 +423,7 @@ command! ToggleColorColumn call ToggleColorColumn()
 " SEARCHING
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 set incsearch   "Star searching as I type
 set hlsearch    "Highlight all matches for the search
 set ignorecase  "Ignore case during searches
@@ -441,7 +451,7 @@ inoremap <C-]> <C-x><C-]>
 "{{{
 
 "To save a file and open a new one
-nnoremap S :update<CR>:e<space>
+nnoremap S :update<CR>:buffer<space>
 "To save a file only if changed have been made
 nnoremap s :update<CR>
 nnoremap <C-s> :update<CR>
@@ -477,8 +487,8 @@ let g:netrw_liststyle=3         "Tree-like browsing
 set splitbelow
 set splitright
 "Make the creation of splits easier
-nnoremap \| :vsplit<space>
-nnoremap _ :split<space>
+nnoremap \| :vsplit<CR>
+nnoremap _ :split<CR>
 "This is used to map ctrl-dir to change windows
 "Uncomment this only if we do not want consistent tmux/vim navigation
 "noremap <C-h> <C-w>h
@@ -540,7 +550,10 @@ nnoremap <leader>s :set spell!<CR>
 
 augroup VimSpecifc
     autocmd!
+    "Use the markers we have specified
     autocmd FileType vim setlocal foldmethod=marker
+    "and close everything by default
+    autocmd BufEnter *.vimrc normal! zM
 augroup END
 
 augroup SageSpecific
@@ -553,8 +566,8 @@ augroup RSpecific
     autocmd!
     autocmd BufEnter *.Rprofile set filetype=r
     "Shortcuts for common operators
-    autocmd FileType r inoremap <buffer> - <-
-    autocmd FileType r inoremap <buffer> <C-b> %>%
+    autocmd FileType r inoremap <buffer> - <space><-<space>
+    autocmd FileType r inoremap <buffer> <C-b> <space>%>%<space>
     "Indent R with 2 spaces, the standard for R
     autocmd FileType r
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
@@ -567,7 +580,7 @@ function! NewCppHeaderFile()
     %s/XXX/\=expand('%:r')/g
     %s/EXTENSION/\=expand('%:e')/g
     "Set uppercase stuff and position of cursor
-    execute "normal! 7G2wgUwjgUw12G3wgUw10G"
+    execute "normal! 7G2wgU$jgU$12G3wgU$10G"
     echom "Loaded Cpp Header File"
 endfunction
 
@@ -592,12 +605,13 @@ augroup MakefileSpecific
         \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
-augroup PlaintextSpecific
+"For files that mostly comprise of English words
+augroup TextSpecific
     autocmd!
-    "To autoformat paragraphs in text mode
-    autocmd FileType text setlocal formatoptions+=a
+    autocmd FileType tex,markdown,markdown.pandoc,text set spell
 augroup END
 
+"Needed for Pandoc-compatible syntax highlighting of markdown files
 augroup pandoc_syntax
     autocmd!
     autocmd BufNewFile,BufFilePre,BufRead *.md
@@ -606,17 +620,10 @@ augroup pandoc_syntax
     autocmd FileType markdown.pandoc setlocal formatoptions-=a
 augroup END
 
-"This is used to disable colorcolumn for certain files
-function! RemoveColorColumn()
-    let &colorcolumn=''
-    let g:colorcolumn_is_on = 0
-endfunction
-command! RemoveColorColumn call RemoveColorColumn()
-"Call it for all relevant files
-augroup NoColorColumnSpecific
+augroup PlaintextSpecific
     autocmd!
-    autocmd BufEnter *.tex,*.txt,*.md,*.sh
-        \ :call RemoveColorColumn()
+    "To autoformat paragraphs in text mode
+    autocmd FileType text setlocal formatoptions+=a
 augroup END
 
 "This is used to remove trailing white spaces
@@ -643,6 +650,7 @@ augroup END
 " POTENTIAL FEATURES
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+
 "TODO:
 "-> Play around with Autocmd events
 "----> make default code for .cpp, .hh files
@@ -662,4 +670,5 @@ augroup END
 "click backspace, the original text is reverted back
 "-> Have a command to return a buffer to the state that is stored on disc
 "-> Have a command to list all the colours available in vim
+
 "}}}
