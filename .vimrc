@@ -55,8 +55,6 @@ call vundle#begin()
     Plugin 'tpope/vim-repeat'
     "For consistent vim-tmux navigation
     Plugin 'christoomey/vim-tmux-navigator'
-    "For new verbs
-    Plugin 'tpope/vim-surround'
 
     " 2) FILETYPE SPECIFIC
     "For DoxyGen syntax highlighting on top of C/C++
@@ -69,9 +67,11 @@ call vundle#begin()
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks
     Plugin 'kshenoy/vim-signature'
+    "For new motions (surround is the opposite of 'inside')
+    Plugin 'tpope/vim-surround'
 
     "4) POTENTIALS/LOOK COOL
-    "Valloric/YouCompleteMe
+    "Valloric/YouCompleteMe or supertab
     "NERDcommenting or commentary.vim
     "NERDTree
     "vim-gitgutter
@@ -450,12 +450,14 @@ inoremap <C-]> <C-x><C-]>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 
+"To make fuzzy recursive search a thing
+set path+=**
+"To use the find feature while editing
+nnoremap <leader>f :find<space>
 "To save a file and open a new one
-nnoremap S :update<CR>:buffer<space>
+nnoremap S :update<CR>:find<space>
 "To save a file only if changed have been made
 nnoremap s :update<CR>
-nnoremap <C-s> :update<CR>
-inoremap <C-s> <Esc>:update<CR>a
 "To sudo save a file when permission is needed, use :W
 command! W w !sudo tee % > /dev/null
 "To write all open files
@@ -465,11 +467,6 @@ nnoremap <leader>wa :wa<CR>
 nnoremap Q :q<CR>
 "To save and then close a window
 nnoremap X :update<CR>:q<CR>
-
-"To make fuzzy recursive search a thing
-set path+=**
-"To use the find feature while editing
-nnoremap <leader>f :find<space>
 
 "For browsing using the default netrw
 let g:netrw_banner=0            "Disable top banner
@@ -500,7 +497,7 @@ nnoremap _ :split<CR>
 "Opens previous buffer, and deletes the 'latest buffer'
 nnoremap K :bprevious\|bdelete #<CR>
 "To open a buffer using a fuzzy search-string
-nnoremap <leader>b :b<space>
+nnoremap <leader>b :buffer<space>
 
 "To open file under cursor in a vsplit
 "TODO: play around so that we can make this open it in the 'other' window
@@ -657,7 +654,6 @@ augroup END
 "----> use filetype specific iabbrevs for common constructs
 "----> use echom to log what is happening
 "
-"-> Look at folding the .vrimrc by default
 "-> Get Snipmate for snippet control
 "-> Get Ack and learn it (better than grep), but also check out vimgrep and
 "see how quickfix makes search results display nicer in the statusline, and
@@ -670,5 +666,6 @@ augroup END
 "click backspace, the original text is reverted back
 "-> Have a command to return a buffer to the state that is stored on disc
 "-> Have a command to list all the colours available in vim
+"-> Have a command to toggle on/off the buffer list/bufferline
 
 "}}}
