@@ -55,6 +55,8 @@ call vundle#begin()
     Plugin 'tpope/vim-repeat'
     "For consistent vim-tmux navigation
     Plugin 'christoomey/vim-tmux-navigator'
+    "For opening files using a fuzzy search (THIS REQUIRES COMPILATION)
+    "Plugin 'wincent/command-t'
 
     " 2) FILETYPE SPECIFIC
     "For DoxyGen syntax highlighting on top of C/C++
@@ -109,6 +111,10 @@ filetype plugin on "required for the plugins to have effect
 "    \ 'text' : 1,
 "    \ 'pandoc' : 1
 "    \}
+
+" ****** CommandT ******
+"To save a file and open a new one
+"nnoremap S :update<CR>:CommandT<CR>
 
 " ****** GoYo ******
 function! GoyoEnterFn()
@@ -438,7 +444,7 @@ nnoremap <leader><space> :let @/ = ""<CR>
 "TODO: make this autoupdate instead of rebuilding every time
 command! MakeTags !ctags -R .
 "Shortcut for updating tags
-nnoremap <leader>t :MakeTags<CR><CR>
+nnoremap <leader>m :MakeTags<CR><CR>
 "And using them in insert mode
 inoremap <C-]> <C-x><C-]>
 "<C-]> for finding tags, (g<C-]> for ambiguous)
@@ -452,12 +458,11 @@ inoremap <C-]> <C-x><C-]>
 
 "To make fuzzy recursive search a thing
 set path+=**
-"To use the find feature while editing
-nnoremap <leader>f :find<space>
-"To save a file and open a new one
-nnoremap S :update<CR>:find<space>
 "To save a file only if changed have been made
 nnoremap s :update<CR>
+"To save the current file and open a new one
+nnoremap S :update<CR>:find<space>
+
 "To sudo save a file when permission is needed, use :W
 command! W w !sudo tee % > /dev/null
 "To write all open files
@@ -496,7 +501,7 @@ nnoremap _ :split<CR>
 "To kill the current buffer and start a new one
 "Opens previous buffer, and deletes the 'latest buffer'
 nnoremap K :bprevious\|bdelete #<CR>
-"To open a buffer using a fuzzy search-string
+"To search within the current buffers in a fuzzy manner
 nnoremap <leader>b :buffer<space>
 
 "To open file under cursor in a vsplit
