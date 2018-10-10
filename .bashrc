@@ -79,30 +79,19 @@ On_White='\e[47m'
 
 NC="\e[m" # Color Reset
 
-# Naming stuff ----
-
-# a function to set the title of the terminal
-function set-title() {
-	if [[ -z "$ORIG" ]]; then
-		ORIG=$PS1
-	fi
-	TITLE="\[\e]2;$*\a\]"
-	PS1=${ORIG}${TITLE}
-}
-# -----------
-
-# the prompt is '<username> <pwd>$'
 # TODO: make everything use tput
-# TODO: make the prompt colorful (it helps with debugging because you can scroll
-# up a lot and look for a color to find your last bash command executed)
 tput_bold=$(tput bold)
 tput_reset=$(tput sgr0)
-# for bold prompts
-# export PS1="\[$tput_reset\]\[$tput_bold\]\u \w\[$tput_reset\]$ "
-# for normal prompts
-export PS1="\[$tput_reset\]\u \w\[$tput_reset\]$ "
+
+# \u for username
+# \w for full pwd, \W for final part of pwd
+# \$ $ if normal user, # if sudo
+# the max number of dirs to print (rest is ...)
+PROMPT_DIRTRIM=3
+export PS1="\[$tput_reset\]\[$Green\]\w\[$tput_reset\]\$ "
 
 # set a fancy prompt (non-color, unless we know we "want" color)
+# TODO: make this work
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
