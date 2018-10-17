@@ -10,6 +10,7 @@ FILES="
 .bash_aliases
 .bashrc
 .get_battery.sh
+.get_internet.sh
 .gitconfig
 .inputrc
 .makenotes.sh
