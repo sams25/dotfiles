@@ -137,3 +137,6 @@ fi
 if [ -f /etc/profile.d/vte.sh ]; then
     . /etc/profile.d/vte.sh
 fi
+
+PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+export GEM_HOME=$HOME/.gem

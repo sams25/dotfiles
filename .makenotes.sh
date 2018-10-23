@@ -45,6 +45,16 @@ then
     $makefile "$fullfile" -o "$file$filetypeout"
 fi
 
+if [ "$filetypein" == "adoc" ]
+then
+
+    #The command used to make the notes
+    makefile="asciidoctor-pdf"
+
+    echo "Compiling (with asciidoctor)" $file".pdf from" $fullfile
+    $makefile "$fullfile"
+fi
+
 
 if [ $? -eq 0 ] && [ "$open" ==  "o" ]
 then
