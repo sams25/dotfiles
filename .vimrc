@@ -37,7 +37,7 @@ set background=dark
 
 filetype off "Because Vundle should have control of it
 
-"To include Vundle into the run time path and intialise
+"To include Vundle into the run time path and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
 
 "TODO: Lazy loading of plugins to make vim lighter?
@@ -538,11 +538,14 @@ nnoremap <leader>sh :sh<CR>
 let $BASH_ENV = "~/.bash_aliases"
 
 "Cool stuff for calculation when you have selected an expression
-vnoremap <C-e> :!bc<CR>
+"calc -p for non-interactive mode, -d for eliminating '~' for 'approximately'
+vnoremap <C-e> :!calc -p -d<CR>
+"Alternatively, can use :!bc<CR>
 
-"Set Spell checker and a shortcute to toggle it
+"Set Spell checker and a shortcut to toggle it
 set spelllang=en_gb
 nnoremap <leader>s :set spell!<CR>
+nnoremap <leader>sp :!aspell -c %<CR>
 
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -88,7 +88,17 @@ tput_reset=$(tput sgr0)
 # \$ $ if normal user, # if sudo
 # the max number of dirs to print (rest is ...)
 PROMPT_DIRTRIM=3
-export PS1="\[$tput_reset\]\[$Green\]\w\[$tput_reset\]\$ "
+
+checkresult()
+{
+    if [ "$?" == "0" ]
+    then
+        echo -e '$ '
+    else
+        echo -e '\e[41m$\e[m '
+    fi
+}
+export PS1="\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: make this work
