@@ -20,6 +20,7 @@ FILES="
 .vimrc
 .vim/skeleton.*
 "
+# TODO: add ranger config files
 
 for f in $FILES
 do

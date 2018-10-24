@@ -22,9 +22,9 @@ HISTFILESIZE=2000 # max lines to store in history file
 # -------------
 
 # command not found, look in the official repositories and suggest something
-if [ -f /usr/share/doc/pkgfile/command-not-found.bash ]; then
-    source /usr/share/doc/pkgfile/command-not-found.bash
-fi
+# if [ -f /usr/share/doc/pkgfile/command-not-found.bash ]; then
+#     source /usr/share/doc/pkgfile/command-not-found.bash
+# fi
 
 # prevent C-s and C-q from suspending and unsuspending the screen
 stty -ixon
@@ -89,7 +89,25 @@ tput_reset=$(tput sgr0)
 # the max number of dirs to print (rest is ...)
 PROMPT_DIRTRIM=3
 
-checkresult()
+# Two-line TODO
+# Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
+export TODO=~/.todo
+function todo()
+{
+    if [ "$#" == "0" ]
+    then
+        cat $TODO
+    else
+        echo "• $@" >> $TODO
+    fi
+}
+
+function todone()
+{
+    sed -i -e "/$*/d" $TODO
+}
+
+function checkresult()
 {
     if [ "$?" == "0" ]
     then
@@ -98,7 +116,13 @@ checkresult()
         echo -e '\e[41m$\e[m '
     fi
 }
-export PS1="\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
+
+function numtodo()
+{
+    todo | wc -l
+}
+
+export PS1="["'`numtodo`'"]""\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: make this work
