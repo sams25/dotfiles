@@ -55,8 +55,6 @@ call vundle#begin()
     Plugin 'tpope/vim-repeat'
     "For consistent vim-tmux navigation
     Plugin 'christoomey/vim-tmux-navigator'
-    "For opening files using a fuzzy search (THIS REQUIRES COMPILATION)
-    "Plugin 'wincent/command-t'
 
     " 2) FILETYPE SPECIFIC
     "For DoxyGen syntax highlighting on top of C/C++
@@ -80,6 +78,7 @@ call vundle#begin()
     "easymotion
     "fugitive
     "vim-markdown (needs tabular)
+    "Plugin 'wincent/command-t' (this requires some extra compilation)
 "}
 call vundle#end()
 
@@ -235,7 +234,7 @@ set encoding=utf-8        "Encoding to display a file in vim
 set fileencoding=utf-8    "Encoding to read/write files
 set virtualedit=block     "Allow cursor to go beyond EOL during visual block
 set lazyredraw            "Do not redraw every time a macro is executed
-syntax enable             "Syntax highlighting, has to be before SpeicalColumns
+syntax enable             "Syntax highlighting, has to be before SpecialColumns
 set belloff=all           "Disable all alarms/visual bells
 set clipboard=unnamedplus "Use the system keyboard and store in register '+'
 
@@ -640,11 +639,12 @@ function! TrimWhiteSpace()
 endfunction
 command! TrimWhiteSpace call TrimWhiteSpace()
 "Call it for all relevant files
+"TODO: use filetypes as opposed to extensions
 augroup TrimWhiteSpaceSpecific
     autocmd!
     autocmd BufWrite *.cc,*.hh,*.cpp,*.hpp,*.c,*.h,*.sh,*.vimrc
             \ :call TrimWhiteSpace()
-    autocmd BufWrite *.R,*.py,*.tex,*.bib,*.sage,*.spyx,*.m
+    autocmd BufWrite *.R,*.py,*.tex,*.bib,*.sage,*.spyx,*.m,*.adoc
             \ :call TrimWhiteSpace()
     autocmd BufWrite Makefile
             \ :call TrimWhiteSpace()

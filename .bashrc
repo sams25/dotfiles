@@ -79,7 +79,7 @@ On_White='\e[47m'
 
 NC="\e[m" # Color Reset
 
-# TODO: make everything use tput
+# For prompts specifically
 tput_bold=$(tput bold)
 tput_reset=$(tput sgr0)
 
@@ -92,19 +92,54 @@ PROMPT_DIRTRIM=3
 # Two-line TODO
 # Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
 export TODO=~/.todo
+export TODO_categories="** 1: Work   2: Personal   3: Fun   4: Extra **"
+
+function todate()
+{
+    sort -o $TODO $TODO
+}
+
 function todo()
 {
+    # Add a new task
+    # Or, if no arugments, show list of tasks 
     if [ "$#" == "0" ]
     then
-        cat $TODO
+        if [ -s $TODO ]
+        then
+            echo -e "${BRed}$TODO_categories${NC}"
+            cat $TODO
+        else
+            echo 'No tasks to do!'
+        fi
     else
-        echo "• $@" >> $TODO
+        echo "- $@" >> $TODO
+        todate
     fi
 }
 
 function todone()
 {
-    sed -i -e "/$*/d" $TODO
+    # Remove a task from the list
+    if [ "$#" != "0" ]
+    then
+        vim -c "%s/^.*$*.*$//c" -c "g/^$/d" -c "wq" $TODO
+    else
+        echo 'Specify a task you have done!'
+    fi
+}
+
+function todraft()
+{
+    # Edit the todo list manually
+    vim $TODO
+    todate
+}
+
+function numtodo()
+{
+    x=$(wc -l < $TODO)
+    echo "[$x]"
 }
 
 function checkresult()
@@ -117,12 +152,7 @@ function checkresult()
     fi
 }
 
-function numtodo()
-{
-    todo | wc -l
-}
-
-export PS1="["'`numtodo`'"]""\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
+export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: make this work
