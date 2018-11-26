@@ -26,7 +26,7 @@ let maplocalleader="\\"
 set t_Co=256
 "Some cool colourschemes - elflord, koehler, ron, slate, default
 colorscheme elflord
-"Dark color
+"Most settings below assume the background is always dark, don't change this
 set background=dark
 
 "}}}
@@ -35,7 +35,7 @@ set background=dark
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 
-filetype off "Because Vundle should have control of it
+filetype off "Because Vundle should have control of it temporarily
 
 "To include Vundle into the run time path and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -49,18 +49,12 @@ call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
     "For a smoother statusline
     Plugin 'bling/vim-airline'
-    "For distraction-free writing
-    Plugin 'junegunn/goyo.vim'
     "For repeating plugin commands
     Plugin 'tpope/vim-repeat'
     "For consistent vim-tmux navigation
     Plugin 'christoomey/vim-tmux-navigator'
 
     " 2) FILETYPE SPECIFIC
-    "For DoxyGen syntax highlighting on top of C/C++
-    Plugin 'DoxyGen-Syntax'
-    "For vim-go, a plugin for Go syntax
-    Plugin 'fatih/vim-go'
     "For markdown syntax
     Plugin 'vim-pandoc/vim-pandoc-syntax'
 
@@ -69,6 +63,8 @@ call vundle#begin()
     Plugin 'kshenoy/vim-signature'
     "For new motions (surround is the opposite of 'inside')
     Plugin 'tpope/vim-surround'
+    "For distraction-free writing
+    Plugin 'junegunn/goyo.vim'
 
     "4) POTENTIALS/LOOK COOL
     "Valloric/YouCompleteMe or supertab
@@ -101,20 +97,6 @@ filetype plugin on "required for the plugins to have effect
 "the plugins are loaded. That way this .vimrc is portable even to systems where
 "the plugins are not loaded
 
-" ****** YouCompleteMe ******
-"let g:ycm_server_python_interpreter='/usr/bin/python'
-"let g:ycm_autoclose_preview_window_after_insertion=1
-"
-"let g:ycm_filetype_blacklist = {
-"    \ 'markdown' : 1,
-"    \ 'text' : 1,
-"    \ 'pandoc' : 1
-"    \}
-
-" ****** CommandT ******
-"To save a file and open a new one
-"nnoremap S :update<CR>:CommandT<CR>
-
 " ****** GoYo ******
 function! GoyoEnterFn()
    set noshowmode
@@ -137,27 +119,17 @@ augroup GoyoStuff
     autocmd User GoyoLeave nested call GoyoLeaveFn()
 augroup END
 
-" ****** Doxygen ******
-"Need to set syntax to cpp.doxygen
-nnoremap <leader>dox :set syntax=cpp.doxygen<CR>
-nnoremap <leader>cpp :set syntax=cpp<CR>
-"CPP/doxygen automatically set syntax
-augroup CppDoxygen
-    autocmd!
-    autocmd BufEnter *.cpp,*.cc,*.hpp,*.hh,*.c,*.h
-        \ set syntax=cpp.doxygen
-augroup END
-
 " ****** Vim-signature****
 "Make the 0-9 marks reflect the 'uppercase' versions of 0-9
 let g:SignatureIncludeMarkers = ')!"£$%^&*('
-"Only display the current marker, and suffix it with an underscore
+"How to display the current marker - sign column is exactly 2 characters
+"Can include m (current mark) p (previous mark) and >/./_/-/etc for decoration
 let g:SignatureMarkOrder = 'm '
 
 " ****** Vim-airline ******
-"Make all information explicit
+"Whether or not to make all information explicit
 let g:airline_skip_empty_sections = 0
-"V- is v line, V| is v block
+"What to display for each of the modes
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -172,23 +144,23 @@ let g:airline_mode_map = {
   \ '' : 'S',
   \ }
 
-"Remove VCS information
+"VCS information
 let g:airline_section_b = ''
-"Remove filetype
+"Filetype
 let g:airline_section_x = ''
-"Remove fileencoding and fileformat if it is utf-8[unix]
+"Fileencoding and fileformat
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-"Make the position in vim file more succinct
+"The position of cursor in vim file more succinct
 let g:airline_section_z = '%p%% %l/%L:%v'
-"Remove warning and error counts (check this again)
+"Warning and error counts
 let g:airline_section_error = ''
 let g:airline_section_warning = ''
 
-"Enable the displaying of buffer list on top
+"The displaying of buffer list on top
 let g:airline#extensions#tabline#enabled = 0
 "The label for the buffer line
 let g:airline#extensions#tabline#buffers_label = ''
-"Enable the selection of up to 10 buffers
+"Whether or not we enable the selection of up to 10 buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 "Some basic shortcuts, we can't use nnoremap because <plug> expands out the
 "internal command
@@ -233,7 +205,7 @@ set showmode              "Show insert/normal/visual etc
 set encoding=utf-8        "Encoding to display a file in vim
 set fileencoding=utf-8    "Encoding to read/write files
 set virtualedit=block     "Allow cursor to go beyond EOL during visual block
-set lazyredraw            "Do not redraw every time a macro is executed
+set lazyredraw            "Whether to redraw every time a macro is executed
 syntax enable             "Syntax highlighting, has to be before SpecialColumns
 set belloff=all           "Disable all alarms/visual bells
 set clipboard=unnamedplus "Use the system keyboard and store in register '+'
@@ -320,6 +292,11 @@ set wildignore+=*.pdf,*.o,*.so,*.pyc,.git/*,*.git
 inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
+"These look handy but they accidentally get triggered a lot
+"execute 'set <M-k>=k'
+"execute 'set <M-j>=j'
+"inoremap <M-k> <C-p>
+"inoremap <M-j> <C-n>
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " WRAPPING AND LINES
@@ -441,7 +418,8 @@ nnoremap <leader><space> :let @/ = ""<CR>
 
 "To make code-aware tags
 "TODO: make this autoupdate instead of rebuilding every time
-command! MakeTags !ctags -R .
+"TODO: find a workaround the options=~/.ctags, why doesn't ctags detect it?
+command! MakeTags !ctags --options=~/.ctags .
 "Shortcut for updating tags
 nnoremap <leader>m :MakeTags<CR><CR>
 "And using them in insert mode
@@ -545,6 +523,11 @@ vnoremap <C-e> :!calc -p -d<CR>
 set spelllang=en_gb
 nnoremap <leader>s :set spell!<CR>
 nnoremap <leader>sp :!aspell -c %<CR>
+"SpellBad - words not recognized, SpellCap - words that should start with a
+"capital letter, SpellLocal - words in a different region, SpellRare - words
+"that are hardly ever used
+hi clear SpellBad
+hi SpellBad ctermfg=red cterm=underline,italic
 
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -557,7 +540,7 @@ augroup VimSpecifc
     "Use the markers we have specified
     autocmd FileType vim setlocal foldmethod=marker
     "and close everything by default
-    autocmd BufEnter *.vimrc normal! zM
+    autocmd BufRead *.vimrc normal! zM
 augroup END
 
 augroup SageSpecific
@@ -601,6 +584,8 @@ augroup CppSpecific
     "To generate base text for a new header file
     autocmd BufNewFile *.h,*.hh,*.hpp call NewCppHeaderFile()
 augroup END
+"To use Doxygen syntax
+let g:load_doxygen_syntax=1
 
 augroup MakefileSpecific
     autocmd!

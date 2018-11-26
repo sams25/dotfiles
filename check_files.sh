@@ -7,8 +7,10 @@
 
 # the files in our git repository, but are stored in the home directory
 FILES="
+.config/qutebrowser/config.py
 .bash_aliases
 .bashrc
+.ctags
 .get_battery.sh
 .get_internet.sh
 .gitconfig

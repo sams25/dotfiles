@@ -1,6 +1,3 @@
-# TODO: figure out what everything in this file does properly,
-# and play around with more
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -21,11 +18,6 @@ HISTFILESIZE=2000 # max lines to store in history file
 # Misc stuff
 # -------------
 
-# command not found, look in the official repositories and suggest something
-# if [ -f /usr/share/doc/pkgfile/command-not-found.bash ]; then
-#     source /usr/share/doc/pkgfile/command-not-found.bash
-# fi
-
 # prevent C-s and C-q from suspending and unsuspending the screen
 stty -ixon
 stty -ixoff
@@ -37,9 +29,6 @@ shopt -s checkwinsize
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and recursively into directories (note the TWO *s)
 shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Colour stuff
 # ------------
@@ -204,3 +193,11 @@ fi
 
 PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 export GEM_HOME=$HOME/.gem
+
+#otherwise this makes start-up very slow
+function nvm_init()
+{
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
