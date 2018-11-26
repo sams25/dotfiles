@@ -91,7 +91,7 @@ function todate()
 function todo()
 {
     # Add a new task
-    # Or, if no arugments, show list of tasks 
+    # Or, if no arugments, show list of tasks
     if [ "$#" == "0" ]
     then
         if [ -s $TODO ]

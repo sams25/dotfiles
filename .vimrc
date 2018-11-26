@@ -24,7 +24,7 @@ let maplocalleader="\\"
 
 "Terminal colours for ctermfg and ctermbg
 set t_Co=256
-"Some cool colourschemes - elflord, koehler, ron, slate, default
+"Some cool colour schemes - elflord, koehler, ron, slate, default
 colorscheme elflord
 "Most settings below assume the background is always dark, don't change this
 set background=dark
@@ -156,6 +156,13 @@ let g:airline_section_z = '%p%% %l/%L:%v'
 let g:airline_section_error = ''
 let g:airline_section_warning = ''
 
+"For spell checks
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_detect_spelllang=0
+
 "The displaying of buffer list on top
 let g:airline#extensions#tabline#enabled = 0
 "The label for the buffer line
@@ -209,6 +216,9 @@ set lazyredraw            "Whether to redraw every time a macro is executed
 syntax enable             "Syntax highlighting, has to be before SpecialColumns
 set belloff=all           "Disable all alarms/visual bells
 set clipboard=unnamedplus "Use the system keyboard and store in register '+'
+
+"Set highlight for TODO to be different than highlights for search
+highlight TODO cterm=bold ctermfg=green ctermbg=None
 
 set mouse=              "Disable all mouse features in terminal
 "TODO: fiddle with this, 'esckeys' and 'ttimeoutlen'
@@ -418,8 +428,7 @@ nnoremap <leader><space> :let @/ = ""<CR>
 
 "To make code-aware tags
 "TODO: make this autoupdate instead of rebuilding every time
-"TODO: find a workaround the options=~/.ctags, why doesn't ctags detect it?
-command! MakeTags !ctags --options=~/.ctags .
+command! MakeTags !ctags --options=$HOME/.ctags
 "Shortcut for updating tags
 nnoremap <leader>m :MakeTags<CR><CR>
 "And using them in insert mode
@@ -528,6 +537,10 @@ nnoremap <leader>sp :!aspell -c %<CR>
 "that are hardly ever used
 hi clear SpellBad
 hi SpellBad ctermfg=red cterm=underline,italic
+hi clear SpellLocal
+hi SpellLocal ctermfg=red cterm=underline,italic
+"By default, look out for spelling mistakes
+set spell
 
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -566,7 +579,7 @@ function! NewCppHeaderFile()
     "Make appropriate replacements
     %s/XXX/\=expand('%:r')/g
     %s/EXTENSION/\=expand('%:e')/g
-    "Set uppercase stuff and position of cursor
+    "Set upper-case stuff and position of cursor
     execute "normal! 7G2wgU$jgU$12G3wgU$10G"
     echom "Loaded Cpp Header File"
 endfunction

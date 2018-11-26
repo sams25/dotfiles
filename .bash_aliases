@@ -8,7 +8,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias top='top -o %CPU'
 # TODO: work around this hack - ctags doesn't seem to load this by default
-alias ctags='ctags --options=~/.ctags' 
+alias ctags='ctags --options=$HOME/.ctags'
 
 # Other programs
 alias vimro='vim -R'
