@@ -21,11 +21,12 @@ FILES="
 .tmux.conf
 .vimrc
 .vim/skeleton.*
+.vim/after/syntax/*
 "
 # TODO: add ranger config files
 
 for f in $FILES
 do
     echo "------ Checking $f ------"
-    diff --color=always $f ~/$f
+    diff --color=always $f $HOME/$f
 done

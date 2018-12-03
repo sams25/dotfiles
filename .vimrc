@@ -36,7 +36,6 @@ set background=dark
 "{{{
 
 filetype off "Because Vundle should have control of it temporarily
-
 "To include Vundle into the run time path and initialise
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -390,6 +389,8 @@ nnoremap ` '
 "To make it so that once you type past 80 characters, the text
 "automatically wraps for you
 set textwidth=80
+"Use autocmd because file plugins overwrite formatoptions
+autocmd BufNewFile,BufRead * setlocal formatoptions=tcqonj
 
 "Displays a coloured column towards the end of the screen to indicate a long
 "line is being written, and ensures all columns after some point are coloured
@@ -428,7 +429,9 @@ nnoremap <leader><space> :let @/ = ""<CR>
 
 "To make code-aware tags
 "TODO: make this autoupdate instead of rebuilding every time
-command! MakeTags !ctags --options=$HOME/.ctags
+command! MakeTags !ctags -f .tags -R --options=$HOME/.ctags
+"The default tags file is called tags, change that
+set tags=./.tags,tags;
 "Shortcut for updating tags
 nnoremap <leader>m :MakeTags<CR><CR>
 "And using them in insert mode
