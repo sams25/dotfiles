@@ -9,6 +9,7 @@
 FILES="
 .config/qutebrowser/config.py
 .bash_aliases
+.bash_profile
 .bashrc
 .ctags
 .get_battery.sh
