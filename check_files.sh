@@ -23,6 +23,7 @@ FILES="
 .vimrc
 .vim/skeleton.*
 .vim/after/syntax/*
+.Xmodmap
 "
 # TODO: add ranger config files
 
