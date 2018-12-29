@@ -68,16 +68,6 @@ On_White='\e[47m'
 
 NC="\e[m" # Color Reset
 
-# For prompts specifically
-tput_bold=$(tput bold)
-tput_reset=$(tput sgr0)
-
-# \u for username
-# \w for full pwd, \W for final part of pwd
-# \$ $ if normal user, # if sudo
-# the max number of dirs to print (rest is ...)
-PROMPT_DIRTRIM=3
-
 # Two-line TODO
 # Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
 export TODO=~/.todo
@@ -130,7 +120,17 @@ function numtodo()
     echo "[$x]"
 }
 
-export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"
+# For prompts specifically
+tput_bold=$(tput bold)
+tput_reset=$(tput sgr0)
+
+# \u for username
+# \w for full pwd, \W for final part of pwd
+# \$ $ if normal user, # if sudo
+# the max number of dirs to print (rest is ...)
+PROMPT_DIRTRIM=3
+
+export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\] "
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: make this work
