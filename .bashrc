@@ -81,13 +81,15 @@ PROMPT_DIRTRIM=3
 # Two-line TODO
 # Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
 export TODO=~/.todo
-export TODO_categories="** 1: Work   2: Personal   3: Fun   4: Extra **"
+if [ ! -f $TODO ]; then
+    touch $TODO
+fi
 
+export TODO_categories="** 1: Work   2: Personal   3: Fun   4: Extra **"
 function todate()
 {
     sort -o $TODO $TODO
 }
-
 function todo()
 {
     # Add a new task
@@ -106,7 +108,6 @@ function todo()
         todate
     fi
 }
-
 function todone()
 {
     # Remove a task from the list
@@ -117,31 +118,19 @@ function todone()
         echo 'Specify a task you have done!'
     fi
 }
-
 function todraft()
 {
     # Edit the todo list manually
     vim $TODO
     todate
 }
-
 function numtodo()
 {
     x=$(wc -l < $TODO)
     echo "[$x]"
 }
 
-function checkresult()
-{
-    if [ "$?" == "0" ]
-    then
-        echo -e '$ '
-    else
-        echo -e '\e[41m$\e[m '
-    fi
-}
-
-export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"'`checkresult`'
+export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\]"
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 # TODO: make this work
@@ -185,5 +174,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
-#export GEM_HOME=$HOME/.gem
+# Paths
+PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+export GEM_HOME=$HOME/.gem
