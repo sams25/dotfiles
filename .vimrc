@@ -225,7 +225,7 @@ set nowritebackup
 "Where to store the undo stuff, in order of preference
 "TODO: make vim create this folder if it does not exist
 if !isdirectory($HOME . "/.vim/undo")
-    silent call mkdir($HOME . ".vim/undo", "p")
+    silent call mkdir($HOME . "/.vim/undo", "p")
 endif
 set undodir=$HOME/.vim/undo/
 "A lot of history

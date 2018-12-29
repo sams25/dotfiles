@@ -7,8 +7,7 @@
 
 # the files in our git repository, but are stored in the home directory
 FILES="
-.i3/*
-.config/qutebrowser/config.py
+.config/i3/*
 .bash_aliases
 .bash_profile
 .bashrc
@@ -23,8 +22,6 @@ FILES="
 .tmux.conf
 .vimrc
 .vim/skeleton.*
-.vim/after/syntax/*
-.Xmodmap
 "
 # TODO: add ranger config files
 

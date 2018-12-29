@@ -1,32 +1,33 @@
-# Command line
+# Basic Utils
 
+* acpi
 * tmux
-* encfs
-* acpimd
-* calc
-* wget
+* gvim
+* base
+* base-devel
+* bash-completion
+* git
+* networkmanager
+* sudo
+
+# Desktop
+
+* i3-gaps
+* i3status
+* i3lock
+* dmenu
+* xorg-server
+* xorg-xinit
+* xf86-video-amdgpu
+* xorg-xwininfo
 
 # Multimedia
 
 * gimp
 * imagemagick
 * vlc
-
-# Comms and Admin
-
-* thunderbird
-
-# Documents
-
-* calibre
-* asciidoctor asciidoc
-* pandoc
-* ruby
-
-# User Apps
-
-* firefox
-* chromium
+* pulseaudio
+* pulseaudio-alsa
 
 # Programming
 
@@ -36,5 +37,22 @@
 * texlive-core
 * cmake
 * sqlite
-* gvim (not vim, because on Arch only gvim can access the system clipboard)
+* ruby
+* r
 
+# Apps
+
+* thunderbird
+* firefox
+* thunderbird
+* dropbox (AUR)
+
+# Documents
+
+* calibre
+* pandoc
+* asciidoctor asciidoc
+
+# Fonts
+
+* TODO: check which ones
