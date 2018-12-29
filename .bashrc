@@ -184,20 +184,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-# ---------------------------------------------
 
-# For gnome terminals to open in the same directory for new tabs
-if [ -f /etc/profile.d/vte.sh ]; then
-    . /etc/profile.d/vte.sh
-fi
-
-PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
-export GEM_HOME=$HOME/.gem
-
-#otherwise this makes start-up very slow
-function nvm_init()
-{
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-}
+#PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+#export GEM_HOME=$HOME/.gem

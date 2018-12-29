@@ -1,4 +1,4 @@
-# explicity expand aliases, needed so that Vim can use this file
+# explicitly expand aliases, needed so that Vim can use this file
 shopt -s expand_aliases
 
 # Programs (basic utilites)
@@ -7,14 +7,12 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias top='top -o %CPU'
-# TODO: work around this hack - ctags doesn't seem to load this by default
 alias ctags='ctags --options=$HOME/.ctags'
 
 # Other programs
 alias vimro='vim -R'
 alias R="R --quiet --no-save"
 alias makenotes='bash ~/.makenotes.sh'
-alias get_battery='bash ~/.get_battery.sh'
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal

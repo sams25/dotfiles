@@ -1,9 +1,7 @@
 #
-# ~/.bash_profile
+# Run for login-shells
 #
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-    exec startx
+if [ -f $HOME/.bashrc ]; then
+    source $HOME/.bashrc
 fi

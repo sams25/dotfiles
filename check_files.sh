@@ -7,6 +7,7 @@
 
 # the files in our git repository, but are stored in the home directory
 FILES="
+.i3/*
 .config/qutebrowser/config.py
 .bash_aliases
 .bash_profile

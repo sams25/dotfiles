@@ -168,31 +168,6 @@ let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#buffers_label = ''
 "Whether or not we enable the selection of up to 10 buffers
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-"Some basic shortcuts, we can't use nnoremap because <plug> expands out the
-"internal command
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>+ <Plug>AirlineSelectNextTab
-let g:airline#extensions#tabline#buffer_idx_format = {
-        \ '0': '0 ',
-        \ '1': '1 ',
-        \ '2': '2 ',
-        \ '3': '3 ',
-        \ '4': '4 ',
-        \ '5': '5 ',
-        \ '6': '6 ',
-        \ '7': '7 ',
-        \ '8': '8 ',
-        \ '9': '9 '
-\}
 "Separators between buffer names in the tabline
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
@@ -249,6 +224,9 @@ set nobackup
 set nowritebackup
 "Where to store the undo stuff, in order of preference
 "TODO: make vim create this folder if it does not exist
+if !isdirectory($HOME . "/.vim/undo")
+    silent call mkdir($HOME . ".vim/undo", "p")
+endif
 set undodir=$HOME/.vim/undo/
 "A lot of history
 set undolevels=300
@@ -278,9 +256,9 @@ set history=1000        "Store lots of commands
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 set wildmenu            "Complete commands with <TAB>
-set wildignorecase      "Ignorecase whilst autocompleting
-"Don't have smartcase for the commandline autocompletetion
-"Assumes both ignorecase and smartcase are already set
+set wildignorecase      "Ignore case whilst auto-completing
+"Don't have smart-case for the command line auto-completion
+"Assumes both ignore-case and smart-case are already set
 augroup DynamicSmartcase
     autocmd!
     autocmd CmdLineEnter : set nosmartcase
@@ -319,7 +297,7 @@ set sidescroll=1        "Scroll by only 1 column as opposed to half a screen
 set sidescrolloff=3     "Give 3 columns of context around cursor
 
 "Make scrolling visually intuitive
-"TODO: set a 'Wrap' that toggles between wrap and sidescroll and j/gj etc
+"TODO: set a 'Wrap' that toggles between wrap and side-scroll and j/gj etc
 if &wrap == 1
     nnoremap j gj
     nnoremap k gk
@@ -331,7 +309,7 @@ if &wrap == 1
     vnoremap 0 g0
 endif
 "Allows us to backspace over a lot of things
-"There is an option to make h and l wrap over lines using whichrap,
+"There is an option to make h and l wrap over lines using which-wrap,
 "but this is not recommended as it may change the behaviour of other
 "combinations when h and l are used as motions
 set backspace=indent,eol,start
@@ -420,7 +398,7 @@ command! ToggleColorColumn call ToggleColorColumn()
 set incsearch   "Star searching as I type
 set hlsearch    "Highlight all matches for the search
 set ignorecase  "Ignore case during searches
-set smartcase   "Unless I explicity type a capital character
+set smartcase   "Unless I explicitly type a capital character
 set gdefault    "Do all substitutions on a line, not just the first
 "TODO: look at / \v \m \M and \V for searches
 
@@ -428,7 +406,7 @@ set gdefault    "Do all substitutions on a line, not just the first
 nnoremap <leader><space> :let @/ = ""<CR>
 
 "To make code-aware tags
-"TODO: make this autoupdate instead of rebuilding every time
+"TODO: make this auto update instead of rebuilding every time
 command! MakeTags !ctags -f .tags -R --options=$HOME/.ctags
 "The default tags file is called tags, change that
 set tags=./.tags,tags;
