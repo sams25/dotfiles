@@ -159,7 +159,7 @@ let g:airline_section_warning = ''
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.spell = '$'
 let g:airline_detect_spelllang=0
 
 "The displaying of buffer list on top

@@ -162,17 +162,6 @@ fi
 # Completion stuff
 complete -c man which systemctl
 complete -cf sudo fusermount
-# ---------------------------------------------
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-   elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
 
 # Paths
 PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"

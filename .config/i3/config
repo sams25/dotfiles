@@ -155,3 +155,9 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# APPLICATIONS THAT RUN ON STARTUP
+exec --no-startup-id dropbox
+exec --no-startup-id nm-applet
+exec --no-startup-id tilix
+

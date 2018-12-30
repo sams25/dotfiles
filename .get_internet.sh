@@ -5,7 +5,7 @@ wifi_success="$(wget -q wttr.in/cambridge -O /dev/null; echo $?)"
 
 if [ "${wifi_success}" == "0" ]
 then
-    echo "☍"
+    echo ">"
 else
-    echo "☹️"
+    echo "¬"
 fi
