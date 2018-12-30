@@ -16,14 +16,15 @@
 * arandr (for multiple monitors)
 * alsa alsa-utils (for audio devices)
 * networkmanager network-manager-applet nm-connection-editor
-* xbindkeys (for function keys)
 
 # Desktop
 
 * dmenu (for running applications in a nice menu)
 * i3-gaps i3status i3lock
+* xbindkeys (for function keys)
 * xf86-video-amdgpu
 * xorg-server xorg-xinit xorg-xwininfo xorg-xbacklight
+* xautolock (for automatically locking X sessions)
 
 # Multimedia
 

@@ -8,6 +8,7 @@
 # the files in our git repository, but are stored in the home directory
 FILES="
 .config/i3/*
+.config/dunst/*
 .bash_aliases
 .bash_profile
 .bashrc
@@ -23,7 +24,6 @@ FILES="
 .xbindkeysrc
 .xinitrc
 "
-# TODO: add ranger config files
 
 for f in $FILES
 do
