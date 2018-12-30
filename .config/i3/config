@@ -16,7 +16,7 @@ focus_follows_mouse no
 
 # Hides borders near the edges of screens
 # none/vertical/horizontal/both/smart
-hide_edge_borders both
+hide_edge_borders smart
 
 # When there's a popup, leave the fullscreen mode so that we can access it
 # leave_fullscreen/smart/ignore
@@ -29,6 +29,8 @@ workspace_auto_back_and_forth yes
 # Don't show title bar
 new_window pixel 0
 
+gaps inner 5
+gaps outer 5
 #########################
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -46,7 +48,7 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec tilix
+bindsym $mod+Return exec $TERMINAL
 
 # kill focused window
 bindsym $mod+x kill
@@ -56,7 +58,7 @@ bindsym $mod+x kill
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 # start dmenu (a program launcher)
-bindsym $mod+shift+d exec dmenu_run
+bindsym $mod+Shift+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
@@ -74,8 +76,6 @@ bindsym $mod+Shift+l move right
 bindsym $mod+backslash split horizontal
 # start splitting in vertical orientation
 bindsym $mod+minus split vertical
-# start splitting in the other orientation to the current one
-bindsym $mod+t split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+Shift+f fullscreen toggle
@@ -129,7 +129,8 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # lock the screen
-bindsym $mod+Shift+q exec i3lock
+bindsym $mod+Control+q exec "i3lock -i /home/anindya/Pictures/LOCKSCREEN.png -t"
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -160,17 +161,29 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        position top
-        output primary
-        tray_padding 0
-        status_command i3status
-        strip_workspace_name no
-        strip_workspace_numbers no
+    # hide/invisible/dock
+    mode hide
+    modifier Mod4
+    position top
+    output primary
+
+    status_command i3status
+    strip_workspace_name no
+    strip_workspace_numbers no
 }
 
+# Change i3 bar mode
+bindsym $mod+b bar mode toggle
+# Change border mode
+bindsym $mod+Shift+b border toggle
+
 # Increase and decrease gaps
-bindsym $mod+z       gaps outer current plus 5
-bindsym $mod+Shift+z gaps outer current minus 5
+bindsym $mod+o        gaps outer current plus 5
+bindsym $mod+Shift+o  gaps outer current minus 5
+bindsym $mod+i        gaps inner current plus 5
+bindsym $mod+Shift+i  gaps inner current minus 5
+bindsym $mod+t        gaps inner current set 0; gaps outer current set 0
+bindsym $mod+Shift+t  gaps inner current set 5; gaps outer current set 5
 
 # Focus parent
 bindsym $mod+p       focus parent
@@ -180,7 +193,11 @@ bindsym $mod+p       focus parent
 
 # APPLICATIONS THAT RUN ON STARTUP
 # Put applets in order left-to-right
+exec --no-startup-id pasystray
 exec --no-startup-id nm-applet
 exec --no-startup-id dropbox
-exec --no-startup-id tilix
+exec --no-startup-id "~/.fehbg"
+exec --no-startup-id $TERMINAL
 
+# Starts dunst for notifications:
+exec --no-startup-id dunst

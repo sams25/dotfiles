@@ -4,3 +4,4 @@
 export EDITOR="vim"
 export BROWSER="firefox"
 export TERMINAL="tilix"
+export PATH=$PATH:$HOME/.scripts

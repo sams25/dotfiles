@@ -47,8 +47,11 @@
 
 # Apps
 
+* deluge
 * dropbox (AUR)
 * firefox
+* pcmanfm
+* ranger
 * thunderbird
 * thunderbird
 
@@ -57,8 +60,9 @@
 * asciidoctor asciidoc
 * calibre
 * pandoc
-* zathura zathura-djvu zathura-pdf-mupdf (for viewing documents)
 * poppler (for manipulating images)
+* texlive-most
+* zathura zathura-djvu zathura-pdf-mupdf (for viewing documents)
 
 # Fonts
 

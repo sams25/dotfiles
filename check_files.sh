@@ -12,11 +12,9 @@ FILES="
 .bash_profile
 .bashrc
 .ctags
-.get_battery.sh
-.get_internet.sh
+.scripts/*
 .gitconfig
 .inputrc
-.makenotes.sh
 .profile
 .Rprofile
 .tmux.conf

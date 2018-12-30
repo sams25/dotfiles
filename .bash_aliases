@@ -12,7 +12,6 @@ alias ctags='ctags --options=$HOME/.ctags'
 # Other programs
 alias vimro='vim -R'
 alias R="R --quiet --no-save"
-alias makenotes='bash ~/.makenotes.sh'
 
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
