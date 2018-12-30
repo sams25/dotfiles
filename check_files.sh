@@ -22,6 +22,8 @@ FILES="
 .tmux.conf
 .vimrc
 .vim/skeleton.*
+.xbindkeysrc
+.xinitrc
 "
 # TODO: add ranger config files
 
