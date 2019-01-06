@@ -22,9 +22,9 @@ options(prompt="> ")
 options(continue="... ")
 
 # Colours in R output
-if(Sys.getenv("TERM") == "xterm-256color") {
-  library("colorout")
-}
+#if(Sys.getenv("TERM") == "xterm-256color") {
+#  library("colorout")
+#}
 
 ####################################################
 ### ------ CAREFUL ZONE (FOR PORTABILITY) ------ ###

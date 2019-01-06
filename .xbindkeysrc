@@ -35,6 +35,7 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
+# TODO: move these to .config/i3 and make sure they display notifications
 # Mute volume
 "pactl set-sink-mute @DEFAULT_SINK@ toggle"
    XF86AudioMute

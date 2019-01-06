@@ -548,7 +548,7 @@ augroup RSpecific
     autocmd BufEnter *.Rprofile set filetype=r
     "Shortcuts for common operators
     autocmd FileType r inoremap <buffer> - <space><-<space>
-    autocmd FileType r inoremap <buffer> <C-b> <space>%>%<space>
+    autocmd FileType r inoremap <buffer> <C-b> %>%<space>
     "Indent R with 2 spaces, the standard for R
     autocmd FileType r
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
@@ -646,13 +646,12 @@ augroup END
 "see how quickfix makes search results display nicer in the statusline, and
 "then checkout IndexSearch
 "-> Configure the makeprg section to be filetype specific
-"-> Think about autocompletetion of matching brackets/parantheses/quotes etc
+"-> Think about auto-completion of matching brackets/parentheses/quotes etc
 "-> Remap ; to : and make # do the same function as ; Because # is the opposite
 "of * and who uses that? Or perhaps we should use it and find something else
 "-> Think of a better way of using insert-mode abbreviations such that when you
 "click backspace, the original text is reverted back
 "-> Have a command to return a buffer to the state that is stored on disc
 "-> Have a command to list all the colours available in vim
-"-> Have a command to toggle on/off the buffer list/bufferline
-
+"-> Have a command to toggle on/off camelCase and snake_case
 "}}}

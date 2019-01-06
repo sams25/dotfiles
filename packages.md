@@ -27,11 +27,13 @@
 * xautolock (for automatically locking X sessions)
 
 # Multimedia
+TODO: check the pulseaudio stuff and remove redundant things
 
 * feh (for image viewing)
+* ffmpeg (for converting streams, audio and video)
 * gimp
 * imagemagick
-* pulseaudio pulseaudio-alsa
+* pulseaudio pulseaudio-alsa pasystray pavucontrol paprefs pulsemixer
 * scrot (for screen capture)
 * maim (for advanced screen capture)
 * vlc

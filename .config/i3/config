@@ -72,10 +72,8 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# start splitting in horizontal orientation
-bindsym $mod+backslash split horizontal
-# start splitting in vertical orientation
-bindsym $mod+minus split vertical
+# start splitting in the opposite orientation than the current one
+bindsym $mod+y split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+Shift+f fullscreen toggle
@@ -134,12 +132,14 @@ assign [class="(?i)chromium"] $ws2
 
 # lock the screen
 bindsym $mod+Control+q exec "xautolock -locknow"
+bindsym Mod4+l exec "xautolock -locknow"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+bindsym $mod+Control+r restart
 # exit i3 (logs you out of your X session)
+# TODO: make this a dmenu script as i3-nagbar can't be accessed by keyboard
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
@@ -169,7 +169,7 @@ bar {
     mode hide
     modifier Mod4
     position top
-    output primary
+    #output primary/others
 
     status_command i3status
     strip_workspace_name no
