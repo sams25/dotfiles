@@ -1,11 +1,14 @@
 #!/bin/bash
 
+pdfreader="zathura"
+
 #This script is used to compile my latex notes and open them
 
 #The name of the latex file, with respect to this file, without the .tex extension
 #TODO: make it so that you can run makenotes from any directory, right now it
 #      creates the new pdf in the location of execution and opens the file in the
 #      subdirectory
+
 fullfile="$1"
 filetypeout=".pdf"
 
@@ -59,7 +62,7 @@ fi
 if [ $? -eq 0 ] && [ "$open" ==  "o" ]
 then
 	echo -e "\nOpening" $file$filetypeout
-	xdg-open "$file$filetypeout"
+	$pdfreader "$file$filetypeout"
 elif [ "$open" != "o" ]
 then
 	echo -e "\nOpen-file is not set, doing nothing."
@@ -68,7 +71,7 @@ else
 	read confirm
 	if [ "$confirm" == "y" ] || [ "$confirm" == "Y" ]
 	then
-		xdg-open "$file$filetypeout"
+		$pdfreader "$file$filetypeout"
 	fi
 fi
 
