@@ -130,9 +130,6 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 assign [class="(?i)firefox"] $ws2
 assign [class="(?i)chromium"] $ws2
 
-# lock the screen
-bindsym $mod+Control+q exec "xautolock -locknow"
-bindsym Mod4+l exec "xautolock -locknow"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -140,16 +137,18 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Control+r restart
 # exit i3 (logs you out of your X session)
 
-# TODO: make this a dmenu script as i3-nagbar can't be accessed by keyboard
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
+set $Locker xautolock -locknow
+# lock the screen
+bindsym Mod4+l          exec --no-startup-id $Locker
+# What the exit options are
 set $mode_exit System Exit (e) exit i3 (l) lock, (r) reboot (s) shutdown
 
 mode "$mode_exit" {
-    bindsym l exec "dunstify lock"
+    bindsym e exec --no-startup-id "i3-msg exit", mode "default"
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    # TODO: fill these out
     bindsym r exec "dunstify reboot"
     bindsym s exec "dunstify shutdown"
-    bindsym e exec "i3-msg exit"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
