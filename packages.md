@@ -33,7 +33,7 @@ TODO: check the pulseaudio stuff and remove redundant things
 * ffmpeg (for converting streams, audio and video)
 * gimp
 * imagemagick
-* pulseaudio pulseaudio-alsa pasystray pavucontrol paprefs pulsemixer
+* pulseaudio pulseaudio-alsa pasystray pavucontrol paprefs pulsemixer pamixer
 * scrot (for screen capture)
 * maim (for advanced screen capture)
 * vlc

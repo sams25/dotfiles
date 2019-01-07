@@ -166,7 +166,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     # hide/invisible/dock
-    mode hide
+    mode dock
     modifier Mod4
     position top
     #output primary/others

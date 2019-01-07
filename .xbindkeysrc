@@ -23,6 +23,9 @@
 #   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
 #   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
 #
+# USING QUOTES IN COMMANDS:
+# xbindkeys just removes outermost quotes before running a command, so don't
+# need to escape " in commands
 
 # The release modifier is not a standard X modifier, but you can
 # use it if you want to catch release events instead of press events
@@ -35,23 +38,24 @@
 #keystate_capslock = enable
 #keystate_scrolllock= enable
 
-# TODO: move these to .config/i3 and make sure they display notifications
-# Mute volume
-"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+# Volumes: depend on pamixer
+# TODO: make this a script and move it to .scripts
+# Make appname VolumeControl so dunst doesn't store the notification, set an id
+# so that dunst replaces the notification (for the time being using 678 because
+# those are the function keys coressponding to volume control)
+"pamixer --toggle-mute; dunstify -a VolumeControl -u low -r 678 "Mute status: $(pamixer --get-mute)""
    XF86AudioMute
-# Increase volume
-"pactl set-sink-volume @DEFAULT_SINK@ +1000"
+"pamixer --increase 1; dunstify -a VolumeControl -u low -r 678 "Volume: $(pamixer --get-volume)""
    XF86AudioRaiseVolume
-# Decrease volume
-"pactl set-sink-volume @DEFAULT_SINK@ -1000"
+"pamixer --decrease 1; dunstify -a VolumeControl -u low -r 678 "Volume: $(pamixer --get-volume)""
    XF86AudioLowerVolume
 
 # Increase backlight
-"xbacklight -inc 10"
-   XF86MonBrightnessUp
+#"xbacklight -inc 10"
+#   XF86MonBrightnessUp
 # Decrease backlight
-"xbacklight -dec 10"
-   XF86MonBrightnessDown
+#"xbacklight -dec 10"
+#   XF86MonBrightnessDown
 
 # Take a screenshot
 "scrot"
