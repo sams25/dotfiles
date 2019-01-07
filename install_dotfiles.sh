@@ -6,6 +6,7 @@ DOTFILE_DIR="`pwd`"
 
 DIRS="
 .config/dunst
+.config/feh
 .config/i3
 .config/i3status
 .scripts/
@@ -17,6 +18,7 @@ FILES="
 .bash_profile
 .bashrc
 .config/dunst/*
+.config/feh/*
 .config/i3/*
 .config/i3status/*
 .ctags
@@ -32,19 +34,19 @@ FILES="
 .xinitrc
 "
 
-echo "Using dotfile directory $DOTFILE_DIR"
+echo -e "Using dotfile directory $DOTFILE_DIR\n"
 
-# First make the directories if they don't exist
-# TODO: figure out a better way of dealing with folders
 for dir in $DIRS
 do
-    echo "Making directory $dir at $HOME"
-    mkdir -p $HOME/$dir
+    # TODO: figure out a better way of dealing with folders
+    # First make the directories if they don't exist
+    mkdir -pv $HOME/$dir
 done
 
-# Then create symbol links
 for file in $FILES
 do
-    echo "Creating symlink to $file at $HOME"
-    ln -sf $DOTFILE_DIR/$file $HOME/$file
+    # Then create symbolic links
+    # Only output the newly created links
+    ln -sv $DOTFILE_DIR/$file $HOME/$file 2>/dev/null
 done
+echo "Done"

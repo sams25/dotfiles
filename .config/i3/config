@@ -139,8 +139,22 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Control+r restart
 # exit i3 (logs you out of your X session)
+
 # TODO: make this a dmenu script as i3-nagbar can't be accessed by keyboard
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+set $mode_exit System Exit (e) exit i3 (l) lock, (r) reboot (s) shutdown
+
+mode "$mode_exit" {
+    bindsym l exec "dunstify lock"
+    bindsym r exec "dunstify reboot"
+    bindsym s exec "dunstify shutdown"
+    bindsym e exec "i3-msg exit"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+e mode "$mode_exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
