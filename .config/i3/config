@@ -209,3 +209,5 @@ exec --no-startup-id dropbox
 
 # User focused
 exec --no-startup-id $TERMINAL
+
+# For extra X keys look at .xbindkeysrc

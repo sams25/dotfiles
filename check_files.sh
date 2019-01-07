@@ -9,6 +9,7 @@
 FILES="
 .config/i3/*
 .config/dunst/*
+.config/i3status/*
 .bash_aliases
 .bash_profile
 .bashrc

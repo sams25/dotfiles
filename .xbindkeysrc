@@ -50,12 +50,13 @@
 "pamixer --decrease 1; dunstify -a VolumeControl -u low -r 678 "Volume: $(pamixer --get-volume)""
    XF86AudioLowerVolume
 
-# Increase backlight
-#"xbacklight -inc 10"
-#   XF86MonBrightnessUp
-# Decrease backlight
-#"xbacklight -dec 10"
-#   XF86MonBrightnessDown
+# Change backlight
+# Needs /usr/local/bin/sysbacklight (aka .scripts/sysbacklight) to be in the
+# sudoers file
+"sudo sysbacklight up"
+   XF86MonBrightnessUp
+"sudo sysbacklight down"
+   XF86MonBrightnessDown
 
 # Take a screenshot
 "scrot"
