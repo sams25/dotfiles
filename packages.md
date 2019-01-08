@@ -21,6 +21,7 @@
 
 * dmenu (for running applications in a nice menu)
 * i3-gaps i3status i3lock
+    - pip install i3ipc
 * xbindkeys (for function keys)
 * xf86-video-amdgpu
 * xorg-server xorg-xinit xorg-xwininfo xorg-xbacklight
