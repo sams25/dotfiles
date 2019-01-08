@@ -4,6 +4,8 @@
 export EDITOR="vim"
 export BROWSER="firefox"
 export TERMINAL="tilix"
+export READER="zathura"
+
 export PATH=$PATH:$HOME/.scripts
 
 # Uncomment if you want to start X on login

@@ -491,6 +491,8 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>
                     \ :setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
 
+"To make using the recipe in the given directory
+nnoremap <C-m> :make<CR>
 "For going through quickfix errors after using make
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprevious<CR>
@@ -554,6 +556,14 @@ augroup RSpecific
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 augroup END
 
+augroup MarkdownSpecific
+    autocmd!
+    "TODO: for some reason calling this seems to get stuck on the output of R
+    "markdown and vim never returns to the editor
+    autocmd Filetype rmd setlocal makeprg=$HOME/.scripts/makenotes\ %
+    autocmd Filetype markdown.pandoc setlocal makeprg=$HOME/.scripts/makenotes\ %
+augroup END
+
 function! NewCppHeaderFile()
     "Read skeleton file
     0read ~/.vim/skeleton.cpp_header
@@ -569,8 +579,6 @@ endfunction
 augroup CppSpecific
     autocmd!
     autocmd BufEnter ~/.vim/skeleton.cpp_header set filetype=cpp
-    "To make using the recipe in the given directory
-    autocmd FileType cpp,c nnoremap <buffer> <C-m> :make<CR>
     "To add a semicolon to the end of the current line
     autocmd FileType cpp,c nnoremap <buffer> <leader>; mqA;<ESC>`q
     "To toggle between header and cpp files quickly

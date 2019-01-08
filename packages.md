@@ -43,10 +43,12 @@ TODO: check the pulseaudio stuff and remove redundant things
 * cmake
 * python python-pip
     + (pip libraries: pandas scipy numpy)
-* r
+* r rstudio
+    - (requires tk for selecting mirrors for installation)
+    - rmarkdown, tidyverse, ggplot2
 * ruby
 * sqlite
-* texlive-core
+* texlive-most
 
 # Apps
 
@@ -62,7 +64,7 @@ TODO: check the pulseaudio stuff and remove redundant things
 
 * asciidoctor asciidoc
 * calibre
-* pandoc
+* pandoc pandoc-citeproc
 * poppler (for manipulating images)
 * texlive-most
 * zathura zathura-djvu zathura-pdf-mupdf (for viewing documents)
