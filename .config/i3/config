@@ -23,9 +23,9 @@ hide_edge_borders smart
 # leave_fullscreen/smart/ignore
 popup_during_fullscreen leave_fullscreen
 
-# Selecting current workspace switches to most recently used workspace
-# yes/no
-workspace_auto_back_and_forth yes
+# Selecting current workspace when you are on it - does it stay where you are or
+# does it switch to last used workspace?  (yes/no)
+workspace_auto_back_and_forth no
 
 # Don't show title bar
 new_window pixel 0
@@ -43,18 +43,11 @@ workspace_layout tabbed
 # is used in the bar {} block below.
 font pango:monospace 8
 
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec $TERMINAL
+bindsym $mod+Return exec --no-startup-id $TERMINAL
 
 # kill focused window
 bindsym $mod+x kill
@@ -64,7 +57,9 @@ bindsym $mod+x kill
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 # start dmenu (a program launcher)
-bindsym $mod+Shift+d exec dmenu_run
+bindsym $mod+Shift+d exec --no-startup-id dmenu_run
+# interactively right an i3-msg
+bindsym $mod+m exec --no-startup-id i3-input -P "i3-msg> "
 
 # change focus
 bindsym $mod+h focus left
@@ -100,6 +95,8 @@ bindsym $mod+Shift+comma workspace prev
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+# TODO: Use scratch-pad workspace
+# TODO: Look at making workspace 0 special
 set $ws1 "Terminal"
 set $ws2 "Web"
 set $ws3 "3"
@@ -138,6 +135,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # assign certain applications to workspaces
 assign [class="(?i)firefox"] $ws2
 assign [class="(?i)chromium"] $ws2
+assign [class="(?i)franz"] $ws2
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -152,16 +150,17 @@ bindsym Mod4+l          exec --no-startup-id $Locker
 set $mode_exit System Exit (e) exit i3 (l) lock, (r) reboot (s) shutdown
 
 mode "$mode_exit" {
-    bindsym e exec --no-startup-id "i3-msg exit", mode "default"
-    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exit
+    bindsym l exec --no-startup-id $Locker
     # TODO: fill these out
-    bindsym r exec "dunstify reboot"
-    bindsym s exec "dunstify shutdown"
+    bindsym r exec --no-startup-id "dunstify reboot", mode "default"
+    bindsym s exec --no-startup-id "dunstify shutdown", mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+e mode "$mode_exit"
+bindsym $mod+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -197,7 +196,7 @@ bar {
     strip_workspace_numbers no
 }
 
-# Change i3 bar mode
+# Dock/hide the i3bar
 bindsym $mod+b bar mode toggle
 # Change border mode
 bindsym $mod+Shift+b border toggle
@@ -222,7 +221,6 @@ bindsym $mod+p       focus parent
 exec --no-startup-id "~/.fehbg"
 exec --no-startup-id dunst
 exec --no-startup-id "~/.scripts/lock_screen"
-exec --no-startup-id "python ~/.scripts/i3bar_workspace.py"
 
 # Put applets in order left-to-right
 exec --no-startup-id pasystray

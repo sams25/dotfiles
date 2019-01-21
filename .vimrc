@@ -409,7 +409,7 @@ nnoremap <leader><space> :let @/ = ""<CR>
 "TODO: make this auto update instead of rebuilding every time
 command! MakeTags !ctags -f .tags -R --options=$HOME/.ctags
 "The default tags file is called tags, change that
-set tags=./.tags,tags;
+set tags=./.tags,.tags;
 "Shortcut for updating tags
 nnoremap <leader>m :MakeTags<CR><CR>
 "And using them in insert mode

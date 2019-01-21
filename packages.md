@@ -16,6 +16,7 @@
 * arandr (for multiple monitors)
 * alsa alsa-utils (for audio devices)
 * networkmanager network-manager-applet nm-connection-editor
+* libmtp (for android file transfer)
 
 # Desktop
 
@@ -42,6 +43,8 @@ TODO: check the pulseaudio stuff and remove redundant things
 # Programming
 
 * cmake
+* ctags
+* doxygen graphviz
 * python python-pip
     + (pip libraries: pandas scipy numpy)
 * r rstudio
@@ -73,6 +76,10 @@ TODO: check the pulseaudio stuff and remove redundant things
 # Fonts
 
 * TODO: check which ones
+
+# Monitoring
+
+* vnstat (for network traffic)
 
 # TODO
 

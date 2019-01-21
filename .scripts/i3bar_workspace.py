@@ -1,6 +1,8 @@
 #!/usr/bin python
 
 #
+# THIS IS NOT BEING USED. DO NOT USE THIS. BUT PLAY WITH i3ipc EVENTS.
+#
 # Hides i3bar for the terminal workspace because we use tmux's bar instead
 #
 
@@ -19,8 +21,6 @@ def on_workspace_focus(self, e):
     # with the data of the event sent from i3.
     if e.current and e.current.name == TERMINAL_WORKSPACE:
         i3.command('bar mode hide')
-    else:
-        i3.command('bar mode dock')
 
 # Subscribe to events
 i3.on('workspace::focus', on_workspace_focus)
