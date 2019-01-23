@@ -1,13 +1,7 @@
 # Anindya's dotfiles
-My config files on Arch Linux, but most settings should work on any Linux distro
-I live in the vim/tmux/i3 'meme'.
+My config files on Arch Linux, but most settings should work on any Linux distro.
 
-Currently contains dotfiles for
-* Bash (and Readline)
-* Git
-* R
-* Tmux
-* Vim (and Vim's templates)
+I live in the vim/tmux/i3 'meme', and most of my command shortcuts are based on never leaving the home row.
 
 Also, contains handy shell scripts for
 * Compiling my notes
