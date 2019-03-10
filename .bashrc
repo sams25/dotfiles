@@ -11,14 +11,17 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash
-HISTSIZE=1000 # max lines to remember in command history
-HISTFILESIZE=2000 # max lines to store in history file
+HISTSIZE=100000     # max number of commands to remember
+HISTFILESIZE=100000 # max number of lines in history file
+# Write to history file after every run so that we don't need clean log-outs
+# from all sessions in order to save history
+export PROMPT_COMMAND='history -a'
 # ------------
 
 # Misc stuff
 # -------------
 
-# prevent C-s and C-q from suspending and unsuspending the screen
+# prevent C-s and C-q from suspending and un-suspending the screen
 stty -ixon
 stty -ixoff
 
@@ -33,10 +36,10 @@ shopt -s globstar
 # Colour stuff
 # ------------
 
-# Color definitions (taken from Color Bash Prompt HowTo).
+# Colour definitions (taken from Colour Bash Prompt HowTo).
 # To use in a string go "${Col} string-in-colour ${NC} no-colour"
 
-# Normal Colors
+# Normal Colours
 Black='\e[0;30m'
 Red='\e[0;31m'
 Green='\e[0;32m'
@@ -66,11 +69,11 @@ On_Purple='\e[45m'
 On_Cyan='\e[46m'
 On_White='\e[47m'
 
-NC="\e[m" # Color Reset
+NC="\e[m" # Colour Reset
 
 # Two-line TODO
 # Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
-export TODO=~/.todo
+export TODO=$HOME/Dropbox/MIMO/.todo
 if [ ! -f $TODO ]; then
     touch $TODO
 fi
@@ -132,10 +135,10 @@ PROMPT_DIRTRIM=3
 
 export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\] "
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+# set a fancy prompt (non-colour, unless we know we "want" colour)
 # TODO: make this work
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-colour) colour_prompt=yes;;
 esac
 
 # colourise output of less
@@ -166,3 +169,9 @@ complete -cf sudo fusermount
 # Paths
 PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 export GEM_HOME=$HOME/.gem
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/anindya/google-cloud-sdk/completion.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/completion.bash.inc'; fi

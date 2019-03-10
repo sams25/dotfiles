@@ -20,6 +20,10 @@ options(editor = "vim")                                   # For `edit()`
 # Better prompts
 options(prompt="> ")
 options(continue="... ")
+# 'number of print entries', keep this small-ish
+options(max.print=50)
+# how many digits of milliseconds to print
+options(digits.secs=3)
 
 # Colours in R output
 #if(Sys.getenv("TERM") == "xterm-256color") {

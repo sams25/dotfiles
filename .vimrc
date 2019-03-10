@@ -564,6 +564,11 @@ augroup MarkdownSpecific
     autocmd Filetype markdown.pandoc setlocal makeprg=$HOME/.scripts/makenotes\ %
 augroup END
 
+augroup LaTeXSpecific
+    autocmd!
+    autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
+augroup END
+
 function! NewCppHeaderFile()
     "Read skeleton file
     0read ~/.vim/skeleton.cpp_header
@@ -644,6 +649,9 @@ augroup END
 "{{{
 
 "TODO:
+"-> Make this a shortcut - it rounds numbers to 2 decimal places
+":perldo s/(\d+\.\d+)/sprintf "%.2f", $1/eg
+
 "-> Play around with Autocmd events
 "----> make default code for .cpp, .hh files
 "----> use filetype specific iabbrevs for common constructs

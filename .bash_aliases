@@ -9,10 +9,6 @@ alias egrep='egrep --color=auto'
 alias top='top -o %CPU'
 alias ctags='ctags --options=$HOME/.ctags'
 
-# Other programs
-alias vimro='vim -R'
-alias R="R --quiet --no-save"
-
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
 alias ls='ls -h --color=auto -F'
@@ -43,6 +39,11 @@ alias reboot="sudo systemctl reboot"
 alias poweroff="sudo systemctl poweroff"
 alias shutdown="sudo systemctl shutdown"
 alias halt="sudo systemctl halt"
+
+# Other programs
+alias vimro='vim -R'
+alias R="R --quiet --no-save"
+alias youtube-dl-music="youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0"
 
 # My local paths
 # -------------
