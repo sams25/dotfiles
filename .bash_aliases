@@ -47,3 +47,14 @@ alias youtube-dl-music="youtube-dl -f bestaudio -x --audio-format mp3 --audio-qu
 
 # My local paths
 # -------------
+
+PATH="$PATH:$HOME/aur_packages/android-studio/bin/"
+
+PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+export GEM_HOME=$HOME/.gem
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/anindya/google-cloud-sdk/completion.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/completion.bash.inc'; fi

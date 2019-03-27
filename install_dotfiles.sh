@@ -7,6 +7,7 @@ DOTFILE_DIR="`pwd`"
 DIRS="
 .config/dunst
 .config/feh
+.config/htop
 .config/i3
 .config/i3status
 .scripts/
@@ -19,9 +20,11 @@ FILES="
 .bashrc
 .config/dunst/*
 .config/feh/*
+.config/htop/*
 .config/i3/*
 .config/i3status/*
 .ctags
+.duckduckgosettings
 .gitconfig
 .inputrc
 .profile

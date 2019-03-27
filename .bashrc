@@ -151,13 +151,7 @@ export LESS_TERMCAP_ue=$'\e[0m' \
 export LESS_TERMCAP_us=$'\e[01;32m' \
 # ------------
 
-# Useful aliases
-# -------------
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
+# Useful aliases and PATHS
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -165,13 +159,3 @@ fi
 # Completion stuff
 complete -c man which systemctl
 complete -cf sudo fusermount
-
-# Paths
-PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
-export GEM_HOME=$HOME/.gem
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/anindya/google-cloud-sdk/completion.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/completion.bash.inc'; fi
