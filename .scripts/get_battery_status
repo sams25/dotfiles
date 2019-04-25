@@ -1,6 +1,9 @@
 #!/bin/bash
-charge_status="$(acpi --battery | cut -d ' ' -f 3 | tr -d ,%)"
-percentage="$(acpi --battery | cut -d ' ' -f 4 | tr -d ,%)"
+
+# There are two batteries on the Thinkpad, using `head -1` to only get the main
+# battery status.
+charge_status="$(acpi --battery | cut -d ' ' -f 3 | tr -d ,% | head -1)"
+percentage="$(acpi --battery | cut -d ' ' -f 4 | tr -d ,% | head -1)"
 
 # Discharging/Full/Charging
 if [ "${charge_status}" == "Discharging" ]

@@ -32,14 +32,6 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias sl='ls'
 
-# Power management
-# Optional: Add these commands to sudoers using visudo, and make them not
-# require a password
-alias reboot="sudo systemctl reboot"
-alias poweroff="sudo systemctl poweroff"
-alias shutdown="sudo systemctl shutdown"
-alias halt="sudo systemctl halt"
-
 # Other programs
 alias vimro='vim -R'
 alias R="R --quiet --no-save"

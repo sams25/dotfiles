@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# time is in minutes, notify is in seconds
-xautolock -time 3 \
-          -locker 'pactl set-sink-mute @DEFAULT_SINK@ 1; \
-                   i3lock -t -i ~/Pictures/LOCKSCREEN.png -c 333333' \
-          -notify 15 -notifier 'notify-send "About to lock screen ..."'

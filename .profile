@@ -1,15 +1,23 @@
-#!bin/bash
 # Profile - runs on login
 
 export EDITOR="vim"
 export BROWSER="firefox"
-export TERMINAL="tilix"
-export READER="zathura"
 
 export PATH=$PATH:$HOME/.scripts
 
-# Uncomment if you want to start X on login
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
 
-#if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-#  exec startx
-#fi
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi

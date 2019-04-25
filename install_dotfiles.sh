@@ -5,10 +5,6 @@
 DOTFILE_DIR="`pwd`"
 
 DIRS="
-.config/dunst
-.config/feh
-.config/i3
-.config/i3status
 .scripts/
 .vim/
 "
@@ -17,10 +13,6 @@ FILES="
 .bash_aliases
 .bash_profile
 .bashrc
-.config/dunst/*
-.config/feh/*
-.config/i3/*
-.config/i3status/*
 .ctags
 .gitconfig
 .inputrc
@@ -30,8 +22,6 @@ FILES="
 .tmux.conf
 .vim/skeleton.*
 .vimrc
-.xbindkeysrc
-.xinitrc
 "
 
 echo -e "Using dotfile directory $DOTFILE_DIR\n"

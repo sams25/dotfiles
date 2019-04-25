@@ -1,12 +1,8 @@
 # Basic Utils
 
-* base base-devel
 * bash-completion
-* calc
 * git
-* gnome-keyring
-* gvim
-* sudo
+* vim
 * tmux
 * wget
 
@@ -18,26 +14,11 @@
 * networkmanager network-manager-applet nm-connection-editor
 * libmtp (for android file transfer)
 
-# Desktop
-
-* dmenu (for running applications in a nice menu)
-* i3-gaps i3status i3lock
-    - pip install i3ipc
-* xbindkeys (for function keys)
-* xf86-video-amdgpu
-* xorg-server xorg-xinit xorg-xwininfo xorg-xbacklight
-* xautolock (for automatically locking X sessions)
-
 # Multimedia
 TODO: check the pulseaudio stuff and remove redundant things
 
-* feh (for image viewing)
-* ffmpeg (for converting streams, audio and video)
 * gimp
 * imagemagick
-* pulseaudio pulseaudio-alsa pasystray pavucontrol paprefs pulsemixer pamixer
-* scrot (for screen capture)
-* maim (for advanced screen capture)
 * vlc
 
 # Programming
@@ -58,10 +39,7 @@ TODO: check the pulseaudio stuff and remove redundant things
 
 * deluge
 * dropbox (AUR)
-* firefox
-* pcmanfm
 * ranger
-* thunderbird
 * thunderbird
 
 # Documents
@@ -72,14 +50,6 @@ TODO: check the pulseaudio stuff and remove redundant things
 * poppler (for manipulating images)
 * texlive-most
 * zathura zathura-djvu zathura-pdf-mupdf (for viewing documents)
-
-# Fonts
-
-* TODO: check which ones
-
-# Monitoring
-
-* vnstat (for network traffic)
 
 # TODO
 
