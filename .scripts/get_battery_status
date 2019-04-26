@@ -1,20 +1,30 @@
 #!/bin/bash
 
-# There are two batteries on the Thinkpad, using `head -1` to only get the main
-# battery status.
-charge_status="$(acpi --battery | cut -d ' ' -f 3 | tr -d ,% | head -1)"
-percentage="$(acpi --battery | cut -d ' ' -f 4 | tr -d ,% | head -1)"
+typeset -i num_batteries=$(acpi | wc -l)
 
-# Discharging/Full/Charging
-if [ "${charge_status}" == "Discharging" ]
-then
-    echo "-""${percentage}"
-elif [ "${charge_status}" == "Charging" ]
-then
-    echo "+""${percentage}"
-elif [ "${charge_status}" == "Full" ]
-then
-    echo "~""${percentage}"
-else
-    echo "?"
-fi
+output=""
+
+for (( i = 1; i <= $num_batteries; ++i ))
+do
+    charge_status="$(acpi --battery | cut -d ' ' -f 3 | tr -d ,% | sed -n ${i}p)"
+    percentage="$(acpi --battery | cut -d ' ' -f 4 | tr -d ,% | sed -n ${i}p)"
+
+    if [ "${charge_status}" == "Discharging" ]
+    then
+        output+="-""${percentage}"
+    elif [ "${charge_status}" == "Charging" ]
+    then
+        output+="+""${percentage}"
+    elif [ "${charge_status}" == "Full" ]
+    then
+        output+="~""${percentage}"
+    elif [ "${charge_status}" == "Unknown" ]
+    then
+        output+="*""${percentage}"
+    else
+        output+="?"
+    fi
+    output+=" "
+done
+
+echo ${output}

@@ -38,6 +38,7 @@ alias R="R --quiet --no-save"
 alias youtube-dl-music="youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0"
 # Stupid Ubuntu
 alias python='/usr/bin/python3'
+alias pip='/usr/bin/pip3'
 
 # My local paths
 # -------------
