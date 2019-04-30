@@ -167,8 +167,8 @@ complete -c man which systemctl
 complete -cf sudo fusermount
 
 # Paths
-PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
 export GEM_HOME=$HOME/.gem
+PATH="$PATH:${GEM_HOME}/bin"
 
 
 # The next line updates PATH for the Google Cloud SDK.

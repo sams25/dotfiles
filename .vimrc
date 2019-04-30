@@ -547,7 +547,7 @@ augroup END
 
 augroup RSpecific
     autocmd!
-    autocmd BufEnter *.Rprofile set filetype=r
+    autocmd BufEnter *.Rprofile,*.r,*.R set filetype=r
     "Shortcuts for common operators
     autocmd FileType r inoremap <buffer> - <space><-<space>
     autocmd FileType r inoremap <buffer> <C-b> %>%<space>

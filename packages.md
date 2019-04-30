@@ -2,7 +2,9 @@
 
 * bash-completion
 * git
-* vim
+* vim-gnome (remove all other vim packages, use vim-gnome for clipboard to work
+  everywhere)
+* xclip (and *not* xsel)
 * tmux
 * wget
 
