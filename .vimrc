@@ -56,6 +56,8 @@ call vundle#begin()
     " 2) FILETYPE SPECIFIC
     "For markdown syntax
     Plugin 'vim-pandoc/vim-pandoc-syntax'
+    "For LaTeX
+    "Plugin 'vim-latex/vim-latex'
 
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks
@@ -607,13 +609,20 @@ augroup TextSpecific
     autocmd FileType tex,markdown,markdown.pandoc,text set spell
 augroup END
 
+function! NewMarkdownPresentationFile()
+    0read ~/.vim/skeleton.markdown_presentation
+    execute "normal! 2j2l"
+    echom "Loaded Markdown Presentation File"
+endfunction
+
 "Needed for Pandoc-compatible syntax highlighting of markdown files
 augroup pandoc_syntax
     autocmd!
-    autocmd BufNewFile,BufFilePre,BufRead *.md
+    autocmd BufNewFile,BufFilePre,BufRead *.md,*.pmd
         \ set filetype=markdown.pandoc
     "To prevent Vim from automatically joining lines
     autocmd FileType markdown.pandoc setlocal formatoptions-=a
+    autocmd BufNewFile *.pmd call NewMarkdownPresentationFile()
 augroup END
 
 augroup PlaintextSpecific

@@ -51,6 +51,12 @@ case "$filetypein" in
         $makeprg $fullfile -o $file$filetypeout
         ;;
 
+    "pmd")
+        echo 'Presentation (Beamer) Markdown'
+        makeprg="pandoc --pdf-engine=pdflatex -t beamer"
+        $makeprg $fullfile -o $file$filetypeout
+        ;;
+
     "rmd")
         echo 'R Markdown'
         makeprg="Rscript -e \"rmarkdown::render('$fullfile', clean=TRUE)\""

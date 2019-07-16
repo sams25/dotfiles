@@ -39,6 +39,3 @@ alias youtube-dl-music="youtube-dl -f bestaudio -x --audio-format mp3 --audio-qu
 # Stupid Ubuntu
 alias python='/usr/bin/python3'
 alias pip='/usr/bin/pip3'
-
-# My local paths
-# -------------
