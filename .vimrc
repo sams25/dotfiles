@@ -58,6 +58,8 @@ call vundle#begin()
     Plugin 'vim-pandoc/vim-pandoc-syntax'
     "For LaTeX
     "Plugin 'vim-latex/vim-latex'
+    "For Javascript
+    Plugin 'pangloss/vim-javascript'
 
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks
@@ -66,6 +68,8 @@ call vundle#begin()
     Plugin 'tpope/vim-surround'
     "For distraction-free writing
     Plugin 'junegunn/goyo.vim'
+    "For useful undos - gundo requires python 2.4 compilation
+    Plugin 'mbbill/undotree'
 
     "4) POTENTIALS/LOOK COOL
     "Valloric/YouCompleteMe or supertab
@@ -119,6 +123,13 @@ augroup GoyoStuff
     autocmd User GoyoEnter nested call GoyoEnterFn()
     autocmd User GoyoLeave nested call GoyoLeaveFn()
 augroup END
+
+" ****** Undotree ******
+nnoremap U :UndotreeToggle<CR>
+
+" ****** vim-javascript ******
+"For Javascript documentation
+let g:javascript_plugin_jsdoc = 1
 
 " ****** Vim-signature****
 "Make the 0-9 marks reflect the 'uppercase' versions of 0-9
@@ -647,7 +658,7 @@ augroup TrimWhiteSpaceSpecific
             \ :call TrimWhiteSpace()
     autocmd BufWrite *.R,*.py,*.tex,*.bib,*.sage,*.spyx,*.m,*.adoc
             \ :call TrimWhiteSpace()
-    autocmd BufWrite Makefile
+    autocmd BufWrite Makefile,*.js
             \ :call TrimWhiteSpace()
 augroup END
 

@@ -7,6 +7,7 @@
 * xclip (and *not* xsel)
 * tmux
 * wget
+* fzf
 
 # Basic Interfaces
 
