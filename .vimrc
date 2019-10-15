@@ -567,30 +567,6 @@ augroup SageSpecific
     autocmd BufEnter *.sage,*.spyx set filetype=python
 augroup END
 
-augroup RSpecific
-    autocmd!
-    autocmd BufEnter *.Rprofile,*.r,*.R set filetype=r
-    "Shortcuts for common operators
-    autocmd FileType r inoremap <buffer> - <space><-<space>
-    autocmd FileType r inoremap <buffer> <C-b> %>%<space>
-    "Indent R with 2 spaces, the standard for R
-    autocmd FileType r
-        \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-augroup END
-
-augroup MarkdownSpecific
-    autocmd!
-    "TODO: for some reason calling this seems to get stuck on the output of R
-    "markdown and vim never returns to the editor
-    autocmd Filetype rmd setlocal makeprg=$HOME/.scripts/makenotes\ %
-    autocmd Filetype markdown.pandoc setlocal makeprg=$HOME/.scripts/makenotes\ %
-augroup END
-
-augroup LaTeXSpecific
-    autocmd!
-    autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
-augroup END
-
 function! NewCppHeaderFile()
     "Read skeleton file
     0read ~/.vim/skeleton.cpp_header
@@ -599,7 +575,7 @@ function! NewCppHeaderFile()
     %s/EXTENSION/\=expand('%:e')/g
     "Set upper-case stuff and position of cursor
     execute "normal! 7G2wgU$jgU$12G3wgU$10G"
-    echom "Loaded Cpp Header File"
+    echom "Loaded initial C++ header file"
 endfunction
 
 "Make commands for C/C++
@@ -623,6 +599,37 @@ augroup MakefileSpecific
         \ setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
 augroup END
 
+augroup RSpecific
+    autocmd!
+    autocmd BufEnter *.Rprofile,*.r,*.R set filetype=r
+    "Shortcuts for common operators
+    autocmd FileType r inoremap <buffer> - <space><-<space>
+    autocmd FileType r inoremap <buffer> <C-b> %>%<space>
+    "Indent R with 2 spaces, the standard for R
+    autocmd FileType r
+        \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+augroup END
+
+function! NewRMarkdownFile()
+    0read ~/.vim/skeleton.Rmarkdown
+    execute "normal! 3j"
+    echom "Loaded initial Rmarkdown file"
+endfunction
+
+augroup MarkdownSpecific
+    autocmd!
+    "TODO: for some reason calling this seems to get stuck on the output of R
+    "markdown and vim never returns to the editor
+    autocmd Filetype rmd setlocal makeprg=$HOME/.scripts/makenotes\ %
+    autocmd Filetype markdown.pandoc setlocal makeprg=$HOME/.scripts/makenotes\ %
+    autocmd BufNewFile *.Rmd call NewRMarkdownFile()
+augroup END
+
+augroup LaTeXSpecific
+    autocmd!
+    autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
+augroup END
+
 "For files that mostly comprise of English words
 augroup TextSpecific
     autocmd!
@@ -632,7 +639,7 @@ augroup END
 function! NewMarkdownPresentationFile()
     0read ~/.vim/skeleton.markdown_presentation
     execute "normal! 2j2l"
-    echom "Loaded Markdown Presentation File"
+    echom "Loaded initial Markdown presentation file"
 endfunction
 
 "Needed for Pandoc-compatible syntax highlighting of markdown files

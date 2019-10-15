@@ -59,7 +59,7 @@ case "$filetypein" in
 
     "Rmd")
         echo 'R Markdown'
-        makeprg="Rscript -e \"rmarkdown::render('$fullfile', clean=TRUE)\""
+        makeprg="Rscript --vanilla -e \"rmarkdown::render('$fullfile', clean=TRUE)\""
         eval $makeprg
         ;;
 
