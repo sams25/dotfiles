@@ -57,7 +57,7 @@ case "$filetypein" in
         $makeprg $fullfile -o $file$filetypeout
         ;;
 
-    "rmd")
+    "Rmd")
         echo 'R Markdown'
         makeprg="Rscript -e \"rmarkdown::render('$fullfile', clean=TRUE)\""
         eval $makeprg
@@ -67,6 +67,12 @@ case "$filetypein" in
         echo 'Asciidoc'
         makeprg="asciidoctor-pdf"
         $makeprg $fullfile
+        ;;
+
+    *)
+        echo 'Unknown file type, cannot make notes'
+        exit 1
+        ;;
 esac
 
 if [ $? -eq 0 ] && [ "$to_open" ==  "o" ]

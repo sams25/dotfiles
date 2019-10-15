@@ -52,14 +52,18 @@ call vundle#begin()
     Plugin 'tpope/vim-repeat'
     "For consistent vim-tmux navigation
     Plugin 'christoomey/vim-tmux-navigator'
+    "For useful auto completeion of brackets, quotes etc
+    Plugin 'jiangmiao/auto-pairs'
+    "For autocompletion
+    Plugin 'ycm-core/YouCompleteMe'
 
     " 2) FILETYPE SPECIFIC
     "For markdown syntax
     Plugin 'vim-pandoc/vim-pandoc-syntax'
-    "For LaTeX
-    "Plugin 'vim-latex/vim-latex'
     "For Javascript
     Plugin 'pangloss/vim-javascript'
+    "For LaTeX
+    "Plugin 'vim-latex/vim-latex'
 
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks
@@ -72,7 +76,6 @@ call vundle#begin()
     Plugin 'mbbill/undotree'
 
     "4) POTENTIALS/LOOK COOL
-    "Valloric/YouCompleteMe or supertab
     "NERDcommenting or commentary.vim
     "NERDTree
     "vim-gitgutter
@@ -130,6 +133,10 @@ nnoremap U :UndotreeToggle<CR>
 " ****** vim-javascript ******
 "For Javascript documentation
 let g:javascript_plugin_jsdoc = 1
+
+" ****** ycm-YouCompleteMe ******
+"For python autocompletion, we need to set a compiler
+"Look at setting g:ycm_extra_conf_vim_data in the docs on YCM @ Github
 
 " ****** Vim-signature****
 "Make the 0-9 marks reflect the 'uppercase' versions of 0-9
@@ -430,6 +437,8 @@ inoremap <C-]> <C-x><C-]>
 "<C-]> for finding tags, (g<C-]> for ambiguous)
 "<C-t> for jumping back to previous location
 
+"Shortcut to replace current word
+nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SAVING, OPENING, CLOSING
@@ -504,8 +513,8 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>
                     \ :setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
 
-"To make using the recipe in the given directory
-nnoremap <C-m> :make<CR>
+"To build using the recipe in the given directory
+nnoremap <C-b> :make<CR>
 "For going through quickfix errors after using make
 nnoremap <leader>n :cnext<CR>
 nnoremap <leader>p :cprevious<CR>
@@ -671,6 +680,8 @@ augroup END
 "TODO:
 "-> Make this a shortcut - it rounds numbers to 2 decimal places
 ":perldo s/(\d+\.\d+)/sprintf "%.2f", $1/eg
+
+"->For python, make 'if', 'for' etc in bold
 
 "-> Play around with Autocmd events
 "----> make default code for .cpp, .hh files
