@@ -64,6 +64,8 @@ call vundle#begin()
     Plugin 'tpope/vim-surround'
     "For distraction-free writing
     Plugin 'junegunn/goyo.vim'
+    "For alignning code
+    Plugin 'tommcdo/vim-lion'
 
     "4) POTENTIALS/LOOK COOL
     "Valloric/YouCompleteMe or supertab

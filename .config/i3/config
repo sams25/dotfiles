@@ -99,7 +99,7 @@ bindsym $mod+Shift+comma workspace prev
 # TODO: Look at making workspace 0 special
 set $ws1 "Terminal"
 set $ws2 "Web"
-set $ws3 "3"
+set $ws3 "Extra"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
