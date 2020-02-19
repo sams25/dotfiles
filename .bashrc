@@ -81,7 +81,7 @@ tput_reset=$(tput sgr0)
 # the max number of dirs to print (rest is ...)
 PROMPT_DIRTRIM=3
 
-export PS1='`numtodo`'"\[$tput_reset\]\[$Green\]\w\[$tput_reset\] "
+export PS1="\[$tput_reset\]\[$Green\]\w\[$tput_reset\] "
 
 # set a fancy prompt (non-colour, unless we know we "want" colour)
 # TODO: make this work
