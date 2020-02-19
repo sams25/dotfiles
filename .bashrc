@@ -71,58 +71,6 @@ On_White='\e[47m'
 
 NC="\e[m" # Colour Reset
 
-# Two-line TODO
-# Borrowed from https://jerodsanto.net/2010/12/minimally-awesome-todos/
-export TODO=$HOME/Dropbox/MIMO/.todo
-if [ ! -f $TODO ]; then
-    touch $TODO
-fi
-
-export TODO_categories="** 1: Work   2: Personal   3: Fun   4: Extra **"
-function todate()
-{
-    sort -o $TODO $TODO
-}
-function todo()
-{
-    # Add a new task
-    # Or, if no arugments, show list of tasks
-    if [ "$#" == "0" ]
-    then
-        if [ -s $TODO ]
-        then
-            echo -e "${BRed}$TODO_categories${NC}"
-            cat $TODO
-        else
-            echo 'No tasks to do!'
-        fi
-    else
-        echo "- $@" >> $TODO
-        todate
-    fi
-}
-function todone()
-{
-    # Remove a task from the list
-    if [ "$#" != "0" ]
-    then
-        vim -c "%s/^.*$*.*$//c" -c "g/^$/d" -c "wq" $TODO
-    else
-        echo 'Specify a task you have done!'
-    fi
-}
-function todraft()
-{
-    # Edit the todo list manually
-    vim $TODO
-    todate
-}
-function numtodo()
-{
-    x=$(wc -l < $TODO)
-    echo "[$x]"
-}
-
 # For prompts specifically
 tput_bold=$(tput bold)
 tput_reset=$(tput sgr0)
