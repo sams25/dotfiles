@@ -56,6 +56,8 @@ call vundle#begin()
     Plugin 'jiangmiao/auto-pairs'
     "For autocompletion
     Plugin 'ycm-core/YouCompleteMe'
+    "For date incrementing
+    Plugin 'tpope/vim-speeddating'
 
     " 2) FILETYPE SPECIFIC
     "For markdown syntax
@@ -395,7 +397,7 @@ autocmd BufNewFile,BufRead * setlocal formatoptions=tcqonj
 "too, and the corresponding text is highlighted
 let g:colorcolumn_is_on = 1
 let &colorcolumn=join(range(81, 999),",")
-highlight ColorColumn ctermbg=232 ctermfg=255
+highlight ColorColumn ctermbg=234 ctermfg=255 cterm=bold,italic
 "This is used to toggle between colorcolumn options
 function! ToggleColorColumn()
     if g:colorcolumn_is_on
@@ -427,7 +429,7 @@ nnoremap <leader><space> :let @/ = ""<CR>
 
 "To make code-aware tags
 "TODO: make this auto update instead of rebuilding every time
-command! MakeTags !ctags -f .tags -R --options=$HOME/.ctags
+command! MakeTags !ctags -o .tags */*
 "The default tags file is called tags, change that
 set tags=./.tags,.tags;
 "Shortcut for updating tags
@@ -489,7 +491,6 @@ nnoremap _ :split<CR>
 
 "To kill the current buffer and start a new one
 "Opens previous buffer, and deletes the 'latest buffer'
-nnoremap K :bprevious\|bdelete #<CR>
 "To search within the current buffers in a fuzzy manner
 nnoremap <leader>b :buffer<space>
 
@@ -605,6 +606,8 @@ augroup RSpecific
     "Shortcuts for common operators
     autocmd FileType r inoremap <buffer> - <space><-<space>
     autocmd FileType r inoremap <buffer> <C-b> %>%<space>
+    autocmd FileType rmd inoremap <buffer> - <space><-<space>
+    autocmd FileType rmd inoremap <buffer> <C-b> %>%<space>
     "Indent R with 2 spaces, the standard for R
     autocmd FileType r
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
@@ -678,6 +681,13 @@ augroup TrimWhiteSpaceSpecific
             \ :call TrimWhiteSpace()
 augroup END
 
+"For files with legitimate long lines
+augroup LongLineFileSpecific
+    autocmd!
+    autocmd BufRead *.csv setlocal textwidth=0
+    autocmd BufRead *.csv call ToggleColorColumn()
+augroup END
+
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " POTENTIAL FEATURES
@@ -708,4 +718,5 @@ augroup END
 "-> Have a command to return a buffer to the state that is stored on disc
 "-> Have a command to list all the colours available in vim
 "-> Have a command to toggle on/off camelCase and snake_case
+"-> Map K to something useful
 "}}}
