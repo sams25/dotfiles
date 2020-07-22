@@ -66,6 +66,8 @@ call vundle#begin()
     Plugin 'pangloss/vim-javascript'
     "For LaTeX
     "Plugin 'vim-latex/vim-latex'
+    "For haskell
+    Plugin 'neovimhaskell/haskell-vim'
 
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks

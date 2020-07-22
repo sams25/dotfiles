@@ -2,12 +2,13 @@
 
 * bash-completion
 * git
-* vim-gnome (remove all other vim packages, use vim-gnome for clipboard to work
+* vim-gtk (remove all other vim packages, use vim-gtk for clipboard to work
   everywhere)
 * xclip (and *not* xsel)
 * tmux
 * wget
 * fzf
+* dconf-tools
 
 # Basic Interfaces
 

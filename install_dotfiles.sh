@@ -7,6 +7,7 @@ DOTFILE_DIR="`pwd`"
 DIRS="
 .scripts/
 .vim/
+.config/taskell
 "
 
 FILES="
@@ -14,7 +15,9 @@ FILES="
 .bash_profile
 .bashrc
 .ctags
+.config/taskell/*
 .gitconfig
+.ghci
 .inputrc
 .profile
 .Rprofile
