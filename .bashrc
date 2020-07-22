@@ -118,17 +118,15 @@ complete -cf sudo fusermount
 export GEM_HOME=$HOME/.gem
 PATH="$PATH:${GEM_HOME}/bin"
 
+# Adding Haskell Stack to path
+PATH=$PATH:~/.local/bin
+# Adding Cabal binaries to path
+PATH=$PATH:~/.cabal/bin
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/anindya/google-cloud-sdk/completion.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/completion.bash.inc'; fi
-
-export ANDROID_HOME="/home/anindya/Android/Sdk/"
-PATH="$PATH:${HOME}/Downloads/flutter/bin"
-
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
