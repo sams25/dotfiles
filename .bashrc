@@ -114,6 +114,7 @@ fi
 complete -c man which systemctl
 complete -cf sudo fusermount
 
+PATH=$PATH:~/.scripts/
 # Paths
 export GEM_HOME=$HOME/.gem
 PATH="$PATH:${GEM_HOME}/bin"
