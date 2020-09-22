@@ -515,6 +515,8 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 "To create a scratch file
 nnoremap <leader>sc :new<CR>:setlocal buftype=nofile<CR>
                     \ :setlocal bufhidden=hide<CR>:setlocal noswapfile<CR>
+"Close any 'Preview' window open
+nnoremap <C-p> :pclose<CR>
 
 "To build using the recipe in the given directory
 nnoremap <C-b> :make<CR>
@@ -633,6 +635,11 @@ augroup END
 augroup LaTeXSpecific
     autocmd!
     autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
+augroup END
+
+augroup PythonSpecific
+    autocmd!
+    autocmd Filetype python setlocal makeprg=python\ %
 augroup END
 
 "For files that mostly comprise of English words
