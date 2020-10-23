@@ -64,7 +64,7 @@ call vundle#begin()
     Plugin 'vim-pandoc/vim-pandoc-syntax'
     "For Javascript
     Plugin 'pangloss/vim-javascript'
-    "For LaTeX
+    "For LaTeX - this is problematic though, as it remaps C-j and uses F5 a lot
     "Plugin 'vim-latex/vim-latex'
     "For haskell
     Plugin 'neovimhaskell/haskell-vim'
@@ -137,6 +137,13 @@ nnoremap U :UndotreeToggle<CR>
 " ****** vim-javascript ******
 "For Javascript documentation
 let g:javascript_plugin_jsdoc = 1
+
+" ****** vim-latex ******
+"TODO: Clean this up
+"set shellslash
+"let g:tex_flavour='latex'
+""Can't use remap as I want the benefit of F5 to complete
+"nmap <C-c> <F5>
 
 " ****** ycm-YouCompleteMe ******
 "For python autocompletion, we need to set a compiler
@@ -268,6 +275,10 @@ augroup VimdiffSpecific
     autocmd!
     autocmd BufWritePost * if &diff == 1 | diffupdate | endif
 augroup END
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 "}}}
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -613,7 +624,7 @@ augroup RSpecific
     autocmd FileType rmd inoremap <buffer> - <space><-<space>
     autocmd FileType rmd inoremap <buffer> <C-b> %>%<space>
     "Indent R with 2 spaces, the standard for R
-    autocmd FileType r
+    autocmd FileType r,rmd
         \ setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 augroup END
 
@@ -635,6 +646,8 @@ augroup END
 augroup LaTeXSpecific
     autocmd!
     autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
+    "Remove ` from auto-pairing so we can use that for VimLatex
+    autocmd Filetype tex let b:AutoPairs = AutoPairsDefine({}, ['`'])
 augroup END
 
 augroup PythonSpecific

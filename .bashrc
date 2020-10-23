@@ -131,3 +131,5 @@ if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/
 if [ -f '/home/anindya/google-cloud-sdk/completion.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/completion.bash.inc'; fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[[ -s "/home/anindya/.gvm/scripts/gvm" ]] && source "/home/anindya/.gvm/scripts/gvm"
