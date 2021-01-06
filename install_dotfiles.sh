@@ -21,6 +21,7 @@ FILES="
 .inputrc
 .profile
 .Rprofile
+.scimrc
 .scripts/*
 .tmux.conf
 .vim/skeleton.*
