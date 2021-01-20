@@ -8,6 +8,7 @@ DIRS="
 .scripts/
 .vim/
 .config/taskell
+.ssh/
 "
 
 FILES="
@@ -23,6 +24,7 @@ FILES="
 .Rprofile
 .scimrc
 .scripts/*
+.ssh/config
 .tmux.conf
 .vim/skeleton.*
 .vimrc
