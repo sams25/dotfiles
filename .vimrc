@@ -63,11 +63,11 @@ call vundle#begin()
     "For markdown syntax
     Plugin 'vim-pandoc/vim-pandoc-syntax'
     "For Javascript
-    Plugin 'pangloss/vim-javascript'
+    "Plugin 'pangloss/vim-javascript'
     "For LaTeX - this is problematic though, as it remaps C-j and uses F5 a lot
     "Plugin 'vim-latex/vim-latex'
     "For haskell
-    Plugin 'neovimhaskell/haskell-vim'
+    "Plugin 'neovimhaskell/haskell-vim'
 
     " 3) DON'T REALLY USE?
     "For toggling and displaying marks
