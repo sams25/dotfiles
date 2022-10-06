@@ -25,9 +25,3 @@
     # for 'git difftool' or the diff tool used by merge
     tool = vimdiff
 
-[github]
-    user = sams25
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-[credential]
-	helper = cache

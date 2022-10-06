@@ -389,6 +389,7 @@ highlight Comment cterm=italic
 
 set ruler               "Show cursor location
 set cursorline          "Highlight current line
+highlight CursorLine cterm=none ctermbg=234
 set number              "Show line numbers in the left column
 set relativenumber      "Number are with respect to current line
 
@@ -647,7 +648,7 @@ augroup LaTeXSpecific
     autocmd!
     autocmd Filetype tex setlocal makeprg=$HOME/.scripts/makenotes\ %
     "Remove ` from auto-pairing so we can use that for VimLatex
-    autocmd Filetype tex let b:AutoPairs = AutoPairsDefine({}, ['`'])
+    "autocmd Filetype tex let b:AutoPairs = AutoPairsDefine({}, ['`'])
 augroup END
 
 augroup PythonSpecific
