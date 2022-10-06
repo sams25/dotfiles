@@ -9,6 +9,12 @@ alias egrep='egrep --color=auto'
 alias top='top -o %CPU'
 alias ctags='ctags --options=$HOME/.ctags'
 
+# Get old vim by typing \vim
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
+
 # Make ls not show single quotes around files/directories with spaces in them
 export QUOTING_STYLE=literal
 alias ls='ls -h --color=auto -F'

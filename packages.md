@@ -1,3 +1,14 @@
+# Terminal
+
+```
+# First install kitty, then make it available as a command
+ln -s /home/anindya/.local/kitty.app/bin/kitty kitty
+
+# Set Ubuntu's default terminal to be Kitty
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator `which kitty` 50
+sudo update-alternatives --config x-terminal-emulator
+```
+
 # Basic Utils
 
 * bash-completion
