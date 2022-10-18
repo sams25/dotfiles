@@ -39,7 +39,9 @@ local options = {
   numberwidth = 4,                          -- line number width (in columns)
   signcolumn = "yes",                       -- always show the sign column, don't shift based on content
 
+  incsearch = true,                         -- start searching as a I type
   hlsearch = true,                          -- highlight all matches on previous search pattern
+  gdefault = true,                          -- do all substitutions on a line, not just the first
   ignorecase = true,                        -- ignore case in search patterns,...
   smartcase = true,                         -- unless we explicitly use capitals,...
   tagcase = 'followscs',                    -- and the same behaviour for tag searches
@@ -68,3 +70,11 @@ end
 
 -- Misc additional options
 vim.opt.iskeyword:append "-"
+
+-- Unusual characters to show
+vim.opt.listchars:append({tab="▸ "})
+vim.opt.listchars:append({eol="¬"})
+vim.opt.listchars:append({trail="␣"})
+vim.opt.listchars:append({precedes="←"})
+vim.opt.listchars:append({extends="→"})
+vim.opt.listchars:append({nbsp="␣"})

@@ -50,7 +50,7 @@ return packer.startup(function(use)
 
   -- Visuals
   use { 'agude/vim-eldar' } -- Truly black background
-
+  use({ "nvim-lualine/lualine.nvim" })
 
   -- Completion plugins and their recommended additional packages
   use({ "hrsh7th/nvim-cmp" })
@@ -85,7 +85,6 @@ return packer.startup(function(use)
   -- use({ "kyazdani42/nvim-tree.lua" })
   -- use({ "akinsho/bufferline.nvim" })
   -- use({ "moll/vim-bbye" })
-  -- use({ "nvim-lualine/lualine.nvim" })
   -- use({ "akinsho/toggleterm.nvim" })
   -- use({ "ahmedkhalf/project.nvim" })
   -- use({ "lewis6991/impatient.nvim" })
