@@ -41,7 +41,7 @@ alias sl='ls'
 # Other programs
 alias vimro='vim -R'
 alias R="R --quiet --no-save"
-alias youtube-dl-music="youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0"
+alias youtube-dl-music="yt-dlp -f bestaudio -x --audio-format mp3 --audio-quality 0"
 # Stupid Ubuntu
 alias python='/usr/bin/python3'
 alias pip='/usr/bin/pip3'
