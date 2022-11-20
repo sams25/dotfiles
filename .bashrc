@@ -123,6 +123,8 @@ PATH="$PATH:${GEM_HOME}/bin"
 PATH=$PATH:~/.local/bin
 # Adding Cabal binaries to path
 PATH=$PATH:~/.cabal/bin
+# Adding Julia packages to path
+PATH=$PATH:~/ProgramsInstalledManually/julia-1.8.3/bin
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/anindya/google-cloud-sdk/path.bash.inc' ]; then . '/home/anindya/google-cloud-sdk/path.bash.inc'; fi
