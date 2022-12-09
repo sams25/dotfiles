@@ -34,6 +34,7 @@ filetypeout=".pdf"            # TODO: Write options for specifying output format
 filetypein="${fullfile##*.}"  # Input extension
 file="${fullfile%.*}"         # Just the filename with no extension
 
+READER="xdg-open"
 if [ "$file" == "" ] ; then
     usage "No file specified as target"
 fi
@@ -41,30 +42,30 @@ fi
 case "$filetypein" in
 
     "tex")
-        echo 'Regular LaTeX'
+        echo 'Regular LaTeX: ' $fullfile
         pdflatex $file
         ;;
 
     "md")
-        echo 'Vanilla Markdown'
+        echo 'Vanilla Markdown: ' $fullfile
         makeprg="pandoc --pdf-engine=pdflatex -V geometry:margin=1in"
         $makeprg $fullfile -o $file$filetypeout
         ;;
 
     "pmd")
-        echo 'Presentation (Beamer) Markdown'
+        echo 'Presentation (Beamer) Markdown: ' $fullfile
         makeprg="pandoc --pdf-engine=pdflatex -t beamer"
         $makeprg $fullfile -o $file$filetypeout
         ;;
 
     "Rmd")
-        echo 'R Markdown'
-        makeprg="Rscript --vanilla -e \"rmarkdown::render('$fullfile', clean=TRUE)\""
+        echo 'R Markdown: ' $fullfile
+        makeprg="Rscript --vanilla -e \"rmarkdown::render('$fullfile', knit_root_dir='$PWD', output_dir='$PWD', clean=TRUE)\""
         eval $makeprg
         ;;
 
     "adoc")
-        echo 'Asciidoc'
+        echo 'Asciidoc: ' $fullfile
         makeprg="asciidoctor-pdf"
         $makeprg $fullfile
         ;;

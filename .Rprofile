@@ -9,11 +9,17 @@ options(editor = "vim")                                   # For `edit()`
   # Print this on start so I know it's loaded
   message("Loaded my custom ~/.Rprofile at: ", date(), "\n",
           "Working directory is: ", getwd())
+  if(interactive()) {
+    if(file.exists(".Rhistory")) {
+      try(utils::loadhistory())
+      message("Loaded R history from .Rhistory")
+    }
+  }
 }
 
 # Called at the end of a session
 .Last <- function() {
-  # TODO: clean-up/save command history?
+  if(interactive()) try(utils::savehistory())
   message("Goodbye at: ", date())
 }
 

@@ -1,9 +1,7 @@
 # Profile - runs on login
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export BROWSER="firefox"
-
-export PATH=$PATH:$HOME/.scripts
 
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists

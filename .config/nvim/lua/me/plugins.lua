@@ -33,6 +33,16 @@ return packer.startup(function(use)
   use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
   use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
 
+  -- TODO:
+  -- nvim-navic
+  -- vim-illuminate
+  -- nvim-treesitter/playground
+  -- nvim-treesitter/nvim-treesitter-textobjects
+  -- nvim-lastplace
+  -- vim-grepper
+  -- nvim-dap
+  -- null-ls
+  
   -- Navigation
   use { 'alexghergh/nvim-tmux-navigation', config = function()
     require 'nvim-tmux-navigation'.setup {
