@@ -7,6 +7,7 @@ end
 local servers = {
   'clangd',
   'sumneko_lua',
+  'julials',
   'pylsp',
   'r_language_server',
   'texlab',
